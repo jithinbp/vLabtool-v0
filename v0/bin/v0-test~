@@ -1,0 +1,13 @@
+#!/usr/bin/python
+
+from v0 import interface
+import time
+from pylab import *
+I=interface.Interface()
+I.set_state(SQR1=0)
+time.sleep(0.01)
+I.set_sine(50)
+x,y= I.capture_fullspeed('CH1',10000,0.5,'SET_HIGH')
+print y[:20]
+plot(x,y)
+show()
