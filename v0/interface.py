@@ -101,7 +101,7 @@ class Interface(object):
 		self.error_count=0
 		self.channels_in_buffer=0
 		self.digital_channels_in_buffer=0
-		self.data_splitting = kwargs.get('data_splitting',2500)
+		self.data_splitting = kwargs.get('data_splitting',500)
 
 
 		#--------------------------Initialize communication handler, and subclasses-----------------
@@ -141,20 +141,22 @@ class Interface(object):
 						print b,poly
 						polyDict[S[0]].append(poly)
 
-				DACX=np.linspace(0,3.3,4096)
 				for a in dac_slope_intercept.split('>|')[1:]:
 					S= a.split('|<')
 					NAME = S[0][:4]
 					print '>>>>>>',NAME
-					slope,intercept = struct.unpack('2f',S[1])
-					print slope,intercept
+					fits = struct.unpack('6f',S[1])
+					slope=fits[0];intercept=fits[1]
+					fitvals = fits[2:]
 					if NAME in ['PVS1','PVS2','PVS3']:
+						DACX=np.linspace(self.DAC.CHANS[NAME].range[0],self.DAC.CHANS[NAME].range[1],4096)
 						if NAME=='PVS1':OFF=self.read_bulk_flash(self.DAC_SHIFTS_PVS1A,2048)+self.read_bulk_flash(self.DAC_SHIFTS_PVS1B,2048)
 						elif NAME=='PVS2':OFF=self.read_bulk_flash(self.DAC_SHIFTS_PVS2A,2048)+self.read_bulk_flash(self.DAC_SHIFTS_PVS2B,2048)
 						elif NAME=='PVS3':OFF=self.read_bulk_flash(self.DAC_SHIFTS_PVS3A,2048)+self.read_bulk_flash(self.DAC_SHIFTS_PVS3B,2048)
 
 						OFF = np.array([ord(data) for data in OFF])
-						YDATA = (DACX) - (OFF*slope+intercept)
+						fitfn = np.poly1d(fitvals)
+						YDATA = fitfn(DACX) - (OFF*slope+intercept)
 						LOOKBEHIND = 100;LOOKAHEAD=100						
 						OFF=np.array([np.argmin(np.fabs(YDATA[max(B-LOOKBEHIND,0):min(4095,B+LOOKAHEAD)]-DACX[B]) )- (B-max(B-LOOKBEHIND,0)) for B in range(0,4096)])
 						self.DAC.load_calibration(NAME,OFF)

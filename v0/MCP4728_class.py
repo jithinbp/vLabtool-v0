@@ -66,6 +66,7 @@ class MCP4728:
 			self.H.__sendInt__((CHAN.VREF << 15) | (CHAN.SwitchedOff << 13) | (1 << 12) | v )
 
 		self.H.__get_ack__()
+		time.sleep(0.0001)
 		R = CHAN.range
 		return (R[1]-R[0])*v/4095.+R[0]
 
