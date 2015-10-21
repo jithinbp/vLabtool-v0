@@ -2031,6 +2031,38 @@ class Interface(object):
 		else: C = 0
 		#print 'Current if C=470pF :',V*(470e-12+self.SOCKET_CAPACITANCE)/(Charge_Time*1e-6)
 		return V,C
+
+
+	def get_ctmu_voltage(self,channel,Crange,tgen=1):
+		"""
+		get_ctmu_voltage(5,2)  will activate a constant current source of 5.5uA on IN1 and then measure the voltage at the output.
+		If a diode is used to connect IN1 to ground, the forward voltage drop of the diode will be returned. e.g. .6V for a 4148diode.
+		
+		If a resistor is connected, ohm's law will be followed within reasonable limits
+		
+		channel=5 for IN1
+		
+		CRange=0   implies 550uA
+		CRange=1   implies 0.55uA
+		CRange=2   implies 5.5uA
+		CRange=3   implies 55uA
+		
+		:return: Voltage
+		"""	
+		if channel=='CAP':channel=5
+		
+		self.H.__sendByte__(COMMON)
+		self.H.__sendByte__(GET_CTMU_VOLTAGE)
+		self.H.__sendByte__((channel)|(Crange<<5)|(tgen<<7))
+		time.sleep(0.001)
+		self.H.__getByte__()	#junk byte '0' sent since UART was in IDLE mode and needs to recover.
+		#V = [self.H.__getInt__() for a in range(16)]
+		#print V
+		#v=sum(V)
+		v=self.H.__getInt__() #16*voltage across the current source
+		self.H.__get_ack__()
+		V=3.3*v/15./4096
+		return V
 			
 
 	def restoreStandalone(self):
@@ -2140,36 +2172,6 @@ class Interface(object):
 		self.H.__get_ack__()
 
 
-	def get_ctmu_voltage(self,channel,Crange,tgen=1):
-		"""
-		get_ctmu_voltage(5,2)  will activate a constant current source of 5.5uA on IN1 and then measure the voltage at the output.
-		If a diode is used to connect IN1 to ground, the forward voltage drop of the diode will be returned. e.g. .6V for a 4148diode.
-		
-		If a resistor is connected, ohm's law will be followed within reasonable limits
-		
-		channel=5 for IN1
-		
-		CRange=0   implies 550uA
-		CRange=1   implies 0.55uA
-		CRange=2   implies 5.5uA
-		CRange=3   implies 55uA
-		
-		:return: Voltage
-		"""	
-		if channel=='CAP':channel=5
-		
-		self.H.__sendByte__(COMMON)
-		self.H.__sendByte__(GET_CTMU_VOLTAGE)
-		self.H.__sendByte__((channel)|(Crange<<5)|(tgen<<7))
-		time.sleep(0.001)
-		self.H.__getByte__()	#junk byte '0' sent since UART was in IDLE mode and needs to recover.
-		#V = [self.H.__getInt__() for a in range(16)]
-		#print V
-		#v=sum(V)
-		v=self.H.__getInt__() #16*voltage across the current source
-		self.H.__get_ack__()
-		V=3.3*v/15./4096
-		return V
 
 
 	def get_temperature(self):
