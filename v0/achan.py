@@ -1,7 +1,6 @@
 import numpy as np
 TEN_BIT=10
 TWELVE_BIT=12
-print 'LOADING'
 gains=[1,2,4,5,8,10,16,32]
 
 #-----------------------Classes for input sources----------------------

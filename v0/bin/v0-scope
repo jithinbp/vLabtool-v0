@@ -13,6 +13,12 @@ parser.add_argument("-P", dest="PortName",
                     help="If you have connected multiple devices, provide the port name . e.g /dev/ttyACM0", metavar="PORT_NAME")
 args = parser.parse_args()
 
+import os
+os.environ['QT_API'] = 'pyqt'
+import sip
+sip.setapi("QString", 2)
+sip.setapi("QVariant", 2)
+
 
 import v0.interface as interface
 from PyQt4 import QtCore, QtGui
@@ -47,8 +53,7 @@ class MyMainWindow(QtGui.QMainWindow, template_scope.Ui_MainWindow):
 		self.setupUi(self)
 		if  args.PortName: self.I = interface.connect(port = args.PortName)
 		else: self.I = interface.connect()
-
-		if not self.I:
+		if not self.I.connected:
 			print 'Exiting'
 			sys.exit(1)
 			if not self.I.connected:
@@ -531,7 +536,7 @@ class MyMainWindow(QtGui.QMainWindow, template_scope.Ui_MainWindow):
 			print 'frequency too low / autoset error'
 		self.autoRange()
 			
-		print frq,self.timebase,self.samples
+		#print frq,self.timebase,self.samples
 
 	def autoSetSamples(self):
 		self.samples = self.max_samples_per_channel[self.active_channels]
@@ -587,7 +592,7 @@ class MyMainWindow(QtGui.QMainWindow, template_scope.Ui_MainWindow):
 		chan = self.I.analogInputSources[self.chan1remap]
 		R = [chan.calPoly10(0),chan.calPoly10(1023)]
 		R[0]=R[0]*.9;R[1]=R[1]*.9
-		print R
+		#print R
 		self.plot.setYRange(min(R),max(R))
 		chan = self.I.analogInputSources['CH2']
 		R = [chan.calPoly10(0),chan.calPoly10(1023)]

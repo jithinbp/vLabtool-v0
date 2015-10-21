@@ -1,5 +1,12 @@
 #!/usr/bin/python
 #!/usr/bin/python
+import os
+os.environ['QT_API'] = 'pyqt'
+import sip
+sip.setapi("QString", 2)
+sip.setapi("QVariant", 2)
+
+
 from v0.experiment import *
 if __name__ == "__main__":
 	Exp=Experiment(parent=None,showresult=False)

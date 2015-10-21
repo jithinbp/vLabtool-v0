@@ -17,10 +17,6 @@
 #
 
 import os
-os.environ['QT_API'] = 'pyqt'
-import sip
-sip.setapi("QString", 2)
-sip.setapi("QVariant", 2)
 
 from commands_proto import *
 
@@ -44,7 +40,7 @@ def connect(**kwargs):
 	obj = Interface(**kwargs)
 	if obj.H.fd != None:
 		return obj
-	#print 'Could not find hardware'#_('Could not find hardware'),_('Check the connections.')
+	print 'Could not find hardware'#_('Could not find hardware'),_('Check the connections.')
 
 
 
@@ -79,6 +75,9 @@ class Interface(object):
 
 	
 	def __init__(self,timeout=1.0,**kwargs):
+		if kwargs.get('verbose',False):self.verbose=True
+		else: self.verbose = False
+		
 		self.ADC_SHIFTS_LOCATION1=11
 		self.ADC_SHIFTS_LOCATION2=12
 		self.ADC_POLYNOMIALS_LOCATION=13
@@ -123,28 +122,28 @@ class Interface(object):
 			polynomials = self.read_bulk_flash(self.ADC_POLYNOMIALS_LOCATION,2048)
 			polyDict={}
 			if polynomials[:8]=='VLABTOOL':
-				print 'ADC calibration found...'
+				self.__print__('ADC calibration found...')
 				import struct
 				adc_shifts = self.read_bulk_flash(self.ADC_SHIFTS_LOCATION1,2048)+self.read_bulk_flash(self.ADC_SHIFTS_LOCATION2,2048)
 				adc_shifts = [ord(a) for a in adc_shifts]
-				print 'ADC INL correction table loaded.'
+				self.__print__('ADC INL correction table loaded.')
 				inl_slope_intercept = polynomials.split('STOP')[2]
 				dac_slope_intercept = polynomials.split('STOP')[1]
 				slopes_offsets=polynomials.split('STOP')[0]
 				for a in slopes_offsets.split('>|')[1:]:
 					S= a.split('|<')
-					print '>>>>>>',S[0]
+					self.__print__( '>>>>>>',S[0])
 					cals=S[1]
 					polyDict[S[0]]=[]
 					for b in range(len(cals)/16):
 						poly=struct.unpack('4f',cals[b*16:(b+1)*16])
-						print b,poly
+						self.__print__( b,poly)
 						polyDict[S[0]].append(poly)
 
 				for a in dac_slope_intercept.split('>|')[1:]:
 					S= a.split('|<')
 					NAME = S[0][:4]
-					print '>>>>>>',NAME
+					self.__print__( '>>>>>>',NAME)
 					fits = struct.unpack('6f',S[1])
 					slope=fits[0];intercept=fits[1]
 					fitvals = fits[2:]
@@ -169,7 +168,7 @@ class Interface(object):
 						self.analogInputSources[a].calibrationReady=True
 						self.analogInputSources[a].regenerateCalibration()
 				
-				print polynomials.split('>|')[0]
+				self.__print__( polynomials.split('>|')[0])
 				
 		
 		self.digital_channel_names=['ID1','ID2','ID3','ID4','-','CH1','Fin']
@@ -252,7 +251,12 @@ class Interface(object):
 		time.sleep(0.001)
 
 
-	
+	def __print__(self,*args):
+		if self.verbose:
+			for a in args:
+				print a,
+			print
+
 	def __del__(self):
 		print 'closing port'
 		try:
@@ -299,16 +303,16 @@ class Interface(object):
 		'''
 		self.H.reconnect()
 		
-	def capture1(self,ch,ns,tg):
+	def capture1(self,ch,ns,tg,*args):
 		"""
 		Blocking call that fetches an oscilloscope trace from the specified input channel
 		
 		==============	============================================================================================
 		**Arguments** 
 		==============	============================================================================================
-		ch		Channel to select as input. ['CH1'..'CH9','5V','PCS','9V','IN1','SEN']
-		ns		Number of samples to fetch. Maximum 10000
-		tg		Timegap between samples in microseconds
+		ch				Channel to select as input. ['CH1'..'CH3','SEN']
+		ns				Number of samples to fetch. Maximum 10000
+		tg				Timegap between samples in microseconds
 		==============	============================================================================================
 
 		.. figure:: ../images/capture1.png
@@ -322,8 +326,8 @@ class Interface(object):
 		Example
 		
 		>>> from pylab import *
-		>>> from Labtools import interface
-		>>> I=interface.Interface()
+		>>> from v0 import interface
+		>>> I=interface.connect()
 		>>> x,y = I.capture1('CH1',3200,1)
 		>>> plot(x,y)
 		>>> show()
@@ -332,11 +336,7 @@ class Interface(object):
 		:return: Arrays X(timestamps),Y(Corresponding Voltage values)
 		
 		"""
-		self.capture_traces(1,ns,tg,ch)
-		time.sleep(1e-6*self.samples*self.timebase+.01)
-		while not self.oscilloscope_progress()[0]:
-			pass
-		return self.fetch_trace(1)
+		return self.capture_fullspeed(ch,ns,tg,*args)
 
 	def capture2(self,ns,tg):
 		"""
@@ -443,9 +443,9 @@ class Interface(object):
 		CHANNEL_SELECTION=0
 		for chan in args:
 			C=self.analogInputSources[chan].CHOSA
-			print chan,C
+			self.__print__( chan,C)
 			CHANNEL_SELECTION|=(1<<C)
-		print 'selection',CHANNEL_SELECTION,len(args),hex(CHANNEL_SELECTION|((total_chans-1)<<12))
+		self.__print__( 'selection',CHANNEL_SELECTION,len(args),hex(CHANNEL_SELECTION|((total_chans-1)<<12)))
 
 		self.H.__sendByte__(ADC)
 		self.H.__sendByte__(CAPTURE_MULTIPLE)		
@@ -454,9 +454,9 @@ class Interface(object):
 		self.H.__sendInt__(total_samples)			#total number of samples to record
 		self.H.__sendInt__(int(self.timebase*8))		#Timegap between samples.  8MHz timer clock
 		self.H.__get_ack__()
-		print 'wait'
+		self.__print__( 'wait')
 		time.sleep(1e-6*total_samples*tg+.01)
-		print 'done'
+		self.__print__( 'done')
 		data=''
 		for i in range(int(total_samples/self.data_splitting)):
 			self.H.__sendByte__(ADC)
@@ -497,14 +497,11 @@ class Interface(object):
 
 		self.H.__sendByte__(ADC)
 		if 'SET_LOW' in args:
-			print 'set low capture'
 			self.H.__sendByte__(SET_LO_CAPTURE)		
 		elif 'SET_HIGH' in args:
-			print 'set high capture'
 			self.H.__sendByte__(SET_HI_CAPTURE)		
 		else:
 			self.H.__sendByte__(CAPTURE_DMASPEED)		
-			print 'regular DMA based capture'
 			
 		
 		self.H.__sendByte__(CHOSA)
@@ -512,9 +509,9 @@ class Interface(object):
 		self.H.__sendInt__(samples)			#total number of samples to record
 		self.H.__sendInt__(int(tg*8))		#Timegap between samples.  8MHz timer clock
 		self.H.__get_ack__()
-		print 'wait'
+		self.__print__( 'wait')
 		time.sleep(1e-6*samples*tg+.01)
-		print 'done'
+		self.__print__( 'done')
 		return self.__retrieveBufferData__(chan,samples,tg)
 
 	def __retrieveBufferData__(self,chan,samples,tg):
@@ -1964,7 +1961,7 @@ class Interface(object):
 		t=10
 		P=[1.5,50e-12]
 		for a in range(4):
-			P=list(self.__get_capacitor_range__(20*10**a))
+			P=list(self.__get_capacitor_range__(50*(10**a)))
 			if(P[0]>1.5):
 				if a==0 and P[0]>3.28: #pico farads range. Values will be incorrect using this method
 					P[1]=50e-12
@@ -1972,7 +1969,7 @@ class Interface(object):
 		return  P
 
 
-	def get_capacitance(self,current_range,trim, Charge_Time):	#time in uS
+	def get_capacitance(self):	#time in uS
 		"""
 		measures capacitance of component connected between IN1 and ground
 		
@@ -1995,6 +1992,28 @@ class Interface(object):
 			C = I_{constant}*time/V_{measured}
 
 		"""
+		GOOD_VOLTS=[2.5,2.8]
+		CT=100
+		CR=1
+		while 1:
+			V,C = self.__get_capacitance__(CR,0,CT)
+			if CT>30000 and V<0.1:
+				print 'Capacitance too high for this method'
+				return 0
+			elif V>GOOD_VOLTS[0] and V<GOOD_VOLTS[1]:
+				return V,C
+			elif V<GOOD_VOLTS[0] and V>0.1:
+				if GOOD_VOLTS[0]/V >1.1:
+					CT=int(CT*GOOD_VOLTS[0]/V)
+					print 'increased CT ',CT
+				else:
+					return V,C
+			elif V<=0.1 and CR<3:
+				CR+=1
+			elif CR==3:
+				return self.get_capacitor_range()
+
+	def __get_capacitance__(self,current_range,trim, Charge_Time):	#time in uS
 		self.H.__sendByte__(COMMON)
 		currents=[0.55e-3,0.55e-6,0.55e-5,0.55e-4]
 		self.H.__sendByte__(GET_CAPACITANCE)
@@ -2008,26 +2027,11 @@ class Interface(object):
 		V = 3.3*self.H.__getInt__()/4095
 		self.H.__get_ack__()
 		Charge_Current = currents[current_range]*(100+trim)/100.0
-		C = Charge_Current*Charge_Time*1e-6/V - self.SOCKET_CAPACITANCE
-		print 'Current if C=470pF :',V*(470e-12+self.SOCKET_CAPACITANCE)/(Charge_Time*1e-6)
-		return V,Charge_Current,Charge_Time,C
-
-
-		
-
-	def get_inductance(self):
-		"""
-		measure the value of the inductor connected to the Inductance measurement unit
-		F_out must be connected to IN3 via a short wire
-		:return: inductance
-		"""
-		f1=1.5491e6
-		c1=1.09017e-9
-		l1=9.68246e-06
-		f3=self.get_high_freq('LMETER')#self.get_freq(LMETER,0.5)
-		if f3>1:return (1.0/(c1*f3*f3*4*math.pi*math.pi))-l1
-		else: return 0
-		
+		if V:C = Charge_Current*Charge_Time*1e-6/V - self.SOCKET_CAPACITANCE
+		else: C = 0
+		#print 'Current if C=470pF :',V*(470e-12+self.SOCKET_CAPACITANCE)/(Charge_Time*1e-6)
+		return V,C
+			
 
 	def restoreStandalone(self):
 		self.H.__sendByte__(COMMON)
@@ -2214,7 +2218,10 @@ class Interface(object):
 		
 		:return: frequency
 		"""
-		if freq<1100:
+		if freq<5:
+			print 'freq too low'
+			return 0		
+		elif freq<1100:
 			HIGHRES=1
 			table_size = 512
 		else:
@@ -2227,7 +2234,7 @@ class Interface(object):
 		self.H.__sendByte__(WAVEGEN)
 		self.H.__sendByte__(SET_SINE1)
 		self.H.__sendByte__(HIGHRES) 	#use larger table for low frequencies
-		self.H.__sendInt__(wavelength)		
+		self.H.__sendInt__(wavelength-1)		
 		self.H.__get_ack__()
 		return freq
 
@@ -2244,7 +2251,10 @@ class Interface(object):
 		
 		:return: frequency
 		"""
-		if freq<1100:
+		if freq<5:
+			print 'freq too low'
+			return 0		
+		elif freq<1100:
 			HIGHRES=1
 			table_size = 512
 		else:
@@ -2257,7 +2267,7 @@ class Interface(object):
 		self.H.__sendByte__(WAVEGEN)
 		self.H.__sendByte__(SET_SINE2)
 		self.H.__sendByte__(HIGHRES) 	#use larger table for low frequencies
-		self.H.__sendInt__(wavelength)		
+		self.H.__sendInt__(wavelength-1)		
 		self.H.__get_ack__()
 
 		return freq
@@ -2275,7 +2285,10 @@ class Interface(object):
 		
 		:return: frequency
 		"""
-		if freq<1100:
+		if freq<5:
+			print 'freq too low'
+			return 0		
+		elif freq<1100:
 			HIGHRES=1
 			table_size = 512
 		else:
@@ -2293,7 +2306,7 @@ class Interface(object):
 		self.H.__sendByte__(WAVEGEN)
 		self.H.__sendByte__(SET_BOTH_WG)
 
-		self.H.__sendInt__(wavelength)		#not really wavelength. time between each datapoint
+		self.H.__sendInt__(wavelength-1)		#not really wavelength. time between each datapoint
 		self.H.__sendInt__(phase_coarse)	#table position for phase adjust
 		self.H.__sendInt__(phase_fine)		#timer delay / fine phase adjust
 
