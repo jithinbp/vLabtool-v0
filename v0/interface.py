@@ -296,12 +296,12 @@ class Interface(object):
 	#|voltmeters, ammeters, and Programmable voltage sources.							    |
 	#-------------------------------------------------------------------------------------------------------------------#
 
-	def reconnect(self):
+	def reconnect(self,**kwargs):
 		'''
 		Attempts to reconnect to the device in case of a commmunication error or accidental disconnect.
 		
 		'''
-		self.H.reconnect()
+		self.H.reconnect(**kwargs)
 		
 	def capture1(self,ch,ns,tg,*args):
 		"""
@@ -2526,7 +2526,7 @@ class Interface(object):
 			print 'not streaming'
 		self.streaming=False
 
-	def sqr1(self,freq,duty_cycle,echo=False):
+	def sqr1(self,freq,duty_cycle=50,echo=False):
 		"""
 		Set the frequency of sqr1
 
@@ -2545,9 +2545,8 @@ class Interface(object):
 			prescaler+=1
 		if prescaler==4:
 			print 'out of range'
-			return
+			return 0
 		high_time = wavelength*duty_cycle/100.
-		print wavelength,high_time,prescaler
 		if echo:print wavelength,high_time,prescaler
 		self.H.__sendByte__(WAVEGEN)
 		self.H.__sendByte__(SET_SQR1)
@@ -2555,6 +2554,8 @@ class Interface(object):
 		self.H.__sendInt__(int(round(high_time)))
 		self.H.__sendByte__(prescaler)
 		self.H.__get_ack__()
+
+		return 64e6/wavelength/p[prescaler]
 
 
 

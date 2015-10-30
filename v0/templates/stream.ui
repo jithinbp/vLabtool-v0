@@ -182,8 +182,8 @@ color: rgb(255, 255, 255);</string>
    <slot>stream()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>31</x>
-     <y>50</y>
+     <x>41</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -198,8 +198,8 @@ color: rgb(255, 255, 255);</string>
    <slot>setAverageCount()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>117</y>
+     <x>255</x>
+     <y>107</y>
     </hint>
     <hint type="destinationlabel">
      <x>274</x>

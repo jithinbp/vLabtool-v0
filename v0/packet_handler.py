@@ -71,20 +71,25 @@ class Handler(object):
 		if len(x):x=x[:-1]
 		return x
 
-	def reconnect(self):
+	def reconnect(self,**kwargs):
+		if kwargs.has_key('port'):
+				self.portname=kwargs.get('port',None)
+
 		try:
 			self.fd = serial.Serial(self.portname, 9600, stopbits=1, timeout = 0.1)
 			self.fd.close()
 			time.sleep(0.2)
 			self.fd = serial.Serial(self.portname, 1000000, stopbits=1, timeout = self.timeout)
-			#print 'connected TestBench'
+			if(self.fd.inWaiting()):
+				self.fd.read(1000)
+				self.fd.flush()
+			version = self.get_version(self.fd)
+			print 'Connected to device at ',self.portname,' ,Version:',version
+			self.connected=True
+			self.version_string=version
 		except serial.SerialException as ex:
 			print "failed to connect. Check device connections ,Or\nls /dev/TestBench\nOr, check if symlink has been created in /etc/udev/rules.d/proto.rules for the relevant Vid,Pid"
-			sys.exit(1)
 			
-		if(self.fd.inWaiting()):
-			self.fd.read(1000)
-			self.fd.flush()
 		
 	def __del__(self):
 		#print 'closing port'

@@ -1695,7 +1695,7 @@ border-color: rgb(29, 122, 162);
              <x>10</x>
              <y>0</y>
              <width>297</width>
-             <height>241</height>
+             <height>260</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -2301,38 +2301,6 @@ border-color: rgb(29, 122, 162);
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>plot_liss()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>303</x>
-     <y>455</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>change_scope_type(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>866</x>
-     <y>48</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>43</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBox_2</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>MainWindow</receiver>
@@ -2345,38 +2313,6 @@ border-color: rgb(29, 122, 162);
     <hint type="destinationlabel">
      <x>892</x>
      <y>348</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>liss_animate(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>276</x>
-     <y>485</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>719</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trigger_select_box</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTriggerChannel(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>175</x>
-     <y>239</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>286</y>
     </hint>
    </hints>
   </connection>
@@ -2413,22 +2349,6 @@ border-color: rgb(29, 122, 162);
    </hints>
   </connection>
   <connection>
-   <sender>dial_11</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTriggerLevel(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>295</x>
-     <y>264</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>359</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBox_4</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>MainWindow</receiver>
@@ -2441,22 +2361,6 @@ border-color: rgb(29, 122, 162);
     <hint type="destinationlabel">
      <x>892</x>
      <y>466</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>timebase_dial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTimeBase(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>296</x>
-     <y>345</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>445</y>
     </hint>
    </hints>
   </connection>
@@ -2605,6 +2509,134 @@ border-color: rgb(29, 122, 162);
    </hints>
   </connection>
   <connection>
+   <sender>sinebox1</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setSINE2(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>227</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setSinePhase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>plot_liss()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>455</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>change_scope_type(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>866</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>liss_animate(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>719</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trigger_select_box</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTriggerChannel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_11</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTriggerLevel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timebase_dial</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTimeBase(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>comboBox_6</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>MainWindow</receiver>
@@ -2649,38 +2681,6 @@ border-color: rgb(29, 122, 162);
     <hint type="destinationlabel">
      <x>-1</x>
      <y>127</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sinebox1</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setSINE2(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>267</x>
-     <y>227</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>365</x>
-     <y>25</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setSinePhase()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>290</x>
-     <y>287</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>515</x>
-     <y>25</y>
     </hint>
    </hints>
   </connection>
