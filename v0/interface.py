@@ -21,6 +21,7 @@ import os
 from commands_proto import *
 
 import packet_handler
+
 import I2C_class,SPI_class,NRF24L01_class,MCP4728_class,NRF_NODE
 
 from achan import *
@@ -75,8 +76,7 @@ class Interface(object):
 
 	
 	def __init__(self,timeout=1.0,**kwargs):
-		if kwargs.get('verbose',False):self.verbose=True
-		else: self.verbose = False
+		self.verbose=kwargs.get('verbose',False)
 		
 		self.ADC_SHIFTS_LOCATION1=11
 		self.ADC_SHIFTS_LOCATION2=12
@@ -932,8 +932,11 @@ class Interface(object):
 		chan=self.analogInputSources[channel]
 		chan.setOffset(offset)				
 		self.DAC.__setRawVoltage__(1,chan.offsetCode)
-		
-	def get_average_voltage(self,channel_name,sleep=0):
+
+
+
+
+	def get_average_voltage(self,channel_name,**kwargs):
 		""" 
 		Return the voltage on the selected channel
 		
@@ -955,21 +958,13 @@ class Interface(object):
 		1.002
 		
 		"""
-		chosa = self.__calcCHOSA__(channel_name)
-		self.H.__sendByte__(ADC)
-		self.H.__sendByte__(GET_VOLTAGE_SUMMED)
-		if(sleep):self.H.__sendByte__(chosa|0x80)#sleep mode conversion. buggy
-		else:self.H.__sendByte__(chosa) 
-		self.H.__getInt__() #2 leading Zeroes sent by UART. sleep or no sleep :p
-		V_sum = self.H.__getInt__()
-		#V = [self.H.__getInt__() for a in range(16)]
-		#print V
-		self.H.__get_ack__()
-		return  self.analogInputSources[channel_name].calPoly12(V_sum/16.)
+		poly = self.analogInputSources[channel_name].calPoly12
+		val = np.average([poly(self.__get_raw_average_voltage__(channel_name,**kwargs)) for a in range(kwargs.get('samples',1))])		
+		return  val
 
 
 
-	def __get_raw_average_voltage__(self,channel_name,sleep=0):
+	def __get_raw_average_voltage__(self,channel_name,**kwargs):
 		""" 
 		Return the average of 16 raw 10-bit ADC values of the voltage on the selected channel
 		
@@ -984,14 +979,12 @@ class Interface(object):
 		chosa = self.__calcCHOSA__(channel_name)
 		self.H.__sendByte__(ADC)
 		self.H.__sendByte__(GET_VOLTAGE_SUMMED)
-		if(sleep):self.H.__sendByte__(chosa|0x80)#sleep mode conversion. buggy
+		if(kwargs.get('sleep',False)):self.H.__sendByte__(chosa|0x80)#sleep mode conversion. buggy
 		else:self.H.__sendByte__(chosa) 
 		self.H.__getInt__() #2 Zeroes sent by UART. sleep or no sleep :p
 		V_sum = self.H.__getInt__()
 		self.H.__get_ack__()
 		return  V_sum/16. #sum(V)/16.0	#
-
-
 
 
 
@@ -2001,17 +1994,17 @@ class Interface(object):
 				print 'Capacitance too high for this method'
 				return 0
 			elif V>GOOD_VOLTS[0] and V<GOOD_VOLTS[1]:
-				return V,C
+				return C
 			elif V<GOOD_VOLTS[0] and V>0.1:
 				if GOOD_VOLTS[0]/V >1.1:
 					CT=int(CT*GOOD_VOLTS[0]/V)
 					print 'increased CT ',CT
 				else:
-					return V,C
+					return C
 			elif V<=0.1 and CR<3:
 				CR+=1
 			elif CR==3:
-				return self.get_capacitor_range()
+				return self.get_capacitor_range()[1]
 
 	def __get_capacitance__(self,current_range,trim, Charge_Time):	#time in uS
 		self.H.__sendByte__(COMMON)

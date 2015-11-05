@@ -5,12 +5,15 @@ Also includes control widgets, and a logic analyzer
 '''
 
 from argparse import ArgumentParser
-
 parser = ArgumentParser()
-
 # Add more options if you like
 parser.add_argument("-P", dest="PortName",
                     help="If you have connected multiple devices, provide the port name . e.g /dev/ttyACM0", metavar="PORT_NAME")
+
+parser.add_argument("-H", dest="HostName",
+                    help="The IP Address of the wireless vLabtool you wish to connect to", metavar="HOST_NAME")
+
+
 args = parser.parse_args()
 
 import os
@@ -51,8 +54,16 @@ class MyMainWindow(QtGui.QMainWindow, template_scope.Ui_MainWindow):
 	def __init__(self, parent=None):
 		super(MyMainWindow, self).__init__(parent)
 		self.setupUi(self)
-		if  args.PortName: self.I = interface.connect(port = args.PortName)
-		else: self.I = interface.connect()
+
+		if  args.HostName:
+			import v0.interface_wifi as interface
+			self.I = interface.connect(host = args.HostName,data_splitting=1000,timeout=2.0)
+		else:
+			import v0.interface as interface
+			if  args.PortName: self.I = interface.connect(port = args.PortName)
+			else: self.I = interface.connect()
+
+
 		if not self.I.connected:
 			print 'Exiting'
 			sys.exit(1)

@@ -48,12 +48,11 @@ class MCP4728:
 
 	def setVoltage(self,name,v):
 		chan = self.CHANS[name]
-		v = int(chan.VToCode(v))
-		retval = self.__setRawVoltage__(name,v)
-		return retval#chan.CodeToV(v)
+		v = int(round(chan.VToCode(v)))		
+		return  self.__setRawVoltage__(name,v)
 
 	def __setRawVoltage__(self,name,v):
-		v=np.clip(v,0,4095)
+		v=int(np.clip(v,0,4095))
 		CHAN = self.CHANS[name]
 		'''
 		self.H.__sendByte__(DAC) #DAC write coming through.(MCP4728)
@@ -76,8 +75,7 @@ class MCP4728:
 		else:
 			self.I2C.writeBulk(self.addr,[64|(CHAN.channum<<1),(v>>8)&0x0F,v&0xFF])
 
-		R = CHAN.range
-		return (R[1]-R[0])*v/4095.+R[0]
+		return CHAN.CodeToV(v)
 
 
 	def __samplewriteall__(self,v1):
