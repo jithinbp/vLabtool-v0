@@ -1,0 +1,78 @@
+#!/usr/bin/python
+'''
+Transistor CE characteristics
+'''
+
+import os
+
+from PyQt4 import QtCore, QtGui
+import time,sys
+from v0.templates import transistorCE
+
+import sys
+
+import pyqtgraph as pg
+
+import numpy as np
+
+image = 'stream.png'
+
+class AppWindow(QtGui.QMainWindow, transistorCE.Ui_MainWindow):
+	def __init__(self, parent=None,**kwargs):
+		super(AppWindow, self).__init__(parent)
+		self.setupUi(self)
+		self.I=kwargs.get('I',None)
+
+		self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+		self.plot=pg.PlotWidget()
+		labelStyle = {'color': 'rgb(255,255,255)', 'font-size': '11pt'}
+		self.plot.setLabel('left','Current -->', units='A',**labelStyle)
+		self.plot.setLabel('bottom','Voltage -->', units='V',**labelStyle)
+
+		self.totalpoints=2000
+		self.X=[]
+		self.Y=[]
+		
+		self.curve = self.plot.plot(name='C1'); self.curve.setPen(color=[255,255,255], width=1)
+		self.plot_area.addWidget(self.plot)
+
+		self.looptimer = QtCore.QTimer()
+		self.looptimer.timeout.connect(self.acquire)
+
+
+	def run(self):
+		self.looptimer.stop()
+		self.X=[];self.Y=[]
+
+		self.I.set_pvs3(self.baseV.value()) # set base current. PVS3+200K resistor
+
+		self.V = self.startV.value()
+		self.I.set_pvs1(self.V) 
+		time.sleep(0.2)
+
+		P=self.plot.getPlotItem()
+		P.enableAutoRange(True,False)
+		self.plot.setXRange(self.V,self.stopV.value())
+
+		self.looptimer.start(20)
+
+	def acquire(self):
+		V=self.I.set_pvs1(self.V)
+		VC =  np.average([self.I.get_average_voltage('CH3') for a in range(20)])# self.I.get_average_voltage('CH3') #self.I.capture1('CH3',1000,1)[1]#
+		self.X.append(VC)
+		self.Y.append((V-VC)/1.e3) # list( ( np.linspace(V,V+self.stepV.value(),1000)-VC)/1.e3)
+		self.curve.setData(self.X,self.Y)
+
+		self.V+=self.stepV.value()
+		if self.V>self.stopV.value():
+			self.looptimer.stop()
+
+
+	def __del__(self):
+		self.looptimer.stop()
+		print 'bye'
+
+	def closeEvent(self, event):
+		self.looptimer.stop()
+		self.finished=True
+
