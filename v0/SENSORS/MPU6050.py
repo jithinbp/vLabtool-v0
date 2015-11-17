@@ -1,5 +1,21 @@
-from numpy import int16
+from numpy import int16,std
+from Kalman import KalmanFilter
+
+def connect(route):
+	return MPU6050(route)
+
 class MPU6050():
+	'''
+	Mandatory members:
+	GetRaw : Function called by Graphical apps. Must return values stored in a list
+	NUMPLOTS : length of list returned by GetRaw. Even single datapoints need to be stored in a list before returning
+	PLOTNAMES : a list of strings describing each element in the list returned by GetRaw. len(PLOTNAMES) = NUMPLOTS
+	name : the name of the sensor shown to the user
+	params:
+		A dictionary of function calls(single arguments only) paired with list of valid argument values. (Primitive. I know.)
+		These calls can be used for one time configuration settings
+
+	'''
 	GYRO_CONFIG = 0x1B
 	ACCEL_CONFIG = 0x1C
 	GYRO_SCALING= [131,65.5,32.8,16.4]
@@ -7,11 +23,13 @@ class MPU6050():
 	AR=3
 	GR=3
 	NUMPLOTS=7
+	PLOTNAMES = ['Ax','Ay','Az','Temp','Gx','Gy','Gz']
+
 	def __init__(self,I2C):
 		self.I2C=I2C
 		self.ADDRESS = 0x68
 		self.name = 'Accel/gyro'
-		self.params={'powerUp':['Go'],'setGyroRange':[250,500,1000,2000],'setAccelRange':[2,4,8,16]}
+		self.params={'powerUp':['Go'],'setGyroRange':[250,500,1000,2000],'setAccelRange':[2,4,8,16],'KalmanFilter':[.01,.1,1,10,100,1000,10000,'OFF']}
 		self.setGyroRange(2000)
 		self.setAccelRange(16)
 		'''
@@ -21,6 +39,23 @@ class MPU6050():
 			pass
 		'''
 		self.powerUp(True)
+		self.K=None
+
+
+
+	def KalmanFilter(self,opt):
+		if opt=='OFF':
+			self.K=None
+			return
+		noise=[[]]*self.NUMPLOTS
+		for a in range(500):
+			vals=self.getRaw()
+			for b in range(self.NUMPLOTS):noise[b].append(vals[b])
+
+		self.K=[None]*7
+		for a in range(self.NUMPLOTS):
+			sd = std(noise[a])
+			self.K[a] = KalmanFilter(1./opt, sd**2)
 
 	def getVals(self,addr,bytes):
 		vals = self.I2C.readBulk(self.ADDRESS,addr,bytes) 
@@ -53,7 +88,14 @@ class MPU6050():
 				for a in range(3):raw[a] = 1.*int16(vals[a*2]<<8|vals[a*2+1])/self.ACCEL_SCALING[self.AR]
 				for a in range(4,7):raw[a] = 1.*int16(vals[a*2]<<8|vals[a*2+1])/self.GYRO_SCALING[self.GR]
 				raw[3] = int16(vals[6]<<8|vals[7])/340. + 36.53
-				return raw
+				if not self.K:
+					return raw
+				else:
+					for b in range(self.NUMPLOTS):
+						self.K[b].input_latest_noisy_measurement(raw[b])
+						raw[b]=self.K[b].get_latest_estimated_measurement()
+					return raw
+
 			else:
 				return False
 		else:

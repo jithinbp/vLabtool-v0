@@ -41,11 +41,14 @@ def connect(**kwargs):
 	obj = Interface(**kwargs)
 	if obj.H.fd != None:
 		return obj
-	print 'Could not find hardware'#_('Could not find hardware'),_('Check the connections.')
+	else:
+		print 'Err'
+		return None
+	
 
 
 
-class Interface(object):
+class Interface():
 	"""
 	**Communications library.**
 
@@ -72,11 +75,10 @@ class Interface(object):
 	into the device.
 		
 	"""
-	__metaclass__ = Singleton
-
 	
 	def __init__(self,timeout=1.0,**kwargs):
 		self.verbose=kwargs.get('verbose',False)
+		self.initialArgs = kwargs
 		
 		self.ADC_SHIFTS_LOCATION1=11
 		self.ADC_SHIFTS_LOCATION2=12
@@ -104,14 +106,14 @@ class Interface(object):
 
 
 		#--------------------------Initialize communication handler, and subclasses-----------------
+		self.__runInitSequence__(**kwargs)
+	
+	def __runInitSequence__(self,**kwargs):
 		self.H = packet_handler.Handler(**kwargs)
 		self.connected = self.H.connected
 		if not self.H.connected:
 			print 'Check hardware connections. Not connected'
-		else:
-			self.__runInitSequence__(**kwargs)
-	
-	def __runInitSequence__(self,**kwargs):
+			return			
 		self.DAC = MCP4728_class.MCP4728(self.H,3.3,0)
 		self.analogInputSources={}
 		self.allAnalogChannels=allAnalogChannels
@@ -1995,7 +1997,7 @@ class Interface(object):
 				return 0
 			elif V>GOOD_VOLTS[0] and V<GOOD_VOLTS[1]:
 				return C
-			elif V<GOOD_VOLTS[0] and V>0.1:
+			elif V<GOOD_VOLTS[0] and V>0.1 and CT<40000:
 				if GOOD_VOLTS[0]/V >1.1:
 					CT=int(CT*GOOD_VOLTS[0]/V)
 					print 'increased CT ',CT
@@ -2302,10 +2304,11 @@ class Interface(object):
 		self.H.__sendByte__(SET_BOTH_WG)
 
 		self.H.__sendInt__(wavelength-1)		#not really wavelength. time between each datapoint
+		self.H.__sendInt__(wavelength-1)		#not really wavelength. time between each datapoint
 		self.H.__sendInt__(phase_coarse)	#table position for phase adjust
 		self.H.__sendInt__(phase_fine)		#timer delay / fine phase adjust
 
-		self.H.__sendByte__(HIGHRES) 	#use larger table for low frequencies
+		self.H.__sendByte__((HIGHRES<<1)|(HIGHRES)) 	#use larger table for low frequencies
 		self.H.__get_ack__()
 
 		return retfreq
@@ -2431,7 +2434,7 @@ class Interface(object):
 		"""
 		self.H.__sendByte__(COMMON)
 		self.H.__sendByte__(SET_ONBOARD_RGB)
-		G=reverse_bits(G);R=reverse_bits(R);B=reverse_bits(B)
+		#G=reverse_bits(G);R=reverse_bits(R);B=reverse_bits(B)
 		self.H.__sendByte__(B)
 		self.H.__sendByte__(R)
 		self.H.__sendByte__(G)
@@ -2461,7 +2464,8 @@ class Interface(object):
 		self.H.__sendByte__(SET_RGB)
 		self.H.__sendByte__(len(cols)*3)
 		for col in cols:
-			R=reverse_bits(int(col[0]));G=reverse_bits(int(col[1]));B=reverse_bits(int(col[2]))
+			#R=reverse_bits(int(col[0]));G=reverse_bits(int(col[1]));B=reverse_bits(int(col[2]))
+			R=col[0];G=col[1];B=col[2];
 			self.H.__sendByte__(G);	self.H.__sendByte__(R);self.H.__sendByte__(B)
 		self.H.__get_ack__()
 

@@ -1,6 +1,10 @@
 from numpy import int16
+def connect(route,**args):
+	return MLX90614(route,**args)
+
 class MLX90614():
 	NUMPLOTS=1
+	PLOTNAMES=['Temp']
 	def __init__(self,I2C,**args):
 		self.I2C=I2C
 		self.ADDRESS = args.get('address',0x5A)

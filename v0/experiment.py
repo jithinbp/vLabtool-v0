@@ -231,20 +231,20 @@ class Experiment(QtGui.QMainWindow,template_exp.Ui_MainWindow,Widgets.CustomWidg
 		self.splash.repaint()
 
 	def showSplash(self):
-			import pkg_resources
-			splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('vLabtool.stylesheets', "splash3.png"))
-			self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
-			# adding progress bar
-			self.progressBar = QtGui.QProgressBar(self.splash)
-			self.progressBar.resize(self.splash.width(),20)
-			css = pkg_resources.resource_string('vLabtool', "stylesheets/splash.css")
-			if css:
-				self.splash.setStyleSheet(css)
-			self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")
-			self.splash.setMask(splash_pix.mask())
-			self.splashMsg.setText('Loading....');self.splashMsg.resize(self.progressBar.width(),20)
-			self.splash.show()
-			self.splash.repaint()
+		import pkg_resources
+		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('vLabtool.stylesheets', "splash3.png"))
+		self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
+		# adding progress bar
+		self.progressBar = QtGui.QProgressBar(self.splash)
+		self.progressBar.resize(self.splash.width(),20)
+		css = pkg_resources.resource_string('vLabtool', "stylesheets/splash.css")
+		if css:
+			self.splash.setStyleSheet(css)
+		self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")
+		self.splash.setMask(splash_pix.mask())
+		self.splashMsg.setText('Loading....');self.splashMsg.resize(self.progressBar.width(),20)
+		self.splash.show()
+		self.splash.repaint()
 
 	
 	def run(self):

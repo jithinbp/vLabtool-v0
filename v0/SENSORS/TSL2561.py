@@ -3,6 +3,9 @@ Adapted from https://github.com/janheise/TSL2561
 '''
 import time
 
+def connect(route,**args):
+	return TSL2561(route,**args)
+
 class TSL2561: 
 	VISIBLE                   = 2       # channel 0 - channel 1
 	INFRARED                  = 1       # channel 1
@@ -32,6 +35,7 @@ class TSL2561:
 	gain = GAIN_16X
 	name = 'TSL2561 Luminosity'
 	NUMPLOTS=3
+	PLOTNAMES = ['Full','IR','Visible']
 	def __init__(self, I2C,**args):
 		self.ADDRESS = args.get('address',0x39)
 		self.I2C = I2C  

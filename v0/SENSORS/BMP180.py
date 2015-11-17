@@ -1,6 +1,9 @@
 from numpy import int16
 import time
 
+def connect(route,**args):
+	return BMP180(route,**args)
+
 class BMP180:
 	ADDRESS = 0x77
 	REG_CONTROL = 0xF4
@@ -12,6 +15,7 @@ class BMP180:
 	CMD_P3 = 0xF4
 	oversampling=0
 	NUMPLOTS=3
+	PLOTNAMES = ['Temperature','Pressure','Altitude']
 	def __init__(self,I2C):
 		
 		self.I2C = I2C

@@ -1,4 +1,8 @@
 from numpy import int16
+def connect(route,**args):
+	return HMC5883L(route,**args)
+
+
 class HMC5883L():
 	CONFA=0x00
 	CONFB=0x01
@@ -31,6 +35,7 @@ class HMC5883L():
 	}
 	
 	NUMPLOTS=3	
+	PLOTNAMES = ['Bx','By','Bz']
 	def __init__(self,I2C):
 		self.I2C=I2C
 		self.ADDRESS = 0x1E

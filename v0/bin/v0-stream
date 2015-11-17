@@ -31,7 +31,7 @@ class Handler(QtGui.QFrame,ConvenienceClass,Ui_Form):
 		self.setupUi(self)
 		if  args.HostName:
 			import v0.interface_wifi as interface
-			self.I = interface.connect(host = args.HostName)
+			self.I = interface.connect(host = args.HostName,verbose=True)
 		else:
 			import v0.interface as interface
 			self.I = interface.connect()

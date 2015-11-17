@@ -1,6 +1,9 @@
 from numpy import int16
 import time
 
+def connect(route,**args):
+	return SHT21(route,**args)
+
 class SHT21():
 	
 	RESET = 0xFE
@@ -8,6 +11,7 @@ class SHT21():
 	HUMIDITY_ADDRESS = 0xF5	
 	selected=0xF3
 	NUMPLOTS=1
+	PLOTNAMES = ['Humidity']
 	def __init__(self,I2C,**args):
 		self.I2C=I2C
 		self.ADDRESS = args.get('address',0x40)

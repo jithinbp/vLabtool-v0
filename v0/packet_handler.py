@@ -1,16 +1,7 @@
 from commands_proto import *
 import serial,commands
 
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class Handler(object):
-	__metaclass__ = Singleton
+class Handler():
 	def __init__(self,timeout=1.0,**kwargs):
 		self.burstBuffer=''
 		self.loadBurst=False
@@ -76,6 +67,7 @@ class Handler(object):
 				self.portname=kwargs.get('port',None)
 
 		try:
+			time.sleep(1.0)
 			self.fd = serial.Serial(self.portname, 9600, stopbits=1, timeout = 0.1)
 			self.fd.close()
 			time.sleep(0.2)
@@ -84,7 +76,7 @@ class Handler(object):
 				self.fd.read(1000)
 				self.fd.flush()
 			version = self.get_version(self.fd)
-			print 'Connected to device at ',self.portname,' ,Version:',version
+			print 'Connected to device at:',self.portname,' ,Version:',version
 			self.connected=True
 			self.version_string=version
 		except serial.SerialException as ex:
