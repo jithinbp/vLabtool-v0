@@ -1,6 +1,8 @@
 #!/usr/bin/python
 '''
-oscilloscope for the vLabtool - version 0.
+oscilloscope for the vLabtool - version 0. \n
+
+Also Includes XY plotting mode, and fitting against standard Sine/Square functions\n
 '''
 
 import os

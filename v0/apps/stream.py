@@ -1,6 +1,11 @@
 #!/usr/bin/python
 '''
 Streaming Utility for the vLabtool - version 0.
+
+Evaluates user defined python statements and plots
+the return values as a function of time.
+Useful for monitoring time evolution of parameters
+measured by the vLabtool
 '''
 
 import os

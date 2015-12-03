@@ -19,20 +19,6 @@ import sys,os,string
 import time
 import sys
 
-import pyqtgraph as pg
-import pyqtgraph.opengl as gl
-
-import numpy as np
-import scipy.optimize as optimize
-import scipy.fftpack as fftpack
-
-
-err_count=0
-trial = 0
-start_time = time.time()
-fps = None
-dacval=0
-from v0.commands_proto import *
 
 
 image = 'dials.png'

@@ -1,16 +1,7 @@
 from commands_proto import *
-import serial
+import serial,commands
 
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class Handler(object):
-	__metaclass__ = Singleton
+class Handler():
 	def __init__(self,timeout=1.0,**kwargs):
 		self.burstBuffer=''
 		self.loadBurst=False
@@ -19,6 +10,7 @@ class Handler(object):
 		self.timeout=timeout
 		self.version_string=''
 		self.connected=False
+		self.fd = None
 		if kwargs.has_key('port'):
 				self.portname=kwargs.get('port',None)
 				if not self.portname:
@@ -37,51 +29,62 @@ class Handler(object):
 				return
 		else:	#Scan and pick a port	
 			for a in range(10):
-				try:
-					self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 9600, stopbits=1, timeout = 0.01)
-					#self.fd.read(100)
-					self.fd.close()
-					self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 1000000, stopbits=1, timeout = 0.2)
-					self.portname=self.BASE_PORT_NAME+str(a)
-					self.fd.read(1000)
-					self.fd.flush()
-					version = self.get_version(self.fd)
-					self.version_string=version
-					if(version[:3]=='LTS'):
-						print 'Connected to device at ',self.portname,' ,Version:',version
-						self.fd.setTimeout(1.)
-						self.connected=True
-						break
-					print self.BASE_PORT_NAME+str(a)+' .yes.',version
-				except IOError:
-					print self.BASE_PORT_NAME+str(a)+' .no.'
-					pass
+				res = commands.getoutput('lsof -t '+ self.BASE_PORT_NAME+str(a))
+				if res == '':
+					try:
+						self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 9600, stopbits=1, timeout = 0.01)
+						#self.fd.read(100)
+						self.fd.close()
+						self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 1000000, stopbits=1, timeout = 0.2)
+						self.portname=self.BASE_PORT_NAME+str(a)
+						self.fd.read(1000)
+						self.fd.flush()
+						version = self.get_version(self.fd)
+						self.version_string=version
+						#print version,self.portname
+						if(version[:6]=='LTS-v0'):
+							#print 'Connected to device at ',self.portname,' ,Version:',version
+							self.fd.setTimeout(1.)
+							self.connected=True
+							break
+						#print self.BASE_PORT_NAME+str(a)+' .yes.',version
+					except IOError:
+						#print self.BASE_PORT_NAME+str(a)+' .no.'
+						pass
 		if not self.connected:
 			print 'Device not found'
 		
 	def get_version(self,fd):
 		fd.write(chr(COMMON))
 		fd.write(chr(GET_VERSION))
-		x=fd.read(100)
+		x=fd.readline()
+		#print 'remaining',[ord(a) for a in fd.read(10)]
+		if len(x):x=x[:-1]
 		return x
 
-	def reconnect(self):
+	def reconnect(self,**kwargs):
+		if kwargs.has_key('port'):
+				self.portname=kwargs.get('port',None)
+
 		try:
+			time.sleep(1.0)
 			self.fd = serial.Serial(self.portname, 9600, stopbits=1, timeout = 0.1)
 			self.fd.close()
 			time.sleep(0.2)
 			self.fd = serial.Serial(self.portname, 1000000, stopbits=1, timeout = self.timeout)
-			print 'connected TestBench'
+			if(self.fd.inWaiting()):
+				self.fd.read(1000)
+				self.fd.flush()
+			version = self.get_version(self.fd)
+			print 'Connected to device at:',self.portname,' ,Version:',version
+			self.connected=True
+			self.version_string=version
 		except serial.SerialException as ex:
 			print "failed to connect. Check device connections ,Or\nls /dev/TestBench\nOr, check if symlink has been created in /etc/udev/rules.d/proto.rules for the relevant Vid,Pid"
-			sys.exit(1)
 			
-		if(self.fd.inWaiting()):
-			self.fd.read(1000)
-			self.fd.flush()
 		
 	def __del__(self):
-		print 'closing port'
+		#print 'closing port'
 		try:self.fd.close()
 		except: pass
 
@@ -127,8 +130,8 @@ class Handler(object):
 		if len(ss): return ord(ss)
 		else:
 			print 'byte communication error.',time.ctime()
-			#return False
-			sys.exit(1)
+			return -1
+			#sys.exit(1)
 	
 	def __getInt__(self):
 		"""
@@ -139,8 +142,8 @@ class Handler(object):
 		if len(ss)==2: return ord(ss[0])|(ord(ss[1])<<8)
 		else:
 			print 'int communication error.',time.ctime()
-			#return False
-			sys.exit(1)
+			return -1
+			#sys.exit(1)
 
 	def __getLong__(self):
 		"""
@@ -150,7 +153,7 @@ class Handler(object):
 		ss = self.fd.read(4)
 		if len(ss)==4: return ord(ss[0])|(ord(ss[1])<<8)|(ord(ss[2])<<16)|(ord(ss[3])<<24)
 		else:
-			print '.'
+			#print '.'
 			return -1
 	
 
@@ -172,7 +175,7 @@ class Handler(object):
 		
 
 		"""
-		print [ord(a) for a in self.burstBuffer],self.inputQueueSize
+		#print [ord(a) for a in self.burstBuffer],self.inputQueueSize
 		self.fd.write(self.burstBuffer)
 		self.burstBuffer=''
 		self.loadBurst=False

@@ -1,5 +1,18 @@
 #!/usr/bin/python
+'''
+Stream data acquired from supported I2C sensors.
 
+Currently Supports:\n
+
+	MPU6050 - 3-Axis Accelerometer. 3-Axis Gyro  . Temperature sensor.\n
+	HMC5883L - 3-Axis Magnetometer \n
+	BMP180 - Temperature, Pressure, Altitude \n
+	MLX90614 - Passive IR base temperature sensor (Thermopile) \n
+	SHT21 - Temperature. humidity. \n
+
+
+
+'''
 from v0.widgets.clicking import Ui_Form as Ui_Clicking
 from v0.templates.template_sensors import Ui_Form
 from v0.templates import sensorTemplate
@@ -130,7 +143,7 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 		def __init__(self,addr,evaluator):
 			super(AppWindow.senHandler, self).__init__()
 			self.setupUi(self)
-			self.label.setText(hex(addr))
+			self.label.setText(hex(addr)+':'+str(sensorHints.get(addr,['Unknown'])[0]+'?'))
 			self.label.setToolTip(str(sensorHints.get(addr,'Unknown')))
 			self.addr=addr
 			self.cmd = evaluator

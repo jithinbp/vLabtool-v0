@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>interface module &mdash; vLabtool Programer&#39;s Manual</title>
+    <title>Python module for accessing the device &mdash; vLabtool Programer&#39;s Manual</title>
     
     <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="vLabtool Programer&#39;s Manual" href="index.html" />
     <link rel="next" title="SPI_class module" href="SPI_class.html" />
-    <link rel="prev" title="Welcome to vLabtool’s documentation!" href="index.html" /> 
+    <link rel="prev" title="General Purpose Applications for Real World interaction" href="experiments.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,7 +42,7 @@
           <a href="SPI_class.html" title="SPI_class module"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to vLabtool’s documentation!"
+          <a href="experiments.html" title="General Purpose Applications for Real World interaction"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">vLabtool Quick ref</a> &raquo;</li> 
       </ul>
@@ -53,13 +53,94 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-interface">
-<span id="interface-module"></span><h1>interface module<a class="headerlink" href="#module-interface" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="python-module-for-accessing-the-device">
+<h1>Python module for accessing the device<a class="headerlink" href="#python-module-for-accessing-the-device" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="connecting-to-the-device">
+<h2>Connecting to the device<a class="headerlink" href="#connecting-to-the-device" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">v0</span> <span class="kn">import</span> <span class="n">interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>     <span class="c">#Returns None if device isn&#39;t found</span>
+<span class="go"># An example function that measures voltage present at the specified analog input</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">get_average_voltage</span><span class="p">(</span><span class="s">&#39;CH1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div><img height="280" src="_images/blockdiag-3a4649a7449276b5b9978a42f64a92cefc7ff096.png" width="640" /></div></div>
+<div class="section" id="sub-instance-i2c-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-i2c-port">
+<h2>Sub-Instance I2C of the Interface library contains methods to access devices connected to the I2C port.<a class="headerlink" href="#sub-instance-i2c-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-i2c-port" title="Permalink to this headline">¶</a></h2>
+<p>Simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">ADDRESS</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c">#writing mode . reading mode=1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mh">0x01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Bulk Write:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">writeBulk</span><span class="p">(</span><span class="n">ADDRESS</span><span class="p">,[</span><span class="n">Byte</span> <span class="mi">1</span><span class="p">,</span><span class="n">Byte</span> <span class="mf">2.</span><span class="o">...</span><span class="p">])</span>
+</pre></div>
+</div>
+<div><img height="280" src="_images/blockdiag-afd7ccbdfe3ab1b953254a266760f52e6f3e3ed3.png" width="640" /></div><div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="I2C_class.html#I2C_class.I2C" title="I2C_class.I2C"><tt class="xref py py-meth docutils literal"><span class="pre">I2C</span></tt></a> for complete documentation</p>
+</div>
+</div>
+<div class="section" id="sub-instance-spi-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-spi-port">
+<h2>Sub-Instance SPI of the Interface library contains methods to access devices connected to the SPI port.<a class="headerlink" href="#sub-instance-spi-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-spi-port" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>example::</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">Interface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;CS1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">send16</span><span class="p">(</span><span class="mh">0xAAFF</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">send16</span><span class="p">(</span><span class="mh">0xFFFF</span><span class="p">)</span>
+<span class="go">some number</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div><img height="200" src="_images/blockdiag-93dd3d1bee315c34dcca4d3393de640a056d08b3.png" width="640" /></div><div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="SPI_class.html#SPI_class.SPI" title="SPI_class.SPI"><tt class="xref py py-meth docutils literal"><span class="pre">SPI</span></tt></a> for complete documentation</p>
+</div>
+</div>
+<div class="section" id="methods-to-access-wireless-sensor-nodes">
+<h2>Methods to access wireless sensor nodes<a class="headerlink" href="#methods-to-access-wireless-sensor-nodes" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Example::</dt>
+<dd><div class="first highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
+<span class="go">#Start listening to any nodes being switched on.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">start_token_manager</span><span class="p">()</span>
+<span class="go">#Wait for at least one node to register itself</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">lst</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">get_nodelist</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">lst</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span><span class="k">break</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">stop_token_manager</span><span class="p">()</span>  <span class="c"># Registrations closed!</span>
+<span class="go"># lst = dictionary with node addresses as keys,</span>
+<span class="go"># and I2C sensors as values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LINK</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">newRadioLink</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">lst</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">#vLabtool automatically transmits data to LINK&#39;s address,</span>
+<span class="go">#and retrieves preliminary info.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">LINK</span><span class="o">.</span><span class="n">I2C_scan</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="last">see <a class="reference internal" href="videos.html#nrf-video"><em>Wireless node being used with accelerometers and gyroscopes</em></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="NRF24L01_class.html#NRF24L01_class.NRF24L01" title="NRF24L01_class.NRF24L01"><tt class="xref py py-meth docutils literal"><span class="pre">NRF24L01</span></tt></a> for complete documentation</p>
+</div>
+</div>
+<div class="section" id="module-interface">
+<span id="function-reference"></span><h2>Function reference<a class="headerlink" href="#module-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="interface.connect">
+<tt class="descclassname">interface.</tt><tt class="descname">connect</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/interface.html#connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>If vLabtool hardware is found, returns an instance of &#8216;Interface&#8217;, else returns None.</p>
+</dd></dl>
+
 <dl class="class">
 <dt id="interface.Interface">
 <em class="property">class </em><tt class="descclassname">interface.</tt><tt class="descname">Interface</tt><big>(</big><em>timeout=1.0</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p><strong>Communications library.</strong></p>
+<dd><p><strong>Communications library.</strong></p>
 <p>This class contains methods that can be used to interact with the vLabtool</p>
 <p>Initialization does the following</p>
 <ul class="simple">
@@ -82,91 +163,19 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">vLabtool</span> <span class="kn">import</span> <span class="n">interface</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">v0</span> <span class="kn">import</span> <span class="n">interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span>
 <span class="go">&lt;interface.Interface instance at 0xb6c0cac&gt;</span>
 </pre></div>
 </div>
 <p>Once you have instantiated this class,  its various methods will allow access to all the features built
 into the device.</p>
-<dl class="attribute">
-<dt id="interface.Interface.I2C">
-<tt class="descname">I2C</tt><em class="property"> = None</em><a class="headerlink" href="#interface.Interface.I2C" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sub-Instance I2C of the Interface library contains methods to access devices
-connected to the I2C port.</p>
-<dl class="docutils">
-<dt>example::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADDRESS</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c">#writing mode</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mh">0x01</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="I2C_class.html#I2C_class.I2C" title="I2C_class.I2C"><tt class="xref py py-meth docutils literal"><span class="pre">I2C</span></tt></a> for complete documentation</p>
-</div>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="interface.Interface.SPI">
-<tt class="descname">SPI</tt><em class="property"> = None</em><a class="headerlink" href="#interface.Interface.SPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sub-Instance SPI of the Interface library contains methods to access devices
-connected to the SPI port.</p>
-<dl class="docutils">
-<dt>example::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">Interface</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s">&#39;CS1&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">send16</span><span class="p">(</span><span class="mh">0xAAFF</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">SPI</span><span class="o">.</span><span class="n">send16</span><span class="p">(</span><span class="mh">0xFFFF</span><span class="p">)</span>
-<span class="go">some number</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="SPI_class.html#SPI_class.SPI" title="SPI_class.SPI"><tt class="xref py py-meth docutils literal"><span class="pre">SPI</span></tt></a> for complete documentation</p>
-</div>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="interface.Interface.NRF">
-<tt class="descname">NRF</tt><em class="property"> = None</em><a class="headerlink" href="#interface.Interface.NRF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sub-Instance NRF of the Interface library contains methods to access wireless sensor nodes
-via an NRF24L01+ module connnected to the SPI port</p>
-<p>try out the wireless modules app by running <em>vLabtool-experiments</em> from the command line.</p>
-<blockquote id="nrf-example">
-<div><dl class="docutils">
-<dt>example::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">start_token_manager</span><span class="p">()</span>  <span class="c">#Start listening to any nodes that may turn on</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>   <span class="c">#Wait for at least one node to register itself</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">lst</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">get_nodelist</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">lst</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span><span class="k">break</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">NRF</span><span class="o">.</span><span class="n">stop_token_manager</span><span class="p">()</span>  <span class="c"># Registrations closed!</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">LINK</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">newRadioLink</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">lst</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>  <span class="c">#lst = dictionary with node addresses as keys, and I2C sensors as values</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">LINK</span><span class="o">.</span><span class="n">I2C_scan</span><span class="p">()</span>                                                 <span class="c">#vLabtool automatically transmits stuff to LINK&#39;s address, and retrieves sensor info.</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7VAGckFzVlc" frameborder="0" allowfullscreen></iframe></div></blockquote>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="NRF24L01_class.html#NRF24L01_class.NRF24L01" title="NRF24L01_class.NRF24L01"><tt class="xref py py-meth docutils literal"><span class="pre">NRF24L01</span></tt></a> for complete documentation</p>
-</div>
-</dd></dl>
-
 <dl class="method">
 <dt id="interface.Interface.get_version">
 <tt class="descname">get_version</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the version string of the device
-format: LTS-...... &lt;newline&gt;</p>
+format: LTS-......</p>
 </dd></dl>
 
 <dl class="method">
@@ -174,23 +183,21 @@ format: LTS-...... &lt;newline&gt;</p>
 <tt class="descname">newRadioLink</tt><big>(</big><em>**args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.newRadioLink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.newRadioLink" title="Permalink to this definition">¶</a></dt>
 <dd><table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col width="15%" />
+<col width="85%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
-<th class="head">&nbsp;</th>
+<th class="head">Description</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>**Kwargs</td>
-<td>&nbsp;</td>
+<td>Keyword Arguments</td>
 </tr>
 <tr class="row-odd"><td>address</td>
-<td><dl class="first last docutils">
-<dt>address of the node. a 24 bit number. Printed on the nodes. Can also be retrieved using</dt>
-<dd><a class="reference internal" href="NRF24L01_class.html#NRF24L01_class.NRF24L01.get_nodelist" title="NRF24L01_class.NRF24L01.get_nodelist"><tt class="xref py py-meth docutils literal"><span class="pre">get_nodelist</span></tt></a></dd>
-</dl>
+<td><p class="first">Address of the node. a 24 bit number. Printed on the nodes.</p>
+<p class="last">can also be retrieved using <a class="reference internal" href="NRF24L01_class.html#NRF24L01_class.NRF24L01.get_nodelist" title="NRF24L01_class.NRF24L01.get_nodelist"><tt class="xref py py-meth docutils literal"><span class="pre">get_nodelist</span></tt></a></p>
 </td>
 </tr>
 </tbody>
@@ -203,21 +210,17 @@ format: LTS-...... &lt;newline&gt;</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#nrf-example">nrf_example</a></p>
-</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.reconnect">
-<tt class="descname">reconnect</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.reconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.reconnect" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">reconnect</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.reconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.reconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to reconnect to the device in case of a commmunication error or accidental disconnect.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.capture1">
-<tt class="descname">capture1</tt><big>(</big><em>ch</em>, <em>ns</em>, <em>tg</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.capture1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.capture1" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">capture1</tt><big>(</big><em>ch</em>, <em>ns</em>, <em>tg</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.capture1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.capture1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocking call that fetches an oscilloscope trace from the specified input channel</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -231,7 +234,7 @@ format: LTS-...... &lt;newline&gt;</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>ch</td>
-<td>Channel to select as input. [&#8216;CH1&#8217;..&#8217;CH9&#8217;,&#8216;5V&#8217;,&#8217;PCS&#8217;,&#8216;9V&#8217;,&#8217;IN1&#8217;,&#8217;SEN&#8217;]</td>
+<td>Channel to select as input. [&#8216;CH1&#8217;..&#8217;CH3&#8217;,&#8217;SEN&#8217;]</td>
 </tr>
 <tr class="row-odd"><td>ns</td>
 <td>Number of samples to fetch. Maximum 10000</td>
@@ -242,13 +245,13 @@ format: LTS-...... &lt;newline&gt;</p>
 </tbody>
 </table>
 <div class="align-center figure">
-<a class="reference internal image-reference" href="_images/capture1.png"><img alt="alternate text" src="_images/capture1.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/capture1.png"><img alt="alternate text" src="_images/capture1.png" style="width: 11cm;" /></a>
 <p class="caption">A sine wave captured and plotted.</p>
 </div>
 <p>Example</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Labtools</span> <span class="kn">import</span> <span class="n">interface</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">v0</span> <span class="kn">import</span> <span class="n">interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">capture1</span><span class="p">(</span><span class="s">&#39;CH1&#39;</span><span class="p">,</span><span class="mi">3200</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>
@@ -288,7 +291,7 @@ format: LTS-...... &lt;newline&gt;</p>
 </tbody>
 </table>
 <div class="align-center figure">
-<a class="reference internal image-reference" href="_images/capture2.png"><img alt="alternate text" src="_images/capture2.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/capture2.png"><img alt="alternate text" src="_images/capture2.png" style="width: 11cm;" /></a>
 <p class="caption">Two sine waves captured and plotted.</p>
 </div>
 <p>Example</p>
@@ -296,9 +299,9 @@ format: LTS-...... &lt;newline&gt;</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Labtools</span> <span class="kn">import</span> <span class="n">interface</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="mi">1600</span><span class="p">,</span><span class="mf">1.25</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>                              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>              
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -335,18 +338,18 @@ format: LTS-...... &lt;newline&gt;</p>
 </tbody>
 </table>
 <div class="align-center figure">
-<a class="reference internal image-reference" href="_images/capture4.png"><img alt="alternate text" src="_images/capture4.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/capture4.png"><img alt="alternate text" src="_images/capture4.png" style="width: 11cm;" /></a>
 <p class="caption">Four traces captured and plotted.</p>
 </div>
 <p>Example</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="n">y4</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">capture4</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="mf">1.75</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y3</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y4</span><span class="p">)</span>                          
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>                              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y3</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y4</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>              
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -354,6 +357,102 @@ format: LTS-...... &lt;newline&gt;</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Arrays X(timestamps),Y1(Voltage at CH1),Y2(Voltage at CH2),Y3(Voltage at CH3),Y4(Voltage at CH4)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface.Interface.capture_multiple">
+<tt class="descname">capture_multiple</tt><big>(</big><em>samples</em>, <em>tg</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.capture_multiple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.capture_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking call that fetches oscilloscope traces from a set of specified channels</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>samples</td>
+<td>Number of samples to fetch. Maximum 10000/(total specified channels)</td>
+</tr>
+<tr class="row-odd"><td>tg</td>
+<td>Timegap between samples in microseconds.</td>
+</tr>
+<tr class="row-even"><td>*args</td>
+<td>channel names</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="n">y4</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">capture_multiple</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="mf">1.75</span><span class="p">,</span><span class="s">&#39;CH1&#39;</span><span class="p">,</span><span class="s">&#39;CH2&#39;</span><span class="p">,</span><span class="s">&#39;MIC&#39;</span><span class="p">,</span><span class="s">&#39;SEN&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y3</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y4</span><span class="p">)</span>              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>              
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Arrays X(timestamps),Y1,Y2 ...</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface.Interface.capture_fullspeed">
+<tt class="descname">capture_fullspeed</tt><big>(</big><em>chan</em>, <em>samples</em>, <em>tg</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.capture_fullspeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.capture_fullspeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking call that fetches oscilloscope traces from a single oscilloscope channel at a maximum speed of 2MSPS</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>chan</td>
+<td>channel name &#8216;CH1&#8217; / &#8216;CH2&#8217; ... &#8216;SEN&#8217;</td>
+</tr>
+<tr class="row-odd"><td>samples</td>
+<td>Number of samples to fetch. Maximum 10000/(total specified channels)</td>
+</tr>
+<tr class="row-even"><td>tg</td>
+<td>Timegap between samples in microseconds. minimum 0.5uS</td>
+</tr>
+<tr class="row-odd"><td>*args</td>
+<td>specify if SQR1 must be toggled right before capturing. &#8216;SET_LOW&#8217; will set it to 0V,
+&#8216;SET_HIGH&#8217; will set it to 5V.  if no arguments are specified, a regular capture will
+be executed.</td>
+</tr>
+</tbody>
+</table>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">=</span><span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">capture_fullspeed</span><span class="p">(</span><span class="s">&#39;CH1&#39;</span><span class="p">,</span><span class="mi">2000</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>               
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>              
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamp array ,voltage_value array</td>
 </tr>
 </tbody>
 </table>
@@ -389,19 +488,15 @@ format: LTS-...... &lt;newline&gt;</p>
 <tr class="row-even"><td>**kwargs</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>trigger</li>
-</ul>
-</td>
+<tr class="row-odd"><td>*trigger</td>
 <td>Whether or not to trigger the oscilloscope based on the voltage level set by <a class="reference internal" href="#interface.Interface.configure_trigger" title="interface.Interface.configure_trigger"><tt class="xref py py-func docutils literal"><span class="pre">configure_trigger</span></tt></a></td>
 </tr>
 </tbody>
 </table>
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/M40dCvR1v7Y" frameborder="0" allowfullscreen></iframe>
-</div><blockquote id="adc-example">
+<p>see <a class="reference internal" href="videos.html#capture-video"><em>4-Channel Oscilloscope in action</em></a></p>
+<blockquote id="adc-example">
 <div><div class="align-center figure">
-<a class="reference internal image-reference" href="_images/transient.png"><img alt="alternate text" src="_images/transient.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/transient.png"><img alt="alternate text" src="_images/transient.png" style="width: 11cm;" /></a>
 <p class="caption">Transient response of an Inductor and Capacitor in series</p>
 </div>
 <p>The following example demonstrates how to use this function to record active events.</p>
@@ -415,17 +510,20 @@ format: LTS-...... &lt;newline&gt;</p>
 </ul>
 </div></blockquote>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">OD1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c">#Turn on OD1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>     <span class="c">#Arbitrary delay to wait for stabilization</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">capture_traces</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">trigger</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>     <span class="c">#Start acquiring data (2 channels,800 samples, 2microsecond intervals)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">OD1</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c">#Turn off OD1. This must occur immediately after the previous line was executed.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">800</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>      <span class="c">#Minimum interval to wait for completion of data acquisition. samples*timegap*(convert to Seconds)</span>
+<span class="go">#Arbitrary delay to wait for stabilization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>                
+<span class="go">#Start acquiring data (2 channels,800 samples, 2microsecond intervals)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">capture_traces</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">trigger</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">#Turn off OD1. This must occur immediately after the previous line was executed.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">OD1</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">#Minimum interval to wait for completion of data acquisition.</span>
+<span class="go">#samples*timegap*(convert to Seconds)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">800</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">CH1</span><span class="o">=</span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span><span class="n">CH2</span><span class="o">=</span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">CH1</span><span class="o">-</span><span class="n">CH2</span><span class="p">)</span>     <span class="c">#Voltage across the inductor                            </span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">CH2</span><span class="p">)</span>         <span class="c">##Voltage across the capacitor          </span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>                              
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">CH1</span><span class="o">-</span><span class="n">CH2</span><span class="p">)</span> <span class="c">#Voltage across the inductor                </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">CH2</span><span class="p">)</span>     <span class="c">##Voltage across the capacitor      </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>              
 </pre></div>
 </div>
 <p>The following events take place when the above snippet runs</p>
@@ -478,10 +576,7 @@ format: LTS-...... &lt;newline&gt;</p>
 <tr class="row-odd"><td>**kwargs</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>trigger</li>
-</ul>
-</td>
+<tr class="row-even"><td>*trigger</td>
 <td>Whether or not to trigger the oscilloscope based on the voltage level set by <a class="reference internal" href="#interface.Interface.configure_trigger" title="interface.Interface.configure_trigger"><tt class="xref py py-func docutils literal"><span class="pre">configure_trigger</span></tt></a></td>
 </tr>
 </tbody>
@@ -592,8 +687,11 @@ The trigger will timeout within 8mS, and capture routines will start regardless.
 <p><strong>Example</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">configure_trigger</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">capture_traces</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c">#Unless a timeout occured, the first point of this channel will be close to 1.1Volts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c">#This channel was acquired simultaneously with channel 1, so it&#39;s triggered along with the first</span>
+<span class="go">#Unless a timeout occured, the first point of this channel will be close to 1.1Volts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">#This channel was acquired simultaneously with channel 1, </span>
+<span class="go">#so it&#39;s triggered along with the first</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">fetch_trace</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -618,7 +716,7 @@ The trigger will timeout within 8mS, and capture routines will start regardless.
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel</td>
-<td>&#8216;CH1&#8217;,&#8217;CH2&#8217;,&#8217;CH3&#8217;,&#8217;CH4&#8217;,&#8217;CH5&#8217;,&#8217;CH6&#8217;,&#8217;CH7&#8217;,&#8217;CH8&#8217;,&#8217;CH9&#8217;,&#8216;5V&#8217;,&#8217;PCS&#8217;,&#8216;9V&#8217;</td>
+<td>&#8216;CH1&#8217;,&#8217;CH2&#8217;</td>
 </tr>
 <tr class="row-odd"><td>gain</td>
 <td>(0-7) -&gt; (1x,2x,4x,5x,8x,10x,16x,32x)</td>
@@ -628,7 +726,7 @@ The trigger will timeout within 8mS, and capture routines will start regardless.
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The gain value applied to a channel will result in better resolution for small amplitude signals.</p>
-<p class="last">However, values read using functions like <a class="reference internal" href="#interface.Interface.get_average_voltage" title="interface.Interface.get_average_voltage"><tt class="xref py py-func docutils literal"><span class="pre">get_average_voltage</span></tt></a> or        <a class="reference internal" href="#interface.Interface.capture_traces" title="interface.Interface.capture_traces"><tt class="xref py py-func docutils literal"><span class="pre">capture_traces</span></tt></a> 
+<p class="last">However, values read using functions like <a class="reference internal" href="#interface.Interface.get_average_voltage" title="interface.Interface.get_average_voltage"><tt class="xref py py-func docutils literal"><span class="pre">get_average_voltage</span></tt></a> or    <a class="reference internal" href="#interface.Interface.capture_traces" title="interface.Interface.capture_traces"><tt class="xref py py-func docutils literal"><span class="pre">capture_traces</span></tt></a> 
 will not be 2x, or 4x times the input signal. These are calibrated to return accurate values of the original input signal.</p>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_gain</span><span class="p">(</span><span class="s">&#39;CH1&#39;</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>  <span class="c">#gain set to 32x on CH1</span>
@@ -637,13 +735,8 @@ will not be 2x, or 4x times the input signal. These are calibrated to return acc
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.setOffset">
-<tt class="descname">setOffset</tt><big>(</big><em>channel</em>, <em>offset</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.setOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.setOffset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="interface.Interface.get_average_voltage">
-<tt class="descname">get_average_voltage</tt><big>(</big><em>channel_name</em>, <em>sleep=0</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_average_voltage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_average_voltage" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_average_voltage</tt><big>(</big><em>channel_name</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_average_voltage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_average_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the voltage on the selected channel</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -657,14 +750,18 @@ will not be 2x, or 4x times the input signal. These are calibrated to return acc
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel_name</td>
-<td>&#8216;CH1&#8217;,&#8217;CH2&#8217;,&#8217;CH3&#8217;,&#8217;CH4&#8217;,&#8217;CH5&#8217;,&#8217;CH6&#8217;,&#8217;CH7&#8217;,&#8217;CH8&#8217;,&#8217;CH9&#8217;,&#8216;5V&#8217;,&#8217;PCS&#8217;,&#8216;9V&#8217;,&#8217;IN1&#8217;,&#8217;SEN&#8217;,&#8217;TEMP&#8217;</td>
+<td>&#8216;CH1&#8217;,&#8217;CH2&#8217;,&#8217;CH3&#8217;, &#8216;MIC&#8217;,&#8217;IN1&#8217;,&#8217;SEN&#8217;,&#8217;V+&#8217;</td>
 </tr>
 <tr class="row-odd"><td>sleep</td>
 <td>read voltage in CPU sleep mode. not particularly useful. Also, Buggy.</td>
 </tr>
+<tr class="row-even"><td>**kwargs</td>
+<td>Samples to average can be specified. eg. samples=100 will average a hundred readings</td>
+</tr>
 </tbody>
 </table>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oPVh_IaMU_g" frameborder="0" allowfullscreen></iframe><p>Example:</p>
+<p>see <a class="reference internal" href="videos.html#stream-video"><em>Voltage Streaming utility demo</em></a></p>
+<p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">get_average_voltage</span><span class="p">(</span><span class="s">&#39;CH4&#39;</span><span class="p">)</span>
 <span class="go">1.002</span>
 </pre></div>
@@ -674,44 +771,12 @@ will not be 2x, or 4x times the input signal. These are calibrated to return acc
 <dl class="method">
 <dt id="interface.Interface.get_high_freq">
 <tt class="descname">get_high_freq</tt><big>(</big><em>pin</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_high_freq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_high_freq" title="Permalink to this definition">¶</a></dt>
-<dd><p>retrieves the frequency of the signal connected to ID1. &gt;10MHz
-also good for lower frequencies, but avoid using it since
-the ADC cannot be used simultaneously. It shares a TIMER with the ADC.</p>
-<p>The input frequency is fed to a 32 bit counter for a period of 100mS.
-The value of the counter at the end of 100mS is used to calculate the frequency.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9RLBPgxYGvM" frameborder="0" allowfullscreen></iframe><div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#interface.Interface.get_freq" title="interface.Interface.get_freq"><tt class="xref py py-func docutils literal"><span class="pre">get_freq</span></tt></a></p>
-</div>
-<table border="1" class="docutils">
-<colgroup>
-<col width="13%" />
-<col width="87%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>pin</td>
-<td>The input pin to measure frequency from. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</td>
-</tr>
-</tbody>
-</table>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">frequency</td>
-</tr>
-</tbody>
-</table>
+<dd><p>experimental feature. Attempt to use fewer timers</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.get_freq">
-<tt class="descname">get_freq</tt><big>(</big><em>channel='ID1'</em>, <em>timeout=0.1</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_freq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_freq" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_freq</tt><big>(</big><em>channel='Fin'</em>, <em>timeout=0.1</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_freq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_freq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Frequency measurement on IDx.
 Measures time taken for 16 rising edges of input signal.
 returns the frequency in Hertz</p>
@@ -727,7 +792,7 @@ returns the frequency in Hertz</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel</td>
-<td>The input to measure frequency from. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</td>
+<td>The input to measure frequency from. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</td>
 </tr>
 <tr class="row-odd"><td>timeout</td>
 <td>This is a blocking call which will wait for one full wavelength before returning the
@@ -749,17 +814,21 @@ returns 0 if timed out</td>
 <div><ul class="simple">
 <li>connect SQR1 to ID1</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_sqr1</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c"># TODO: edit this function</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">sqr1</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">get_freq</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>
 <span class="go">4000.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">r2r_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>     <span class="c">#time between successive rising edges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">r2r_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>
+<span class="go">#time between successive rising edges</span>
 <span class="go">0.00025</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">f2f_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span> <span class="c">#time between successive falling edges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">f2f_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>
+<span class="go">#time between successive falling edges</span>
 <span class="go">0.00025</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">pulse_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span> <span class="c">#may detect a low pulse, or a high pulse. Whichever comes first</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">pulse_time</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>
+<span class="go">#may detect a low pulse, or a high pulse. Whichever comes first</span>
 <span class="go">6.25e-05</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">duty_cycle</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>         <span class="c">#returns wavelength, high time</span>
-<span class="go">(0.00025,6.25e-05)                      </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">duty_cycle</span><span class="p">(</span><span class="s">&#39;ID1&#39;</span><span class="p">)</span>
+<span class="go">#returns wavelength, high time</span>
+<span class="go">(0.00025,6.25e-05)          </span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -782,7 +851,7 @@ of input signal on ID1</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel</td>
-<td>The input to measure time between two rising edges.&#8217;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</td>
+<td>The input to measure time between two rising edges.&#8217;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</td>
 </tr>
 <tr class="row-odd"><td>timeout</td>
 <td>Use the timeout option if you&#8217;re unsure of the input signal time period.
@@ -821,7 +890,7 @@ of input signal on ID1</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel</td>
-<td>The input to measure time between two falling edges. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</td>
+<td>The input to measure time between two falling edges. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</td>
 </tr>
 <tr class="row-odd"><td>timeout</td>
 <td>Use the timeout option if you&#8217;re unsure of the input signal time period.
@@ -861,7 +930,7 @@ returns 0 if timed out</td>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>channel</td>
-<td>The input pin to measure wavelength and high time. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</td>
+<td>The input pin to measure wavelength and high time. &#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</td>
 </tr>
 <tr class="row-odd"><td>timeout</td>
 <td>Use the timeout option if you&#8217;re unsure of the input signal time period.
@@ -897,13 +966,10 @@ If the returned time is negative, it simply means that the event corresponding t
 <tr class="row-even"><td>channel1</td>
 <td>The input pin to measure first logic level change</td>
 </tr>
-<tr class="row-odd"><td>channel1</td>
+<tr class="row-odd"><td>channel2</td>
 <td><dl class="first last docutils">
 <dt>The input pin to measure second logic level change</dt>
-<dd><ul class="first last simple">
-<li>&#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</li>
-</ul>
-</dd>
+<dd>-&#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</dd>
 </dl>
 </td>
 </tr>
@@ -964,18 +1030,15 @@ returns pulse length(s) of high pulse or low pulse. whichever occurs first</p>
 <td><dl class="first last docutils">
 <dt>The input pin to measure pulse width from.</dt>
 <dd><ul class="first last simple">
-<li>&#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;LMETER&#8217;,&#8217;CH1&#8217;</li>
+<li>&#8216;ID1&#8217; , &#8216;ID2&#8217;, &#8216;ID3&#8217;, &#8216;ID4&#8217;, &#8216;Fin&#8217;</li>
 </ul>
 </dd>
 </dl>
 </td>
 </tr>
 <tr class="row-odd"><td>timeout</td>
-<td><dl class="first last docutils">
-<dt>Use the timeout option if you&#8217;re unsure of the input signal time period.</dt>
-<dd>returns 0 if timed out</dd>
-</dl>
-</td>
+<td>Use the timeout option if you&#8217;re unsure of the input signal time period.
+returns 0 if timed out</td>
 </tr>
 </tbody>
 </table>
@@ -994,43 +1057,13 @@ returns pulse length(s) of high pulse or low pulse. whichever occurs first</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.setup_comparator">
-<tt class="descname">setup_comparator</tt><big>(</big><em>level=7</em>, <em>digital_filter=3</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.setup_comparator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.setup_comparator" title="Permalink to this definition">¶</a></dt>
-<dd><p>setup the voltage level and filtering on the analog comparator linked to CH4.
-It can then be used to directly estimate the frequency and other timing details of input analog waveforms on CH4</p>
+<dt id="interface.Interface.capture_edges1">
+<tt class="descname">capture_edges1</tt><big>(</big><em>waiting_time=1.0</em>, <em>**args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.capture_edges1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.capture_edges1" title="Permalink to this definition">¶</a></dt>
+<dd><p>log timestamps of rising/falling edges on one digital input</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>level</td>
-<td>voltage level for + reference of comparator [0-15]</td>
-</tr>
-<tr class="row-odd"><td>digital_filter</td>
-<td>Level changes faster than 3 * cpu freq / (1&lt;&lt;digital_filter) will be ignored</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#timing-example">timing_example</a></p>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="interface.Interface.LA_capture1">
-<tt class="descname">LA_capture1</tt><big>(</big><em>waiting_time=0.1</em>, <em>trigger=0</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.LA_capture1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.LA_capture1" title="Permalink to this definition">¶</a></dt>
-<dd><p>log timestamps of rising/falling edges on one digital input (ID1)</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="12%" />
-<col width="88%" />
+<col width="14%" />
+<col width="86%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
@@ -1039,16 +1072,40 @@ It can then be used to directly estimate the frequency and other timing details 
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>waiting_time</td>
-<td>Total time to allow the logic analyzer to collect data.
-This is implemented using a simple sleep routine, so if large delays will be involved,
+<td><blockquote class="first">
+<div>Total time to allow the logic analyzer to collect data.</div></blockquote>
+<p class="last">This is implemented using a simple sleep routine, so if large delays will be involved,
 refer to <a class="reference internal" href="#interface.Interface.start_one_channel_LA" title="interface.Interface.start_one_channel_LA"><tt class="xref py py-func docutils literal"><span class="pre">start_one_channel_LA</span></tt></a> to start the acquisition, and <a class="reference internal" href="#interface.Interface.fetch_LA_channels" title="interface.Interface.fetch_LA_channels"><tt class="xref py py-func docutils literal"><span class="pre">fetch_LA_channels</span></tt></a> to
 retrieve data from the hardware after adequate time. The retrieved data is stored
-in the array self.dchans[0].timestamps. Divide each timestamp by 64e6 to convert to seconds.</td>
+in the array self.dchans[0].timestamps.</p>
+</td>
 </tr>
-<tr class="row-odd"><td>trigger</td>
+<tr class="row-odd"><td>keyword arguments</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>channel</td>
+<td>&#8216;ID1&#8217;,...,&#8217;ID4&#8217;</td>
+</tr>
+<tr class="row-odd"><td>trigger_channel</td>
+<td>&#8216;ID1&#8217;,...,&#8217;ID4&#8217;</td>
+</tr>
+<tr class="row-even"><td>channel_mode</td>
+<td><p class="first">acquisition mode</p>
+<p>default value: 3</p>
+<ul class="last simple">
+<li>EVERY_SIXTEENTH_RISING_EDGE = 5</li>
+<li>EVERY_FOURTH_RISING_EDGE    = 4</li>
+<li>EVERY_RISING_EDGE           = 3</li>
+<li>EVERY_FALLING_EDGE          = 2</li>
+<li>EVERY_EDGE                  = 1</li>
+<li>DISABLED                    = 0</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>trigger_mode</td>
 <td><dl class="first last docutils">
-<dt>Edge trigger on ID1.</dt>
-<dd>options = 0  , &#8216;rising&#8217; , &#8216;falling&#8217;</dd>
+<dt>same as channel_mode.</dt>
+<dd>default_value : 3</dd>
 </dl>
 </td>
 </tr>
@@ -1058,11 +1115,12 @@ in the array self.dchans[0].timestamps. Divide each timestamp by 64e6 to convert
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Bool initial_state Low/High, timestamp array in Seconds</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamp array in Seconds</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">LA_capture1</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="s">&#39;rising&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">capture_edges</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="n">channel</span><span class="o">=</span><span class="s">&#39;ID1&#39;</span><span class="p">,</span><span class="n">trigger_channel</span><span class="o">=</span><span class="s">&#39;ID1&#39;</span><span class="p">,</span><span class="n">channel_mode</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">trigger_mode</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">#captures rising edges only. with rising edge trigger on ID1</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1091,15 +1149,19 @@ in the array self.dchans[0].timestamps. Divide each timestamp by 64e6 to convert
 <tr class="row-even"><td>trigger_channel</td>
 <td>&#8216;ID1&#8217;,...&#8217;LMETER&#8217;,&#8217;CH1&#8217;</td>
 </tr>
-<tr class="row-odd"><td>channnel_mode</td>
+<tr class="row-odd"><td>channel_mode</td>
 <td><p class="first">acquisition mode.
 default value: 1</p>
-<p class="last">EVERY_SIXTEENTH_RISING_EDGE = 5
-EVERY_FOURTH_RISING_EDGE    = 4
-EVERY_RISING_EDGE           = 3
-EVERY_FALLING_EDGE          = 2
-EVERY_EDGE                  = 1
-DISABLED                    = 0</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>EVERY_SIXTEENTH_RISING_EDGE = 5</li>
+<li>EVERY_FOURTH_RISING_EDGE    = 4</li>
+<li>EVERY_RISING_EDGE           = 3</li>
+<li>EVERY_FALLING_EDGE          = 2</li>
+<li>EVERY_EDGE                  = 1</li>
+<li>DISABLED                    = 0</li>
+</ul>
+</div></blockquote>
 </td>
 </tr>
 <tr class="row-even"><td>trigger_mode</td>
@@ -1116,7 +1178,8 @@ default_value : 3</td>
 </tr>
 </tbody>
 </table>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vzjDV18AmOo" frameborder="0" allowfullscreen></iframe></dd></dl>
+<p>see <a class="reference internal" href="videos.html#la-video"><em>4-Channel Logic Analyzer with PWM inputs</em></a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.start_two_channel_LA">
@@ -1141,8 +1204,8 @@ default_value : 3</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre>&quot;fetch_long_data_from_dma(points to read,1)&quot; to get data acquired from channel 1
-&quot;fetch_long_data_from_dma(points to read,2)&quot; to get data acquired from channel 2
+<div class="highlight-python"><div class="highlight"><pre>&quot;fetch_long_data_from_dma(samples,1)&quot; to get data acquired from channel 1
+&quot;fetch_long_data_from_dma(samples,2)&quot; to get data acquired from channel 2
 The read data can be accessed from self.dchans[0 or 1]
 </pre></div>
 </div>
@@ -1170,17 +1233,16 @@ The read data can be accessed from self.dchans[0 or 1]
 <td>&#8216;ID1&#8217;,...&#8217;LMETER&#8217;,&#8217;CH1&#8217;</td>
 </tr>
 <tr class="row-even"><td>modes</td>
-<td><dl class="first last docutils">
-<dt>modes for each channel. Array .</dt>
-<dd><p class="first">default value: [1,1,1]</p>
-<p class="last">EVERY_SIXTEENTH_RISING_EDGE = 5
-EVERY_FOURTH_RISING_EDGE    = 4
-EVERY_RISING_EDGE           = 3
-EVERY_FALLING_EDGE          = 2
-EVERY_EDGE                  = 1
-DISABLED                    = 0</p>
-</dd>
-</dl>
+<td><p class="first">modes for each channel. Array .</p>
+<p>default value: [1,1,1]</p>
+<ul class="last simple">
+<li>EVERY_SIXTEENTH_RISING_EDGE = 5</li>
+<li>EVERY_FOURTH_RISING_EDGE    = 4</li>
+<li>EVERY_RISING_EDGE           = 3</li>
+<li>EVERY_FALLING_EDGE          = 2</li>
+<li>EVERY_EDGE                  = 1</li>
+<li>DISABLED                    = 0</li>
+</ul>
 </td>
 </tr>
 <tr class="row-odd"><td>trigger_mode</td>
@@ -1219,22 +1281,25 @@ start logging timestamps from a 64MHz counter to record level changes on ID1,ID2
 <td>Bool . Enable rising edge trigger on ID1</td>
 </tr>
 <tr class="row-odd"><td>maximum_time</td>
-<td>Maximum delay expected between two logic level changes.
-If total time exceeds 1 mS, a prescaler will be used in the reference clock
+<td><p class="first">Maximum delay expected between two logic level changes.</p>
+<p>If total time exceeds 1 mS, a prescaler will be used in the reference clock
 However, this only refers to the maximum time between two successive level changes. If a delay larger
-than .26 S occurs, it will be truncated by modulo .26 S.
-If you need to record large intervals, try single channel/ two channel modes which use 32 bit counters
-capable of time interval up to 67 seconds.</td>
+than .26 S occurs, it will be truncated by modulo .26 S.</p>
+<p class="last">If you need to record large intervals, try single channel/two channel modes which use 32 bit counters
+capable of time interval up to 67 seconds.</p>
+</td>
 </tr>
 <tr class="row-even"><td>mode</td>
-<td><p class="first">modes for each channel. Array with four elements
-default values: [1,1,1,1]</p>
-<p class="last">EVERY_SIXTEENTH_RISING_EDGE = 5
-EVERY_FOURTH_RISING_EDGE    = 4
-EVERY_RISING_EDGE           = 3
-EVERY_FALLING_EDGE          = 2
-EVERY_EDGE                  = 1
-DISABLED                    = 0</p>
+<td><p class="first">modes for each channel. List with four elements</p>
+<p>default values: [1,1,1,1]</p>
+<ul class="last simple">
+<li>EVERY_SIXTEENTH_RISING_EDGE = 5</li>
+<li>EVERY_FOURTH_RISING_EDGE    = 4</li>
+<li>EVERY_RISING_EDGE           = 3</li>
+<li>EVERY_FALLING_EDGE          = 2</li>
+<li>EVERY_EDGE                  = 1</li>
+<li>DISABLED                    = 0</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -1334,11 +1399,8 @@ The read data can be accessed from <tt class="xref py py-class docutils literal"
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>trigchan:</td>
-<td><dl class="first last docutils">
-<dt>channel number which should be treated as a trigger. (1,2,3,4). Its first timestamp</dt>
-<dd>is subtracted from the rest of the channels.</dd>
-</dl>
-</td>
+<td>channel number which should be treated as a trigger. (1,2,3,4). Its first timestamp
+is subtracted from the rest of the channels.</td>
 </tr>
 </tbody>
 </table>
@@ -1364,25 +1426,19 @@ The read data can be accessed from <tt class="xref py py-class docutils literal"
 <col width="87%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">Arguments</th>
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
 <th class="head">Description</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td rowspan="5">input_id</td>
-<td rowspan="5"><p class="first">the input channel</p>
-<ul class="last simple">
-<li>&#8216;ID1&#8217; -&gt; state of ID1</li>
-<li>&#8216;ID2&#8217; -&gt; state of ID2</li>
-<li>&#8216;ID3&#8217; -&gt; state of ID3</li>
-<li>&#8216;ID4&#8217; -&gt; state of ID4</li>
-</ul>
+<tr class="row-even"><td>input_id</td>
+<td><dl class="first last docutils">
+<dt>the input channel</dt>
+<dd>&#8216;ID1&#8217; -&gt; state of ID1
+&#8216;ID4&#8217; -&gt; state of ID4</dd>
+</dl>
 </td>
 </tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
-<tr class="row-odd"></tr>
-<tr class="row-even"></tr>
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">I</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">I</span><span class="o">.</span><span class="n">ID1</span><span class="p">)</span>
@@ -1394,8 +1450,8 @@ The read data can be accessed from <tt class="xref py py-class docutils literal"
 <dl class="method">
 <dt id="interface.Interface.set_state">
 <tt class="descname">set_state</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>set the logic level on digital outputs OD1,OD2,SQR1,SQR2
-For newer units, OD1,OD2 have been renamed to SQR3,SQR4. Both mnemonics will work.</p>
+<dd><p>set the logic level on digital outputs SQR1,SQR2,SQR3,SQR4
+On older units, SQR3,SQR4 were called OD1,OD2. Both mnemonics will work.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1408,11 +1464,8 @@ For newer units, OD1,OD2 have been renamed to SQR3,SQR4. Both mnemonics will wor
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>**kwargs</td>
-<td><dl class="first last docutils">
-<dt>OD1,OD2,SQR1,SQR2</dt>
-<dd>states(0 or 1)</dd>
-</dl>
-</td>
+<td>OD1,OD2,SQR1,SQR2
+states(0 or 1)</td>
 </tr>
 </tbody>
 </table>
@@ -1432,42 +1485,56 @@ This function allows an estimation of the parameters to be used with the <a clas
 
 <dl class="method">
 <dt id="interface.Interface.get_capacitance">
-<tt class="descname">get_capacitance</tt><big>(</big><em>current_range</em>, <em>trim</em>, <em>Charge_Time</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_capacitance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_capacitance" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_capacitance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_capacitance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_capacitance" title="Permalink to this definition">¶</a></dt>
 <dd><p>measures capacitance of component connected between IN1 and ground</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Non standard arguments! Needs to be rewritten</p>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>current_range</strong> (<em>int</em>) &#8211; current range to use (0,1,2,3) -&gt;(550uA,.55uA,5.5uA,55uA)</li>
-<li><strong>trim</strong> (<em>int</em>) &#8211; trimming the current range selected. set as 0</li>
-<li><strong>Charge_Time</strong> (<em>int</em>) &#8211; total time in microseconds that the current range will be activated     before measuring the voltage across it.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Capacitance (F)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Voltage,Charging current used,Charging time,  Capacitance</p>
-</td>
+</tbody>
+</table>
+<p>Constant Current Charging</p>
+Q_{stored} = C*V
+
+I_{constant}*time = C*V
+
+C = I_{constant}*time/V_{measured}<p>Also uses Constant Voltage Charging via 20K resistor if required.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface.Interface.get_ctmu_voltage">
+<tt class="descname">get_ctmu_voltage</tt><big>(</big><em>channel</em>, <em>Crange</em>, <em>tgen=1</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_ctmu_voltage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_ctmu_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_ctmu_voltage(5,2)  will activate a constant current source of 5.5uA on IN1 and then measure the voltage at the output.
+If a diode is used to connect IN1 to ground, the forward voltage drop of the diode will be returned. e.g. .6V for a 4148diode.</p>
+<p>If a resistor is connected, ohm&#8217;s law will be followed within reasonable limits</p>
+<p>channel=5 for IN1</p>
+<p>CRange=0   implies 550uA
+CRange=1   implies 0.55uA
+CRange=2   implies 5.5uA
+CRange=3   implies 55uA</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Voltage</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.get_inductance">
-<tt class="descname">get_inductance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_inductance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_inductance" title="Permalink to this definition">¶</a></dt>
-<dd><p>measure the value of the inductor connected to the Inductance measurement unit
-F_out must be connected to IN3 via a short wire
-:return: inductance</p>
+<dt id="interface.Interface.restoreStandalone">
+<tt class="descname">restoreStandalone</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.restoreStandalone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.restoreStandalone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the device, and standalone mode will be enabled if an OLED is connected to the I2C port</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.restoreStandalone">
-<tt class="descname">restoreStandalone</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.restoreStandalone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.restoreStandalone" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="interface.Interface.resetHardware">
+<tt class="descname">resetHardware</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.resetHardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.resetHardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the device, and standalone mode will be enabled if an OLED is connected to the I2C port</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.read_flash">
@@ -1597,27 +1664,6 @@ REFLASHING IT.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.get_ctmu_voltage">
-<tt class="descname">get_ctmu_voltage</tt><big>(</big><em>channel</em>, <em>Crange</em>, <em>tgen=1</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_ctmu_voltage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_ctmu_voltage" title="Permalink to this definition">¶</a></dt>
-<dd><p>get_ctmu_voltage(5,2)  will activate a constant current source of 5.5uA on IN1 and then measure the voltage at the output.
-If a diode is used to connect IN1 to ground, the forward voltage drop of the diode will be returned. e.g. .6V for a 4148diode.</p>
-<p>If a resistor is connected, ohm&#8217;s law will be followed within reasonable limits</p>
-<p>channel=5 for IN1</p>
-<p>CRange=0   implies 550uA
-CRange=1   implies 0.55uA
-CRange=2   implies 5.5uA
-CRange=3   implies 55uA</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Voltage</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="interface.Interface.get_temperature">
 <tt class="descname">get_temperature</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.get_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.get_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the processor&#8217;s temperature</p>
@@ -1632,11 +1678,9 @@ CRange=3   implies 55uA</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.send_address">
-<tt class="descname">send_address</tt><big>(</big><em>c</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.send_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.send_address" title="Permalink to this definition">¶</a></dt>
-<dd><p>DEPRECATED.  PIC1572 waveform generators have been replaced with AD9833 based 28 bit wavegens.</p>
-<p>Outputs an address through the second UART
-This is used to select which PIC1572 will listen to incoming data</p>
+<dt id="interface.Interface.set_sine1">
+<tt class="descname">set_sine1</tt><big>(</big><em>freq</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_sine1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_sine1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the frequency of wavegen</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1648,46 +1692,8 @@ This is used to select which PIC1572 will listen to incoming data</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>address</td>
-<td>slave device address</td>
-</tr>
-</tbody>
-</table>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">nothing</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="interface.Interface.set_sine">
-<tt class="descname">set_sine</tt><big>(</big><em>frequency</em>, <em>register=0</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_sine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_sine" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the frequency of wavegen</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="11%" />
-<col width="89%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
 <tr class="row-even"><td>frequency</td>
-<td>Frequency to set on wave generator . 0MHz to 8MHz</td>
-</tr>
-<tr class="row-odd"><td>register</td>
-<td><dl class="first last docutils">
-<dt>Frequency register to update.  The wavegen has two different registers for storing the</dt>
-<dd>output frequency.  These are used to quickly switch between the two registers for applications
-like frequency shift keying(FSK)</dd>
-</dl>
-</td>
+<td>Frequency to set on wave generator 1.</td>
 </tr>
 </tbody>
 </table>
@@ -1702,9 +1708,9 @@ like frequency shift keying(FSK)</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.set_waveform_type">
-<tt class="descname">set_waveform_type</tt><big>(</big><em>waveform='sine'</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_waveform_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_waveform_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>set the output type of the waveform generator</p>
+<dt id="interface.Interface.set_sine2">
+<tt class="descname">set_sine2</tt><big>(</big><em>freq</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_sine2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_sine2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the frequency of wavegen</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1716,19 +1722,25 @@ like frequency shift keying(FSK)</dd>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>waveform</td>
-<td>&#8216;sine&#8217;, &#8216;triangle&#8217;, or &#8216;square&#8217;</td>
+<tr class="row-even"><td>frequency</td>
+<td>Frequency to set on wave generator 1.</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">frequency</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.select_freq">
-<tt class="descname">select_freq</tt><big>(</big><em>register</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.select_freq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.select_freq" title="Permalink to this definition">¶</a></dt>
-<dd><p>The waveform generator has two frequency registers.  That is, you may store two different frequency
-values with distinct waveform shapes, and quickly toggle between them using this command.
-refer to <a class="reference internal" href="#interface.Interface.set_sine" title="interface.Interface.set_sine"><tt class="xref py py-func docutils literal"><span class="pre">set_sine</span></tt></a></p>
+<dt id="interface.Interface.set_sine_phase">
+<tt class="descname">set_sine_phase</tt><big>(</big><em>freq</em>, <em>phase</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_sine_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_sine_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the frequency of wavegen</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1740,11 +1752,59 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>register</td>
-<td>0 or 1</td>
+<tr class="row-even"><td>frequency</td>
+<td>Frequency to set on both wave generators</td>
+</tr>
+<tr class="row-odd"><td>phase</td>
+<td>Phase difference between the two. 0-360 degrees</td>
 </tr>
 </tbody>
 </table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">frequency</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface.Interface.load_waveform">
+<tt class="descname">load_waveform</tt><big>(</big><em>num</em>, <em>function</em>, <em>span</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.load_waveform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.load_waveform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an arbitrary waveform to the waveform generators</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>num</td>
+<td>The waveform generator to alter. 1 or 2</td>
+</tr>
+<tr class="row-odd"><td>function</td>
+<td>A function that will be used to generate the datapoints</td>
+</tr>
+<tr class="row-even"><td>span</td>
+<td>the range of values in which to evaluate the given function</td>
+</tr>
+</tbody>
+</table>
+<p>example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">50</span><span class="p">)</span>  <span class="c">#Triangular waveform </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="o">.</span><span class="n">load_waveform</span><span class="p">(</span><span class="n">fn</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
+<span class="go">#Load triangular wave to wavegen 1</span>
+
+<span class="go">#Load sinusoidal wave to wavegen 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="o">.</span><span class="n">load_waveform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1774,7 +1834,7 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 <dt id="interface.Interface.set_pvs2">
 <tt class="descname">set_pvs2</tt><big>(</big><em>val</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.set_pvs2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.set_pvs2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the voltage on PVS2.
-12-bit DAC...  0 - 3.3V</p>
+12-bit DAC...  0-3.3V</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1829,8 +1889,8 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 <dd><p>Set programmable current source</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="89%" />
+<col width="13%" />
+<col width="87%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
@@ -1897,25 +1957,29 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>cols</td>
-<td><dl class="first last docutils">
-<dt>2Darray [[R,G,B],[R2,G2,B2],[R3,G3,B3]...]</dt>
-<dd>brightness of R,G,B ( 0-255  )</dd>
-</dl>
-</td>
+<td>2Darray [[R,G,B],[R2,G2,B2],[R3,G3,B3]...]
+brightness of R,G,B ( 0-255  )</td>
 </tr>
 </tbody>
 </table>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/E7Q4B1jeKH0" frameborder="0" allowfullscreen></iframe></dd></dl>
+<p>example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">WS2812B</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]])</span>
+<span class="go">#sets red, cyan, magenta to three daisy chained LEDs</span>
+</pre></div>
+</div>
+<p>see <a class="reference internal" href="videos.html#rgb-video"><em>Daisy Chained RGB LEDs(WS2812B) being controlled via Python</em></a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.fetch_buffer">
 <tt class="descname">fetch_buffer</tt><big>(</big><em>starting_position=0</em>, <em>total_points=100</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.fetch_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.fetch_buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>fetches a section of the ADC hardware buffer</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.clear_buffer">
 <tt class="descname">clear_buffer</tt><big>(</big><em>starting_position</em>, <em>total_points</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.clear_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.clear_buffer" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a section of the buffer</p>
+<dd><p>clears a section of the ADC hardware buffer</p>
 </dd></dl>
 
 <dl class="method">
@@ -1951,7 +2015,7 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 
 <dl class="method">
 <dt id="interface.Interface.sqr1">
-<tt class="descname">sqr1</tt><big>(</big><em>freq</em>, <em>duty_cycle</em>, <em>echo=False</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.sqr1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.sqr1" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">sqr1</tt><big>(</big><em>freq</em>, <em>duty_cycle=50</em>, <em>echo=False</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.sqr1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.sqr1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the frequency of sqr1</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -2120,54 +2184,9 @@ refer to <a class="reference internal" href="#interface.Interface.set_sine" titl
 </dd></dl>
 
 <dl class="method">
-<dt id="interface.Interface.delay_generator">
-<tt class="descname">delay_generator</tt><big>(</big><em>**args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.delay_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.delay_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>UNSUPPORTED IN FIRMWARE. DO NOT USE
-Use Comparator on CH4 to triggger output pulses after precise intervals.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="13%" />
-<col width="87%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>**kwargs</td>
-<td>&nbsp;</td>
-</tr>
-<tr class="row-odd"><td>h0</td>
-<td>High time for SQR1 (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-even"><td>p1</td>
-<td>Phase shift for SQR2 (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-odd"><td>h1</td>
-<td>High time for SQR2 (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-even"><td>p2</td>
-<td>Phase shift for OD1  (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-odd"><td>h2</td>
-<td>High time for OD1  (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-even"><td>p3</td>
-<td>Phase shift for OD2  (0-0xFFFF uS)</td>
-</tr>
-<tr class="row-odd"><td>h3</td>
-<td>High time for OD2  (0-0xFFFF uS)</td>
-</tr>
-</tbody>
-</table>
-<p>NOTE: hx+px must be less than 0xFFFF</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="interface.Interface.map_reference_clock">
 <tt class="descname">map_reference_clock</tt><big>(</big><em>scaler</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.map_reference_clock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.map_reference_clock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Map the internal oscillator output  to SQR1,SQR2,OD1 or OD2
+<dd><p>Map the internal oscillator output  to SQR1,SQR2,SQR3,SQR4 or WAVEGEN
 The output frequency is 128/(1&lt;&lt;scaler) MHz</p>
 <p>scaler [0-15]</p>
 <blockquote>
@@ -2182,10 +2201,10 @@ The output frequency is 128/(1&lt;&lt;scaler) MHz</p>
 </ul>
 </div></blockquote>
 <p>example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">map_reference_clock</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;sqr1&#39;</span><span class="p">,</span><span class="s">&#39;sqr2&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">map_reference_clock</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;SQR1&#39;</span><span class="p">,</span><span class="s">&#39;SQR2&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>outputs 32 MHz on sqr1, sqr2 pins</p>
+<p>outputs 32 MHz on SQR1, SQR2 pins</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">if you change the reference clock for &#8216;wavegen&#8217; , the waveform generator resolution and range will also change.
@@ -2287,6 +2306,20 @@ This is used to operate servo motors.  Tested with 9G SG-90 Servo motor.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="interface.Interface.stepForward">
+<tt class="descname">stepForward</tt><big>(</big><em>steps</em>, <em>delay</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.stepForward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.stepForward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control stepper motors using SQR1-4</p>
+<p>take a fixed number of steps in the forward direction with a certain delay between each step.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface.Interface.stepBackward">
+<tt class="descname">stepBackward</tt><big>(</big><em>steps</em>, <em>delay</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.stepBackward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.stepBackward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control stepper motors using SQR1-4</p>
+<p>take a fixed number of steps in the backward direction with a certain delay between each step.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="interface.Interface.servo4">
 <tt class="descname">servo4</tt><big>(</big><em>a1</em>, <em>a2</em>, <em>a3</em>, <em>a4</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.servo4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.servo4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Operate Four servo motors independently using SQR1, SQR2, SQR3, SQR4.
@@ -2373,20 +2406,19 @@ This effort was a waste.  There are better humidity and temperature sensors avai
 <dl class="method">
 <dt id="interface.Interface.opticalArray">
 <tt class="descname">opticalArray</tt><big>(</big><em>tg</em>, <em>delay</em>, <em>tp</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.opticalArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.opticalArray" title="Permalink to this definition">¶</a></dt>
-<dd><p>read from AM2302
-.. raw:: html</p>
-<blockquote>
-<div>&lt;iframe width=&#8221;560&#8221; height=&#8221;315&#8221; src=&#8221;<a class="reference external" href="https://www.youtube.com/embed/PIIuwt4ZOh8">https://www.youtube.com/embed/PIIuwt4ZOh8</a>&#8221; frameborder=&#8221;0&#8221; allowfullscreen&gt;&lt;/iframe&gt;</div></blockquote>
+<dd><p>read from 3648 element optical sensor array TCD3648P from Toshiba</p>
+<p>see <a class="reference internal" href="videos.html#tcd-video"><em>Linear Optical Array Demo</em></a></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.readLog">
 <tt class="descname">readLog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.readLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.readLog" title="Permalink to this definition">¶</a></dt>
-<dd><p>read hardware log.</p>
+<dd><p>read hardware debug log.</p>
 </dd></dl>
 
 </dd></dl>
 
+</div>
 </div>
 
 
@@ -2395,9 +2427,21 @@ This effort was a waste.  There are better humidity and temperature sensors avai
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python module for accessing the device</a><ul>
+<li><a class="reference internal" href="#connecting-to-the-device">Connecting to the device</a></li>
+<li><a class="reference internal" href="#sub-instance-i2c-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-i2c-port">Sub-Instance I2C of the Interface library contains methods to access devices connected to the I2C port.</a></li>
+<li><a class="reference internal" href="#sub-instance-spi-of-the-interface-library-contains-methods-to-access-devices-connected-to-the-spi-port">Sub-Instance SPI of the Interface library contains methods to access devices connected to the SPI port.</a></li>
+<li><a class="reference internal" href="#methods-to-access-wireless-sensor-nodes">Methods to access wireless sensor nodes</a></li>
+<li><a class="reference internal" href="#module-interface">Function reference</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to vLabtool&#8217;s documentation!</a></p>
+  <p class="topless"><a href="experiments.html"
+                        title="previous chapter">General Purpose Applications for Real World interaction</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="SPI_class.html"
                         title="next chapter">SPI_class module</a></p>
@@ -2436,7 +2480,7 @@ This effort was a waste.  There are better humidity and temperature sensors avai
           <a href="SPI_class.html" title="SPI_class module"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to vLabtool’s documentation!"
+          <a href="experiments.html" title="General Purpose Applications for Real World interaction"
              >previous</a> |</li>
         <li><a href="index.html">vLabtool Quick ref</a> &raquo;</li> 
       </ul>

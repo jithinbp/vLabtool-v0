@@ -199,13 +199,13 @@ class CustomWidgets:
 
 		def setValue(self,val):
 			if self.name=='pvs1':
-				retval=self.I.DAC.__setRawVoltage__(3,val)
+				retval=self.I.DAC.__setRawVoltage__('PVS1',val)
 			elif self.name=='pvs2':
-				retval=self.I.DAC.__setRawVoltage__(2,val)
+				retval=self.I.DAC.__setRawVoltage__('PVS2',val)
 			elif self.name=='pvs3':
-				retval=self.I.DAC.__setRawVoltage__(0,val)
+				retval=self.I.DAC.__setRawVoltage__('PVS3',val)
 			elif self.name=='pcs':
-				retval=self.I.DAC.__setRawVoltage__(0,val)
+				retval=self.I.DAC.__setRawVoltage__('PCS',val)
 
 			self.label.setText(self.name+': %.3f'%(retval))
 

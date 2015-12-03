@@ -67,8 +67,62 @@ color: rgb(255, 255, 255);</string>
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Monitor</string>
+        <string>Start Monitoring</string>
        </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="frame">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>10</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Averaging</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="averageCount">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>501</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Set</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
@@ -128,8 +182,8 @@ color: rgb(255, 255, 255);</string>
    <slot>stream()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>31</x>
-     <y>50</y>
+     <x>41</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -137,8 +191,25 @@ color: rgb(255, 255, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>setAverageCount()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>stream()</slot>
+  <slot>setAverageCount()</slot>
  </slots>
 </ui>

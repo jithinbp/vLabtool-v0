@@ -1,6 +1,9 @@
 #!/usr/bin/python
 '''
-Transistor CE characteristics
+Study Common Emitter Characteristics of NPN transistors.
+Saturation currents, and their dependence on base current 
+can be easily visualized.
+
 '''
 
 import os

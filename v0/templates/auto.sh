@@ -7,7 +7,7 @@ pyuic4 template_experiments.ui -o template_experiments.py
 #pyuic4 wirelessTemplate.ui -o wirelessTemplate.py
 #pyuic4 diodeIV.ui -o diodeIV.py
 #pyuic4 rectifier.ui -o rectifier.py
-
+pyuic4 arbitStream.ui -o arbitStream.py
 cd widgets/
 #pyuic4 dial.ui -o dial.py 
 #pyuic4 button.ui -o button.py

@@ -9,8 +9,8 @@ class digital_channel:
 		self.gain=0
 		self.channel_number=a
 		self.digital_channel_names=digital_channel_names
-		self.xaxis=np.zeros(10000)
-		self.yaxis=np.zeros(10000)
+		self.xaxis=np.zeros(20000)
+		self.yaxis=np.zeros(20000)
 		self.timestamps=np.zeros(10000)
 		self.length=100
 		self.initial_state=0

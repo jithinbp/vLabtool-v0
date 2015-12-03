@@ -1,6 +1,11 @@
 #!/usr/bin/python
+'''
+This Utility allows auto-detection of wireless nodes in the vicinity, as well as the
+sensors connected to each. It can then be used to plot data acquired from sensors located 
+on the various nodes.
 
-from vLabtool.experiment import *
+'''
+from v0.experiment import *
 if __name__ == "__main__":
 	Exp=Experiment(parent=None,showresult=False)
 

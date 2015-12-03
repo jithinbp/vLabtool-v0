@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'vLabtool/templates/stream.ui'
+# Form implementation generated from reading ui file 'stream.ui'
 #
-# Created: Mon Aug 10 23:52:02 2015
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Sat Oct 17 16:53:14 2015
+#      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -42,6 +51,31 @@ class Ui_Form(object):
         self.pushButton = QtGui.QPushButton(Form)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.verticalLayout.addWidget(self.pushButton)
+        self.frame = QtGui.QFrame(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setMinimumSize(QtCore.QSize(0, 10))
+        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame.setObjectName(_fromUtf8("frame"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.frame)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.label = QtGui.QLabel(self.frame)
+        self.label.setMinimumSize(QtCore.QSize(0, 20))
+        self.label.setObjectName(_fromUtf8("label"))
+        self.horizontalLayout.addWidget(self.label)
+        self.averageCount = QtGui.QSpinBox(self.frame)
+        self.averageCount.setMinimum(1)
+        self.averageCount.setMaximum(501)
+        self.averageCount.setObjectName(_fromUtf8("averageCount"))
+        self.horizontalLayout.addWidget(self.averageCount)
+        self.pushButton_2 = QtGui.QPushButton(self.frame)
+        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.verticalLayout.addWidget(self.frame)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.lastReading = QtGui.QLabel(Form)
@@ -60,15 +94,18 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Form.stream)
+        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), Form.setAverageCount)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.cmdlist.setItemText(0, QtGui.QApplication.translate("Form", "get_average_voltage(\'CH1\')", None, QtGui.QApplication.UnicodeUTF8))
-        self.cmdlist.setItemText(1, QtGui.QApplication.translate("Form", "get_freq(\'ID1\')", None, QtGui.QApplication.UnicodeUTF8))
-        self.cmdlist.setItemText(2, QtGui.QApplication.translate("Form", "get_high_freq(\'ID1\')", None, QtGui.QApplication.UnicodeUTF8))
-        self.cmdlist.setItemText(3, QtGui.QApplication.translate("Form", "DutyCycle(\'ID1\')[1]", None, QtGui.QApplication.UnicodeUTF8))
-        self.cmdlist.setItemText(4, QtGui.QApplication.translate("Form", "MeasureInterval(\'ID1\',\'ID2\',\'rising\',\'rising\')", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("Form", "Monitor", None, QtGui.QApplication.UnicodeUTF8))
-        self.lastReading.setText(QtGui.QApplication.translate("Form", "Result", None, QtGui.QApplication.UnicodeUTF8))
+        Form.setWindowTitle(_translate("Form", "Form", None))
+        self.cmdlist.setItemText(0, _translate("Form", "get_average_voltage(\'CH1\')", None))
+        self.cmdlist.setItemText(1, _translate("Form", "get_freq(\'ID1\')", None))
+        self.cmdlist.setItemText(2, _translate("Form", "get_high_freq(\'ID1\')", None))
+        self.cmdlist.setItemText(3, _translate("Form", "DutyCycle(\'ID1\')[1]", None))
+        self.cmdlist.setItemText(4, _translate("Form", "MeasureInterval(\'ID1\',\'ID2\',\'rising\',\'rising\')", None))
+        self.pushButton.setText(_translate("Form", "Start Monitoring", None))
+        self.label.setText(_translate("Form", "Averaging", None))
+        self.pushButton_2.setText(_translate("Form", "Set", None))
+        self.lastReading.setText(_translate("Form", "Result", None))
 

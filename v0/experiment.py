@@ -13,7 +13,6 @@ import functools,random
 
 from templates import template_exp
 import time,sys
-from customui_rc import *
 import custom_widgets as Widgets
  
 import numpy as np
@@ -232,12 +231,12 @@ class Experiment(QtGui.QMainWindow,template_exp.Ui_MainWindow,Widgets.CustomWidg
 
 	def showSplash(self):
 		import pkg_resources
-		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('vLabtool.stylesheets', "splash3.png"))
+		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('v0.stylesheets', "splash3.png"))
 		self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
 		# adding progress bar
 		self.progressBar = QtGui.QProgressBar(self.splash)
 		self.progressBar.resize(self.splash.width(),20)
-		css = pkg_resources.resource_string('vLabtool', "stylesheets/splash.css")
+		css = pkg_resources.resource_string('v0', "stylesheets/splash.css")
 		if css:
 			self.splash.setStyleSheet(css)
 		self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")

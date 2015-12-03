@@ -16,12 +16,12 @@ class ThreadedLauncher(Thread):
 
 class messenger():
 	def __init__(self):
-		self.ind = appindicator.Indicator("vLabtool-indicator", "vLabtool-menu", appindicator.CATEGORY_APPLICATION_STATUS)
+		self.ind = appindicator.Indicator("vLabtool-v0-indicator", "vLabtool-v0-menu", appindicator.CATEGORY_APPLICATION_STATUS)
 		#self.ind.set_status(appindicator.STATUS_ATTENTION)
 		self.ind.set_status(appindicator.STATUS_ACTIVE)
 		self.ind.set_attention_icon("system-devices-panel-alert")
 		self.ind.set_icon("system-devices-panel-information")
-		self.ind.set_label("vLabtool")
+		self.ind.set_label("v0")
 
 		self.menu_setup()
 		self.ind.set_menu(self.menu)

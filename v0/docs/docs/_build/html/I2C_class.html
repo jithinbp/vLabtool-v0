@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -64,21 +64,19 @@
 <dd><div class="first highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ADDRESS</span> <span class="o">=</span> <span class="mh">0x1E</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Labtools</span> <span class="kn">import</span> <span class="n">interface</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">Interface</span><span class="p">()</span> 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Alternately, you may skip using I2C as a child instance of Interface, </span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># and instead use I2C=Labtools.I2C_class.I2C(Labtools.packet_handler.Handler())</span>
+<span class="go">#Alternately, you may skip using I2C as a child instance of Interface, </span>
+<span class="go">#and instead use I2C=Labtools.I2C_class.I2C(Labtools.packet_handler.Handler())</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">bulkWrite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADDRESS</span><span class="p">,[</span><span class="mh">0x01</span><span class="p">,</span><span class="mi">0</span><span class="o">&lt;&lt;</span><span class="mi">5</span><span class="p">])</span> <span class="c"># writing to 0x1E, set gain(0x01) to smallest(0)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">bulkWrite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADDRESS</span><span class="p">,[</span><span class="mh">0x02</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c"># writing to 0x1E, set mode conf(0x02), continuous measurement(0)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">bulkRead</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ADDRESS</span><span class="p">,</span><span class="n">addr</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c"># read 6 bytes from addr register on I2C device located at ADDRESS</span>
-</pre></div>
-</div>
+<p># writing to 0x1E, set gain(0x01) to smallest(0)
+&gt;&gt;&gt; I.I2C.bulkWrite(ADDRESS,[0x01,0])</p>
+<p># writing to 0x1E, set mode conf(0x02), continuous measurement(0)
+&gt;&gt;&gt; I.I2C.bulkWrite(ADDRESS,[0x02,0])</p>
+<p># read 6 bytes from addr register on I2C device located at ADDRESS
+&gt;&gt;&gt; vals = I.I2C.bulkRead(ADDRESS,addr,6)</p>
 <div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">int16</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">int16</span><span class="p">((</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">|</span><span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>       <span class="c">#conversion to signed datatype</span>
+<span class="go">#conversion to signed datatype</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="n">int16</span><span class="p">((</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">|</span><span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="o">=</span><span class="n">int16</span><span class="p">((</span><span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">|</span><span class="n">vals</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="o">=</span><span class="n">int16</span><span class="p">((</span><span class="n">vals</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">|</span><span class="n">vals</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span>
@@ -99,7 +97,25 @@
 <dl class="method">
 <dt id="I2C_class.I2C.pullSCLLow">
 <tt class="descname">pullSCLLow</tt><big>(</big><em>uS</em><big>)</big><a class="reference internal" href="_modules/I2C_class.html#I2C.pullSCLLow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#I2C_class.I2C.pullSCLLow" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Hold SCL pin at 0V for a specified time period. Used by certain sensors such
+as MLX90316 PIR for initializing.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>uS</td>
+<td>Time(in uS) to hold SCL output at 0 Volts</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="I2C_class.I2C.config">
@@ -143,8 +159,8 @@
 </tr>
 <tr class="row-odd"><td>rw</td>
 <td>Read/write.
-* 0 for writing
-* 1 for reading.</td>
+- 0 for writing
+- 1 for reading.</td>
 </tr>
 </tbody>
 </table>
@@ -273,7 +289,27 @@ Use start(address) for this.</p>
 <dl class="method">
 <dt id="I2C_class.I2C.simpleRead">
 <tt class="descname">simpleRead</tt><big>(</big><em>addr</em>, <em>numbytes</em><big>)</big><a class="reference internal" href="_modules/I2C_class.html#I2C.simpleRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#I2C_class.I2C.simpleRead" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Read bytes from I2C slave without first transmitting the read location.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>addr</td>
+<td>Address of I2C slave</td>
+</tr>
+<tr class="row-odd"><td>numbytes</td>
+<td>Total Bytes to read</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="I2C_class.I2C.read">
@@ -321,12 +357,57 @@ with Nack.</p>
 <dl class="method">
 <dt id="I2C_class.I2C.writeBulk">
 <tt class="descname">writeBulk</tt><big>(</big><em>device_address</em>, <em>bytestream</em><big>)</big><a class="reference internal" href="_modules/I2C_class.html#I2C.writeBulk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#I2C_class.I2C.writeBulk" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>write bytes to I2C slave</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>device_address</td>
+<td>Address of I2C slave</td>
+</tr>
+<tr class="row-odd"><td>bytestream</td>
+<td>List of bytes to write</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="I2C_class.I2C.scan">
 <tt class="descname">scan</tt><big>(</big><em>frequency=100000</em>, <em>verbose=False</em><big>)</big><a class="reference internal" href="_modules/I2C_class.html#I2C.scan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#I2C_class.I2C.scan" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Scan I2C port for connected devices</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Arguments</strong></th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Frequency</td>
+<td>I2C clock frequency</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of addresses of connected I2C slave devices</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

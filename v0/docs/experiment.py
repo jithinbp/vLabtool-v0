@@ -13,7 +13,6 @@ import functools,random
 
 from templates import template_exp
 import time,sys
-from customui_rc import *
 import custom_widgets as Widgets
  
 import numpy as np
@@ -231,20 +230,20 @@ class Experiment(QtGui.QMainWindow,template_exp.Ui_MainWindow,Widgets.CustomWidg
 		self.splash.repaint()
 
 	def showSplash(self):
-			import pkg_resources
-			splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('vLabtool.stylesheets', "splash3.png"))
-			self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
-			# adding progress bar
-			self.progressBar = QtGui.QProgressBar(self.splash)
-			self.progressBar.resize(self.splash.width(),20)
-			css = pkg_resources.resource_string('vLabtool', "stylesheets/splash.css")
-			if css:
-				self.splash.setStyleSheet(css)
-			self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")
-			self.splash.setMask(splash_pix.mask())
-			self.splashMsg.setText('Loading....');self.splashMsg.resize(self.progressBar.width(),20)
-			self.splash.show()
-			self.splash.repaint()
+		import pkg_resources
+		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('v0.stylesheets', "splash3.png"))
+		self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
+		# adding progress bar
+		self.progressBar = QtGui.QProgressBar(self.splash)
+		self.progressBar.resize(self.splash.width(),20)
+		css = pkg_resources.resource_string('v0', "stylesheets/splash.css")
+		if css:
+			self.splash.setStyleSheet(css)
+		self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")
+		self.splash.setMask(splash_pix.mask())
+		self.splashMsg.setText('Loading....');self.splashMsg.resize(self.progressBar.width(),20)
+		self.splash.show()
+		self.splash.repaint()
 
 	
 	def run(self):
@@ -375,42 +374,49 @@ class Experiment(QtGui.QMainWindow,template_exp.Ui_MainWindow,Widgets.CustomWidg
 			print 'Device Not Connected.'
 		
   	def addConsole(self,**args):
-		#read arguments
-		self.I = args.get('I',self.I)
-		self.showSplash();self.updateSplash(10,'Importing iPython Widgets...')
-		from iPythonEmbed import QIPythonWidget;self.updateSplash(10,'Creating Dock Widget...')
-		#-------create an area for it to sit------
-		dock = QtGui.QDockWidget()
-		dock.setFeatures(QtGui.QDockWidget.DockWidgetMovable|QtGui.QDockWidget.DockWidgetFloatable)#|QDockWidget.DockWidgetVerticalTitleBar)
-		dock.setWindowTitle("Interactive Python Console")
-		fr = QtGui.QFrame();self.updateSplash(10)
-		dock.setWidget(fr)
-		self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock)
-		fr.setFrameShape(QtGui.QFrame.StyledPanel)
-		fr.setFrameShadow(QtGui.QFrame.Raised);self.updateSplash(10,'Embedding IPython Widget...')
+  		try:
+			#read arguments
+			self.I = args.get('I',self.I)
+			self.showSplash();self.updateSplash(10,'Importing iPython Widgets...')
+			from iPythonEmbed import QIPythonWidget;self.updateSplash(10,'Creating Dock Widget...')
+			#-------create an area for it to sit------
+			dock = QtGui.QDockWidget()
+			dock.setFeatures(QtGui.QDockWidget.DockWidgetMovable|QtGui.QDockWidget.DockWidgetFloatable)#|QDockWidget.DockWidgetVerticalTitleBar)
+			dock.setWindowTitle("Interactive Python Console")
+			fr = QtGui.QFrame();self.updateSplash(10)
+			dock.setWidget(fr)
+			self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock)
+			fr.setFrameShape(QtGui.QFrame.StyledPanel)
+			fr.setFrameShadow(QtGui.QFrame.Raised);self.updateSplash(10,'Embedding IPython Widget...')
 
-		#--------instantiate the iPython class-------
-		self.ipyConsole = QIPythonWidget(customBanner="An interactive Python Console!\n");self.updateSplash(10)
-		layout = QtGui.QVBoxLayout(fr)
-		layout.setMargin(0)
-		layout.addWidget(self.ipyConsole);self.updateSplash(10,'Preparing default command dictionary...')        
-		cmdDict = {"delayedTask":self.delayedTask,"loopTask":self.loopTask,"addWidget":self.addWidget,"setCommand":self.setCommand,"Widgets":Widgets}
-		#if self.graphContainer1_enabled:cmdDict["graph"]=self.graph
-		if self.I :
-			cmdDict["I"]=self.I
-			self.ipyConsole.printText("Access hardware using the Instance 'I'.  e.g.  I.get_average_voltage('CH1')")
-		self.ipyConsole.pushVariables(cmdDict);self.updateSplash(10,'Winding up...')
-		self.console_enabled=True
-		self.splash.finish(dock);self.updateSplash(10)
-		dock.widget().setMaximumSize(QtCore.QSize(self.width(), self.height()/3))
-		dock.widget().setMinimumSize(QtCore.QSize(self.width(), self.height()/3))
-		print dock.width(),dock.height()
-		def dockResize():
-			dock.widget().setMaximumSize(65535,65535)
-			dock.widget().setMinimumSize(60,60)
-		self.delayedTask(0,dockResize)
-		return self.ipyConsole
-
+			#--------instantiate the iPython class-------
+			self.ipyConsole = QIPythonWidget(customBanner="An interactive Python Console!\n");self.updateSplash(10)
+			layout = QtGui.QVBoxLayout(fr)
+			layout.setMargin(0)
+			layout.addWidget(self.ipyConsole);self.updateSplash(10,'Preparing default command dictionary...')        
+			cmdDict = {"delayedTask":self.delayedTask,"loopTask":self.loopTask,"addWidget":self.addWidget,"setCommand":self.setCommand,"Widgets":Widgets}
+			#if self.graphContainer1_enabled:cmdDict["graph"]=self.graph
+			if self.I :
+				cmdDict["I"]=self.I
+				self.ipyConsole.printText("Access hardware using the Instance 'I'.  e.g.  I.get_average_voltage('CH1')")
+			self.ipyConsole.pushVariables(cmdDict);self.updateSplash(10,'Winding up...')
+			self.console_enabled=True
+			self.splash.finish(dock);self.updateSplash(10)
+			dock.widget().setMaximumSize(QtCore.QSize(self.width(), self.height()/3))
+			dock.widget().setMinimumSize(QtCore.QSize(self.width(), self.height()/3))
+			print dock.width(),dock.height()
+			def dockResize():
+				dock.widget().setMaximumSize(65535,65535)
+				dock.widget().setMinimumSize(60,60)
+			self.delayedTask(0,dockResize)
+			return self.ipyConsole
+		except:
+			self.splash.finish(self);self.updateSplash(10)
+			errbox = QtGui.QMessageBox()
+			errbox.setStyleSheet('background:#fff;')
+			print errbox.styleSheet()
+			errbox.about(self, "Error", "iPython-qtconsole not found.\n Please Install the module")
+			
  	def showHelp(self):
  		from PyQt4 import QtWebKit
 		dock = QtGui.QMainWindow()
@@ -431,6 +437,17 @@ class Experiment(QtGui.QMainWindow,template_exp.Ui_MainWindow,Widgets.CustomWidg
 		URL = pkg_resources.resource_filename(__name__, os.path.join('helpfiles','interface.html'))
 		self.helpView.setUrl(QtCore.QUrl(URL))			
 		self.fullHelpWindow = dock
+
+ 	def showImageMap(self):
+ 		from PyQt4 import QtWebKit
+		dock = QtGui.QMainWindow()
+		self.helpView = QtWebKit.QWebView()
+		dock.setCentralWidget(self.helpView)
+		dock.setWindowTitle("Help window")
+		dock.show()
+		URL = pkg_resources.resource_filename(__name__, os.path.join('helpfiles','imagemap.html'))
+		self.helpView.setUrl(QtCore.QUrl(URL))			
+		self.imageMapHelp = dock
 
 
 	def setHelpUrl(self,url):

@@ -191,6 +191,7 @@ HX711_HEADER = 1
 HCSR04_HEADER = 2
 AM2302_HEADER = 3
 TCD1304_HEADER = 4
+STEPPER_MOTOR = 5
 #--------COMMUNICATION PASSTHROUGHS--------
 #Data sent to the device is directly routed to output ports such as (SCL, SDA for UART)
 

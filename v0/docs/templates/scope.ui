@@ -150,7 +150,7 @@ border-color: rgb(29, 122, 162);
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>180</y>
+             <y>140</y>
              <width>281</width>
              <height>71</height>
             </rect>
@@ -236,6 +236,16 @@ border-color: rgb(29, 122, 162);
               <string>CH2</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>CH3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>MIC</string>
+             </property>
+            </item>
            </widget>
            <widget class="QLabel" name="label_48">
             <property name="geometry">
@@ -263,7 +273,7 @@ border-color: rgb(29, 122, 162);
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>250</y>
+             <y>220</y>
              <width>281</width>
              <height>71</height>
             </rect>
@@ -350,7 +360,7 @@ border-color: rgb(29, 122, 162);
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>380</y>
+             <y>370</y>
              <width>281</width>
              <height>71</height>
             </rect>
@@ -448,6 +458,9 @@ border-color: rgb(29, 122, 162);
               <height>21</height>
              </rect>
             </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <item>
              <property name="text">
               <string>CH1</string>
@@ -464,7 +477,7 @@ border-color: rgb(29, 122, 162);
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>320</y>
+             <y>300</y>
              <width>281</width>
              <height>61</height>
             </rect>
@@ -488,7 +501,7 @@ border-color: rgb(29, 122, 162);
              </rect>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>4</number>
             </property>
             <item>
              <property name="text">
@@ -498,6 +511,16 @@ border-color: rgb(29, 122, 162);
             <item>
              <property name="text">
               <string>CH2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>CH3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>MIC</string>
              </property>
             </item>
             <item>
@@ -529,7 +552,7 @@ border-color: rgb(29, 122, 162);
              </rect>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>4</number>
             </property>
             <item>
              <property name="text">
@@ -539,6 +562,16 @@ border-color: rgb(29, 122, 162);
             <item>
              <property name="text">
               <string>CH2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>CH3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>MIC</string>
              </property>
             </item>
             <item>
@@ -596,7 +629,7 @@ border-color: rgb(29, 122, 162);
              <x>10</x>
              <y>10</y>
              <width>281</width>
-             <height>161</height>
+             <height>121</height>
             </rect>
            </property>
            <property name="frameShape">
@@ -609,7 +642,7 @@ border-color: rgb(29, 122, 162);
             <property name="geometry">
              <rect>
               <x>220</x>
-              <y>0</y>
+              <y>10</y>
               <width>61</width>
               <height>21</height>
              </rect>
@@ -619,8 +652,8 @@ border-color: rgb(29, 122, 162);
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>0</y>
-              <width>201</width>
+              <y>10</y>
+              <width>31</width>
               <height>21</height>
              </rect>
             </property>
@@ -640,8 +673,8 @@ border-color: rgb(29, 122, 162);
             <property name="geometry">
              <rect>
               <x>20</x>
-              <y>80</y>
-              <width>201</width>
+              <y>50</y>
+              <width>41</width>
               <height>21</height>
              </rect>
             </property>
@@ -657,32 +690,11 @@ border-color: rgb(29, 122, 162);
              <string>CH2</string>
             </property>
            </widget>
-           <widget class="QLabel" name="label_26">
-            <property name="geometry">
-             <rect>
-              <x>240</x>
-              <y>80</y>
-              <width>31</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>50</weight>
-              <italic>true</italic>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string> CH2</string>
-            </property>
-           </widget>
            <widget class="QComboBox" name="comboBox_6">
             <property name="geometry">
              <rect>
-              <x>10</x>
-              <y>35</y>
+              <x>130</x>
+              <y>10</y>
               <width>78</width>
               <height>21</height>
              </rect>
@@ -731,8 +743,8 @@ border-color: rgb(29, 122, 162);
            <widget class="QComboBox" name="comboBox_7">
             <property name="geometry">
              <rect>
-              <x>20</x>
-              <y>106</y>
+              <x>130</x>
+              <y>50</y>
               <width>78</width>
               <height>20</height>
              </rect>
@@ -781,8 +793,8 @@ border-color: rgb(29, 122, 162);
            <widget class="QLabel" name="label_30">
             <property name="geometry">
              <rect>
-              <x>30</x>
-              <y>60</y>
+              <x>90</x>
+              <y>10</y>
               <width>31</width>
               <height>17</height>
              </rect>
@@ -794,8 +806,8 @@ border-color: rgb(29, 122, 162);
            <widget class="QLabel" name="label_31">
             <property name="geometry">
              <rect>
-              <x>40</x>
-              <y>130</y>
+              <x>90</x>
+              <y>50</y>
               <width>31</width>
               <height>17</height>
              </rect>
@@ -808,7 +820,7 @@ border-color: rgb(29, 122, 162);
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
+              <y>10</y>
               <width>21</width>
               <height>20</height>
              </rect>
@@ -824,48 +836,13 @@ border-color: rgb(29, 122, 162);
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>80</y>
+              <y>50</y>
               <width>21</width>
               <height>20</height>
              </rect>
             </property>
             <property name="text">
              <string/>
-            </property>
-           </widget>
-           <widget class="QSlider" name="offsetSlider">
-            <property name="geometry">
-             <rect>
-              <x>100</x>
-              <y>30</y>
-              <width>141</width>
-              <height>29</height>
-             </rect>
-            </property>
-            <property name="maximum">
-             <number>4095</number>
-            </property>
-            <property name="pageStep">
-             <number>10</number>
-            </property>
-            <property name="value">
-             <number>2047</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_10">
-            <property name="geometry">
-             <rect>
-              <x>160</x>
-              <y>60</y>
-              <width>66</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Offset</string>
             </property>
            </widget>
            <widget class="QLabel" name="offsetLabel">
@@ -879,6 +856,43 @@ border-color: rgb(29, 122, 162);
             </property>
             <property name="text">
              <string>.</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="FOURCHAN_ENABLE">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>90</y>
+              <width>21</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QLabel" name="CH2_LABEL_2">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>90</y>
+              <width>101</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>CH3 , MIC</string>
             </property>
            </widget>
           </widget>
@@ -1294,6 +1308,11 @@ border-color: rgb(29, 122, 162);
                 <string>CH1</string>
                </property>
               </item>
+              <item>
+               <property name="text">
+                <string>Fin</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item row="1" column="2">
@@ -1381,6 +1400,11 @@ border-color: rgb(29, 122, 162);
               <item>
                <property name="text">
                 <string>CH1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Fin</string>
                </property>
               </item>
              </widget>
@@ -1550,6 +1574,11 @@ border-color: rgb(29, 122, 162);
               <string>CH1</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Fin</string>
+             </property>
+            </item>
            </widget>
           </widget>
           <widget class="QFrame" name="frame_10">
@@ -1616,6 +1645,11 @@ border-color: rgb(29, 122, 162);
                 <string>CH1</string>
                </property>
               </item>
+              <item>
+               <property name="text">
+                <string>Fin</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item>
@@ -1660,8 +1694,8 @@ border-color: rgb(29, 122, 162);
             <rect>
              <x>10</x>
              <y>0</y>
-             <width>279</width>
-             <height>211</height>
+             <width>297</width>
+             <height>260</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -1750,14 +1784,14 @@ border-color: rgb(29, 122, 162);
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Wavegen</string>
+               <string>Wave 1</string>
               </property>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLabel" name="label_19">
+             <widget class="QLabel" name="WAVE1_FREQ">
               <property name="text">
-               <string>10Hz to 1MHz</string>
+               <string>10Hz to 5KHz</string>
               </property>
              </widget>
             </item>
@@ -1821,13 +1855,148 @@ border-color: rgb(29, 122, 162);
               </property>
              </widget>
             </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Wave 2</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLabel" name="WAVE2_FREQ">
+              <property name="text">
+               <string>10Hz to 5KHz</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QDoubleSpinBox" name="sinebox1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximum">
+               <double>1000000.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_24">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <italic>true</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="label_25">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <italic>true</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>phase</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="label_26">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <italic>true</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Correlate</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QDoubleSpinBox" name="sinePhase_freq">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <double>5.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>5000.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QDoubleSpinBox" name="sinePhase_phase">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="decimals">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <double>359.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2">
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>SET PHASE</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="layoutWidget_2">
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>220</y>
+             <y>250</y>
              <width>271</width>
              <height>159</height>
             </rect>
@@ -2012,6 +2181,9 @@ border-color: rgb(29, 122, 162);
              <height>17</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>Msg:</string>
            </property>
@@ -2119,44 +2291,12 @@ border-color: rgb(29, 122, 162);
    <slot>set_dchan_mode_ch3(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>284</y>
+     <x>192</x>
+     <y>359</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
      <y>393</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>plot_liss()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>303</x>
-     <y>465</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>change_scope_type(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>866</x>
-     <y>48</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -2167,44 +2307,12 @@ border-color: rgb(29, 122, 162);
    <slot>set_dchan_mode_ch2(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>284</y>
+     <x>192</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
      <y>348</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>liss_animate(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>276</x>
-     <y>495</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>719</x>
-     <y>562</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>trigger_select_box</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTriggerChannel(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>175</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>286</y>
     </hint>
    </hints>
   </connection>
@@ -2231,28 +2339,12 @@ border-color: rgb(29, 122, 162);
    <slot>set_dchan_mode_ch1(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>284</y>
+     <x>192</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
      <y>308</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_11</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTriggerLevel(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>295</x>
-     <y>304</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>359</y>
     </hint>
    </hints>
   </connection>
@@ -2263,28 +2355,12 @@ border-color: rgb(29, 122, 162);
    <slot>set_dchan_mode_ch4(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>284</y>
+     <x>192</x>
+     <y>385</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
      <y>466</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>timebase_dial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setTimeBase(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>296</x>
-     <y>375</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>892</x>
-     <y>445</y>
     </hint>
    </hints>
   </connection>
@@ -2295,8 +2371,8 @@ border-color: rgb(29, 122, 162);
    <slot>measure_interval()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>434</y>
+     <x>151</x>
+     <y>495</y>
     </hint>
     <hint type="destinationlabel">
      <x>272</x>
@@ -2311,8 +2387,8 @@ border-color: rgb(29, 122, 162);
    <slot>sqr_update()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>294</y>
+     <x>142</x>
+     <y>452</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -2327,8 +2403,8 @@ border-color: rgb(29, 122, 162);
    <slot>sqr_phase(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>304</y>
+     <x>203</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -2343,8 +2419,8 @@ border-color: rgb(29, 122, 162);
    <slot>sqr_dc(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>304</y>
+     <x>295</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -2359,8 +2435,8 @@ border-color: rgb(29, 122, 162);
    <slot>setSINE1(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>84</y>
+     <x>295</x>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2375,8 +2451,8 @@ border-color: rgb(29, 122, 162);
    <slot>setPVS1(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>84</y>
+     <x>295</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2391,8 +2467,8 @@ border-color: rgb(29, 122, 162);
    <slot>setPVS2(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>84</y>
+     <x>295</x>
+     <y>107</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2407,8 +2483,8 @@ border-color: rgb(29, 122, 162);
    <slot>setPVS3(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>84</y>
+     <x>295</x>
+     <y>136</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2423,12 +2499,140 @@ border-color: rgb(29, 122, 162);
    <slot>setPCS(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>84</y>
+     <x>295</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
      <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sinebox1</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setSINE2(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>227</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setSinePhase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>plot_liss()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>455</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>change_scope_type(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>866</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>liss_animate(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>719</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trigger_select_box</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTriggerChannel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_11</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTriggerLevel(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timebase_dial</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTimeBase(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>892</x>
+     <y>445</y>
     </hint>
    </hints>
   </connection>
@@ -2439,8 +2643,8 @@ border-color: rgb(29, 122, 162);
    <slot>setGainCH1(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>116</y>
+     <x>218</x>
+     <y>95</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2455,8 +2659,8 @@ border-color: rgb(29, 122, 162);
    <slot>setGainCH2(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>71</x>
-     <y>182</y>
+     <x>197</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>-7</x>
@@ -2477,22 +2681,6 @@ border-color: rgb(29, 122, 162);
     <hint type="destinationlabel">
      <x>-1</x>
      <y>127</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>offsetSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setOffset(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>216</x>
-     <y>110</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>342</x>
-     <y>-2</y>
     </hint>
    </hints>
   </connection>
@@ -2544,5 +2732,6 @@ border-color: rgb(29, 122, 162);
   <slot>autoset()</slot>
   <slot>setSINEPHASE(double)</slot>
   <slot>collapse_waveform()</slot>
+  <slot>setSinePhase()</slot>
  </slots>
 </ui>

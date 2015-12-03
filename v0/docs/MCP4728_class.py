@@ -1,6 +1,19 @@
 from commands_proto import *
+
 import I2C_class
 import numpy as np
+
+class DACCHAN:
+	def __init__(self,name,span,channum,**kwargs):
+		self.name = name
+		self.channum=channum
+		self.VREF = kwargs.get('VREF',0)
+		self.SwitchedOff = kwargs.get('STATE',0)
+		self.range = span
+		slope = (span[1]-span[0])
+		intercept = span[0]
+		self.VToCode = np.poly1d([4095./slope,-4095.*intercept/slope ])
+		self.CodeToV = np.poly1d([slope/4095.,intercept ])
 
 class MCP4728:
 	defaultVDD =3300
@@ -20,43 +33,64 @@ class MCP4728:
 		self.addr = 0x60|self.devid		#0x60 is the base address
 		self.H=H
 		self.I2C = I2C_class.I2C(self.H)
+		print int( (1./2e6-1./1e7)*64e6-1 )
 		self.SWITCHEDOFF=[0,0,0,0]
 		self.VREFS=[0,0,0,0]  #0=Vdd,1=Internal reference
-		self.VRANGES=[[ -3.3e-3,0],[0.,3.3],[-3.3,3.3],[-5.,5.]]
-		self.VtoCode=[]
-		for a in self.VRANGES:
-			slope = (a[1]-a[0])
-			intercept = a[0]
-			self.VtoCode.append(np.poly1d([4095./slope,-4095.*intercept/slope ]))
-		print self.VtoCode
+		self.CHANS = {'PCS':DACCHAN('PCS',[3.3e-3,0],0),'PVS3':DACCHAN('PVS3',[0,3.3],1),'PVS2':DACCHAN('PVS2',[-3.3,3.3],2),'PVS1':DACCHAN('PVS1',[-5.,5.],3)}
+		self.CHANNEL_MAP={0:'PCS',1:'PVS3',2:'PVS2',3:'PVS1'}
+		self.calibration_enabled={'PVS1':False,'PVS2':False,'PVS3':False,'PCS':False}
+		self.calibration_tables={'PVS1':[],'PVS2':[],'PVS3':[],'PCS':[]}
 
-	def setVoltage(self,chan,v):
-		chanMaps={'PCS':0,'PVS3':0,'PVS2':2,'PVS1':3}
-		dacChan = chanMaps[chan]
-		chan = ['PCS','PVS3','PVS2','PVS1'].index(chan)
-		R=self.VtoCode[chan]
-		v = int(R(v))
-		self.__setRawVoltage__(dacChan,v)
-		R=self.VRANGES[chan]
-		return (R[1]-R[0])*v/4095.+R[0]
 
-	def __setRawVoltage__(self,chan,v,ADD_CALIBRATION=False):
-		self.H.__sendByte__(DAC) #DAC write coming through.(MCP4922)
-		if(ADD_CALIBRATION):self.H.__sendByte__(SET_CALIBRATED_DAC)
-		else:self.H.__sendByte__(SET_DAC)
+	def load_calibration(self,name,table):
+		self.calibration_enabled[name]=True
+		self.calibration_tables[name] = table
+
+	def setVoltage(self,name,v):
+		chan = self.CHANS[name]
+		v = int(round(chan.VToCode(v)))		
+		return  self.__setRawVoltage__(name,v)
+
+	def __setRawVoltage__(self,name,v):
+		v=int(np.clip(v,0,4095))
+		CHAN = self.CHANS[name]
+		'''
+		self.H.__sendByte__(DAC) #DAC write coming through.(MCP4728)
+		self.H.__sendByte__(SET_DAC)
 		self.H.__sendByte__(self.addr<<1)	#I2C address
-		self.H.__sendByte__(chan)		#DAC channel
-		self.H.__sendInt__((self.VREFS[chan] << 15) | (self.SWITCHEDOFF[chan] << 13) | (1 << 12) | v )
-		#print chan,hex((self.VREFS[chan] << 15) | (self.SWITCHEDOFF[chan] << 13) | (1 << 12) | v )
-		if(ADD_CALIBRATION):
-			val = self.H.__getInt__()
-			#print 'val, correction: ',v,val-v
-		else: pass#print v
+		self.H.__sendByte__(CHAN.channum)		#DAC channel
+		if self.calibration_enabled[name]:
+			val = v+self.calibration_tables[name][v]
+			#print val,v,self.calibration_tables[name][v]
+			self.H.__sendInt__((CHAN.VREF << 15) | (CHAN.SwitchedOff << 13) | (0 << 12) | (val) )
+		else:
+			self.H.__sendInt__((CHAN.VREF << 15) | (CHAN.SwitchedOff << 13) | (0 << 12) | v )
+
 		self.H.__get_ack__()
-		if chan==0:chan=1   #pvs3=pcs=DAC channel 1
-		R=self.VRANGES[chan]
-		#print 'code',self.VtoCode[chan]((R[1]-R[0])*v/4095.+R[0])
-		return (R[1]-R[0])*v/4095.+R[0]
+		'''
+		if self.calibration_enabled[name]:
+			val = int(v+self.calibration_tables[name][v])
+			#print val,v,self.calibration_tables[name][v]
+			self.I2C.writeBulk(self.addr,[64|(CHAN.channum<<1),(val>>8)&0x0F,val&0xFF])
+		else:
+			self.I2C.writeBulk(self.addr,[64|(CHAN.channum<<1),(v>>8)&0x0F,v&0xFF])
+
+		return CHAN.CodeToV(v)
+
+
+	def __samplewriteall__(self,v1):
+		self.I2C.start(self.addr,0)
+		self.I2C.send((v1>>8)&0xF )
+		self.I2C.send(v1&0xFF)
+		self.I2C.send((v1>>8)&0xF )
+		self.I2C.send(v1&0xFF)
+		self.I2C.send((v1>>8)&0xF )
+		self.I2C.send(v1&0xFF)
+		self.I2C.send((v1>>8)&0xF )
+		self.I2C.send(v1&0xFF)
+		self.I2C.stop()
+
+
 
 	def __writeall__(self,v1,v2,v3,v4):
 		self.I2C.start(self.addr,0)

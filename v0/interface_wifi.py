@@ -36,7 +36,7 @@ import math
 
 def connect(**kwargs):
 	'''
-	If EYES hardware in found, returns an instance of 'Eyes', else returns None.
+	If vLabtool hardware is found, returns an instance of 'Interface', else returns None.
 	'''
 	obj = Interface(**kwargs)
 	if obj.H.fd != None:
@@ -3104,8 +3104,8 @@ class Interface(object):
 
 if __name__ == "__main__":
 	print """this is not an executable file
-	from vLabtool import interface
-	I=interface.Interface()
+	from v0 import interface
+	I=interface.connect()
 	
 	You're good to go.
 	

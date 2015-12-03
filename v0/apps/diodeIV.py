@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Transistor CE characteristics
+Study Current Voltage characteristics of PN junctions.
 '''
 
 import os
