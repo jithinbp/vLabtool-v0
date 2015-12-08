@@ -1043,7 +1043,7 @@ class Interface():
         scale=self.H.__getByte__()
         val = self.H.__getLong__()
         self.H.__get_ack__()
-        print hex(val)
+        #print hex(val)
         return scale*(val)/1.0e-1 #100mS sampling
 
 
@@ -1970,6 +1970,7 @@ class Interface():
         GOOD_VOLTS=[2.5,2.8]
         CT=100
         CR=1
+        iterations = 0
         while 1:
             V,C = self.__get_capacitance__(CR,0,CT)
             if CT>30000 and V<0.1:
@@ -1978,9 +1979,12 @@ class Interface():
             elif V>GOOD_VOLTS[0] and V<GOOD_VOLTS[1]:
                 return C
             elif V<GOOD_VOLTS[0] and V>0.1 and CT<40000:
-                if GOOD_VOLTS[0]/V >1.1:
+                if GOOD_VOLTS[0]/V >1.1 and iterations<10:
                     CT=int(CT*GOOD_VOLTS[0]/V)
+                    iterations+=1
                     print 'increased CT ',CT
+                elif iterations==10:
+                    return 0
                 else:
                     return C
             elif V<=0.1 and CR<3:

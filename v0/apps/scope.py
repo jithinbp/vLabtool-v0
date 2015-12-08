@@ -36,9 +36,10 @@ fps = None
 dacval=0
 from v0.commands_proto import *
 
-
-image = 'scope.png'
-#helpfile = 'index.html'
+params = {
+'image' : 'scope.png',
+'name':'Oscilloscope'
+}
 
 
 
@@ -107,14 +108,17 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 		self.curve4 = self.plot.plot(name='CH4'); self.curve4.setPen(color=self.trace_colors[3], width=1)
 		self.curve_lis = self.plot.plot(); self.curve_lis.setPen(color=(255,255,255), width=1)
 
-		self.curve_fitL = self.plot.plot(); self.curve_fitL.setPen(color=(255,255,255), width=1)
+		self.curveF=[]
+		for a in range(2):
+			self.curveF.append( self.plot.plot() ); self.curveF[-1].setPen(color=(255,255,255), width=1)
 
-		self.curve_fitR = pg.PlotDataItem()
-		self.plot2.addItem(self.curve_fitR); self.curve_fitR.setPen(color=(255,255,255), width=1)
 
 		self.curveB = pg.PlotDataItem(name='CH2')
 		self.plot2.addItem(self.curveB)
 		self.curveB.setPen(color=self.trace_colors[1], width=1)
+
+		self.curveFR = pg.PlotDataItem()
+		self.plot2.addItem(self.curveFR); self.curveFR.setPen(color=(255,255,255), width=1)
 
 		self.CH1_ENABLE.setStyleSheet('background-color:rgba'+str(self.trace_colors[0])[:-1]+',3);color:(0,0,0);')
 		self.CH2_ENABLE.setStyleSheet('background-color:rgba'+str(self.trace_colors[1])[:-1]+',3);color:(0,0,0);')
@@ -207,19 +211,24 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 		self.curve3.clear()
 		self.curve4.clear()
 		self.curveB.clear()
-		self.curve_fitL.clear()
-		self.curve_fitR.clear()
+		self.curveF[0].clear()
+		self.curveF[1].clear()
+		self.curveFR.clear()
 
 		msg='';pos=0
-		plotnum=0
-		for fitsel in [self.fit_select_box.currentIndex(),self.fit_select_box_2.currentIndex()]:
-			plotnum+=1
-			if fitsel<4:
+		for fitsel in [self.fit_select_box,self.fit_select_box_2]:
+			if fitsel.currentIndex()<4:
 				if len(msg)>0:
 					msg+='\n'
-				if self.channel_states[fitsel]:
-					msg+='FIT '+chr(pos+65)+': '+self.fitData(self.I.achans[fitsel].get_xaxis(),\
-					self.I.achans[fitsel].get_yaxis(),plotnum)
+				if self.channel_states[fitsel.currentIndex()]:
+					if fitsel.currentText()=='CH2':
+						msg+='FIT '+chr(pos+65)+': '+self.fitData(self.I.achans[fitsel.currentIndex()].get_xaxis(),\
+						self.I.achans[fitsel.currentIndex()].get_yaxis(),self.curveFR)
+					else:
+						msg+='FIT '+chr(pos+65)+': '+self.fitData(self.I.achans[fitsel.currentIndex()].get_xaxis(),\
+						self.I.achans[fitsel.currentIndex()].get_yaxis(),self.curveF[pos])
+
+
 				else:
 					msg+='FIT '+chr(pos+65)+': Channel Unavailable'
 
@@ -282,7 +291,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 			self.coord_label.setText("")
 
 
-	def fitData(self,xReal,yReal,plotnum):
+	def fitData(self,xReal,yReal,curve):
 		if self.fit_type_box.currentIndex()==0: #sine wave
 			fitres = self.math.sineFit(xReal,yReal)
 			if fitres:
@@ -313,8 +322,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 			
 				if(self.overlay_fit_button.isChecked()):
 					x=np.linspace(0,xReal[-1],50000)
-					if plotnum==1:self.curve_fitL.setData(x*1e-6,self.math.sineFunc(x,amp,frequency,ph*np.pi/180,offset))
-					elif plotnum==2:self.curve_fitR.setData(x*1e-6,self.math.sineFunc(x,amp,frequency,ph*np.pi/180,offset))
+					curve.setData(x*1e-6,self.math.sineFunc(x,amp,frequency,ph*np.pi/180,offset))
 				return 'Amp = %0.3fV \tFreq=%0.2fHz \tOffset=%0.3fV \tPhase=%0.1f%c'%(amp, freq, offset,ph,176)
 			else:
 				return 'fit failed'
@@ -350,8 +358,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 			
 				if(self.overlay_fit_button.isChecked()):
 					x=np.linspace(0,xReal[-1],50000)
-					if plotnum==1:self.curve_fitL.setData(x*1e-6,self.math.squareFunc(x,amp,frequency,phase,dc,offset))
-					elif plotnum==2:self.curve_fitR.setData(x*1e-6,self.math.squareFunc(x,amp,frequency,phase,dc,offset))
+					curve.setData(x*1e-6,self.math.squareFunc(x,amp,frequency,phase,dc,offset))
 				return 'Amp = %0.3fV \tFreq=%0.2fHz \tDC=%0.3fV \tOffset=%0.3fV'%(amp, freq,dc,offset)
 			else:
 				return 'fit failed'

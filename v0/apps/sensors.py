@@ -29,7 +29,10 @@ import numpy as np
 
 from PyQt4 import QtCore, QtGui
 
-image = 'stream.png'
+params = {
+'image' : 'sensors.png',
+'name':'Sensor\nData Logger'
+}
 
 class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):

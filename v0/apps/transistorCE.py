@@ -19,8 +19,12 @@ from v0.utilitiesClass import utilitiesClass
 
 import numpy as np
 
-image = 'transistorCE.png'
-helpfile = 'transistorCE.html'
+params = {
+'image' : 'transistorCE.png',
+'helpfile': 'transistorCE.html',
+'name':'Transistor CE\nCharacteristics'
+}
+
 class AppWindow(QtGui.QMainWindow, transistorCE.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)

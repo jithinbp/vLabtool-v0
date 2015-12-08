@@ -19,8 +19,12 @@ import pyqtgraph as pg
 
 import time
 
-image = 'stream.png'
-helpfile = 'https://hackaday.io/project/6490-a-versatile-labtool/log/20189-nrf24l01-based-wireless-nodes'
+params = {
+'image' : 'stream.png',
+'helpfile': 'https://hackaday.io/project/6490-a-versatile-labtool/log/20189-nrf24l01-based-wireless-nodes',
+'name':'wireless\nsensors'
+}
+
 
 class AppWindow(QtGui.QMainWindow, wirelessTemplate.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):

@@ -75,29 +75,32 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 
 		autogenControls=[]
 		if self.I:
-			autogenControls.append(self.autogenControl(TITLE='sine 1',MIN=10,MAX=5000,FUNC=self.I.set_sine1,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of waveform generator #1'))
-			autogenControls.append(self.autogenControl(TITLE='sine 2',MIN=10,MAX=5000,FUNC=self.I.set_sine2,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of waveform generator #2'))
-			autogenControls.append(self.autogenControl(TITLE='square 1',MIN=10,MAX=50000,FUNC=self.I.sqr1,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of square wave generator #1'))
+			if self.I.connected:
+				autogenControls.append(self.autogenControl(TITLE='sine 1',MIN=10,MAX=5000,FUNC=self.I.set_sine1,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of waveform generator #1'))
+				autogenControls.append(self.autogenControl(TITLE='sine 2',MIN=10,MAX=5000,FUNC=self.I.set_sine2,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of waveform generator #2'))
+				autogenControls.append(self.autogenControl(TITLE='square 1',MIN=10,MAX=50000,FUNC=self.I.sqr1,TYPE='dial',UNITS='Hz',TOOLTIP='Frequency of square wave generator #1'))
 
-			tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS1')
-			autogenControls.append(self.autogenControl(TITLE='PVS1',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
+				tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS1')
+				autogenControls.append(self.autogenControl(TITLE='PVS1',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
 
-			tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS2')
-			autogenControls.append(self.autogenControl(TITLE='PVS2',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
+				tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS2')
+				autogenControls.append(self.autogenControl(TITLE='PVS2',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
 
-			tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS3')
-			autogenControls.append(self.autogenControl(TITLE='PVS3',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
+				tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PVS3')
+				autogenControls.append(self.autogenControl(TITLE='PVS3',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='V',TOOLTIP='Programmable Voltage Source '))
 
-			tmpfunc = lambda x: self.I.DAC.__setRawVoltage__('PCS',4095-x)
-			autogenControls.append(self.autogenControl(TITLE='PCS',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='mA',TOOLTIP='Programmable Current Source ',SCALE_FACTOR = 1e3))
+				tmpfunc = lambda x: self.I.DAC.__setRawVoltage__('PCS',4095-x)
+				autogenControls.append(self.autogenControl(TITLE='PCS',MIN=0,MAX=4095,FUNC=tmpfunc,TYPE='dial',UNITS='mA',TOOLTIP='Programmable Current Source ',SCALE_FACTOR = 1e3))
 
-			autogenControls.append(self.autogenControl(TITLE='CAPACITANCE',FUNC=self.I.get_capacitance,TYPE='button',UNITS='F',TOOLTIP='Read Capacitance connected to CAP input '))
+				autogenControls.append(self.autogenControl(TITLE='CAPACITANCE',FUNC=self.I.get_capacitance,TYPE='button',UNITS='F',TOOLTIP='Read Capacitance connected to CAP input '))
 
-			tmpfunc = functools.partial(self.I.get_average_voltage,samples=100)
-			autogenControls.append(self.autogenControl(TITLE='VOLTMETER',FUNC=tmpfunc,TYPE='selectButton',UNITS='V',TOOLTIP='Voltmeter',OPTIONS=self.I.allAnalogChannels))
-			autogenControls.append(self.autogenControl(TITLE='Low Frequency',FUNC=self.I.get_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequency. Minimum 40Hz',OPTIONS=self.I.allDigitalChannels))
-			autogenControls.append(self.autogenControl(TITLE='High Frequency',FUNC=self.I.get_high_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequencies over 1MHz with 10Hz resolution',OPTIONS=self.I.allDigitalChannels))
-			self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+				tmpfunc = functools.partial(self.I.get_average_voltage,samples=100)
+				autogenControls.append(self.autogenControl(TITLE='VOLTMETER',FUNC=tmpfunc,TYPE='selectButton',UNITS='V',TOOLTIP='Voltmeter',OPTIONS=self.I.allAnalogChannels))
+				autogenControls.append(self.autogenControl(TITLE='Low Frequency',FUNC=self.I.get_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequency. Minimum 40Hz',OPTIONS=self.I.allDigitalChannels))
+				autogenControls.append(self.autogenControl(TITLE='High Frequency',FUNC=self.I.get_high_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequencies over 1MHz with 10Hz resolution',OPTIONS=self.I.allDigitalChannels))
+				self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+			else:
+				self.setWindowTitle('vLabtool : Not Connected')
 		else:
 			self.setWindowTitle('vLabtool : Not Connected')
 
@@ -183,7 +186,7 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 		else:
 			print self.setWindowTitle('Device Not Connected!')
 
-
+	'''
 	class experimentIcon(QtGui.QFrame,icon.Ui_Form):
 		def __init__(self,name,launchfunc):
 			super(MyMainWindow.experimentIcon, self).__init__()
@@ -199,19 +202,34 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 		def run(self):
 			self.func()
 
+	'''
+	
+	class experimentIcon(QtGui.QPushButton):
+		def __init__(self,name,launchfunc):
+			super(MyMainWindow.experimentIcon, self).__init__()
+			self.name = name
+			tmp = importlib.import_module('v0.apps.'+name)
+			print name
+			self.setText(tmp.params.get('name',name))
+			self.func = launchfunc			
+			self.clicked.connect(self.func)
+			self.setMinimumHeight(70)
+			self.setMinimumWidth(470)
+			self.setStyleSheet("border-image: url(%s) 0 0 0 0 stretch stretch;color:white;"%(pkg_resources.resource_filename('v0.apps', _fromUtf8(tmp.params.get('image','') ))))
+
+
 
 	class controlIcon(QtGui.QFrame,icon.Ui_Form):
 		def __init__(self,name,launchfunc,**kwargs):
 			super(MyMainWindow.controlIcon, self).__init__()
 			self.setupUi(self)
 			self.name = name
-			self.title.setText(self.name)
+			tmp = importlib.import_module('v0.controls.'+name)
+			self.title.setText(tmp.params.get('name',name))
 			self.func = launchfunc
 			if 'tooltip' in kwargs:self.widgetFrameOuter.setToolTip(kwargs.get('tooltip',''))
 
-			tmp = importlib.import_module('v0.controls.'+name)
-			pic = QtGui.QPixmap(pkg_resources.resource_filename('v0.controls', _fromUtf8(tmp.image)))
-			self.button.setStyleSheet("border-image: url(%s) 0 0 0 0 stretch stretch;"%(pkg_resources.resource_filename('v0.controls', _fromUtf8(tmp.image))))
+			self.button.setStyleSheet("border-image: url(%s) 0 0 0 0 stretch stretch;"%(pkg_resources.resource_filename('v0.controls', _fromUtf8(tmp.params.get('image','')))))
 
 		def run(self):
 			self.func()

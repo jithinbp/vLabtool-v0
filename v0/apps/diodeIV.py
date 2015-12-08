@@ -16,8 +16,12 @@ from v0.utilitiesClass import utilitiesClass
 
 import numpy as np
 
-image = 'diodeIV.png'
-helpfile = 'diodeIV.html'
+params = {
+'image' : 'diodeIV.png',
+'helpfile': 'diodeIV.html',
+'name':'Diode IV\nCharacteristics'
+}
+
 class AppWindow(QtGui.QMainWindow, diodeIV.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)

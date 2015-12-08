@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'template_experiments.ui'
 #
-# Created: Mon Nov 16 19:13:53 2015
+# Created: Thu Dec  3 19:45:27 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.gridLayout_7.setObjectName(_fromUtf8("gridLayout_7"))
         self.ExperimentLayout = QtGui.QGridLayout()
         self.ExperimentLayout.setMargin(5)
-        self.ExperimentLayout.setSpacing(15)
+        self.ExperimentLayout.setSpacing(7)
         self.ExperimentLayout.setObjectName(_fromUtf8("ExperimentLayout"))
         self.gridLayout_7.addLayout(self.ExperimentLayout, 0, 0, 1, 1)
         self.gridLayout_5.addWidget(self.frame_5, 0, 0, 1, 1)

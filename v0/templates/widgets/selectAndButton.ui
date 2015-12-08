@@ -185,6 +185,9 @@ background:transparent;
            <property name="text">
             <string>Read</string>
            </property>
+           <property name="autoRepeat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>

@@ -13,14 +13,15 @@ sip.setapi("QVariant", 2)
 from PyQt4 import QtCore, QtGui
 import time,sys
 from v0.templates import stepper
-from v0.customui_rc import *
 
 import sys,os,string
 import time
 import sys
 
 
-image = 'dials.png'
+params = {
+'image' : 'dials.png',
+}
 
 class AppWindow(QtGui.QMainWindow, stepper.Ui_MainWindow):
 	def __init__(self, parent=None,**kwargs):

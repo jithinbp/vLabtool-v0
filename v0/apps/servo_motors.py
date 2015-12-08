@@ -5,8 +5,13 @@ Simple example demonstrating controlling servo motors with sliders
 
 import sys,time
 from PyQt4 import QtGui, QtCore
-image = 'servo.jpg'
-helpfile = 'servos.html'
+
+params = {
+'image' : 'servo.jpg',
+'helpfile': 'servos.html',
+'name':'Servo Motors'
+}
+
 class AppWindow(QtGui.QMainWindow):
 	def __init__(self,parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)

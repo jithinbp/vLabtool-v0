@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'stepper.ui'
 #
-# Created: Sun Nov 29 22:26:30 2015
+# Created: Sat Dec  5 15:41:31 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -71,12 +71,15 @@ class Ui_MainWindow(object):
         self.delay.setObjectName(_fromUtf8("delay"))
         self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.delay)
         self.pushButton_2 = QtGui.QPushButton(self.centralwidget)
+        self.pushButton_2.setAutoRepeat(True)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.formLayout.setWidget(4, QtGui.QFormLayout.LabelRole, self.pushButton_2)
         self.pushButton = QtGui.QPushButton(self.centralwidget)
+        self.pushButton.setAutoRepeat(False)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.formLayout.setWidget(2, QtGui.QFormLayout.SpanningRole, self.pushButton)
         self.pushButton_3 = QtGui.QPushButton(self.centralwidget)
+        self.pushButton_3.setAutoRepeat(True)
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.formLayout.setWidget(4, QtGui.QFormLayout.FieldRole, self.pushButton_3)
         self.line = QtGui.QFrame(self.centralwidget)

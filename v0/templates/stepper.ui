@@ -86,12 +86,18 @@ stop: 0 #abe, stop: 0.7 #aba);
       <property name="shortcut">
        <string>Left</string>
       </property>
+      <property name="autoRepeat">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>Take Steps</string>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -102,6 +108,9 @@ stop: 0 #abe, stop: 0.7 #aba);
       </property>
       <property name="shortcut">
        <string>Right</string>
+      </property>
+      <property name="autoRepeat">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

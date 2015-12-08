@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'selectAndButton.ui'
 #
-# Created: Fri Nov  6 19:59:06 2015
+# Created: Sat Dec  5 15:45:04 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -111,6 +111,7 @@ class Ui_Form(object):
         self.value.setObjectName(_fromUtf8("value"))
         self.gridLayout_3.addWidget(self.value, 2, 0, 1, 1)
         self.pushButton = QtGui.QPushButton(self.ImageFrame)
+        self.pushButton.setAutoRepeat(True)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.gridLayout_3.addWidget(self.pushButton, 1, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.ImageFrame)

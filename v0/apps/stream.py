@@ -18,7 +18,6 @@ sip.setapi("QVariant", 2)
 from PyQt4 import QtCore, QtGui
 import time,sys
 from v0.templates import arbitStream
-from v0.customui_rc import *
 
 import sys,os,string
 import time
@@ -36,7 +35,10 @@ fps = None
 dacval=0
 
 
-image = 'stream.png'
+params = {
+'image' : 'stream.png',
+'name':'Data\nStreaming'
+}
 
 class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow):
 	def __init__(self, parent=None,**kwargs):
