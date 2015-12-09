@@ -231,7 +231,7 @@ stop: 0 #abe, stop: 0.7 #aba);
                    <number>5</number>
                   </property>
                   <property name="spacing">
-                   <number>15</number>
+                   <number>7</number>
                   </property>
                  </layout>
                 </item>

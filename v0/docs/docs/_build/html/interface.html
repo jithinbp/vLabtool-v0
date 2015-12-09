@@ -1464,13 +1464,13 @@ On older units, SQR3,SQR4 were called OD1,OD2. Both mnemonics will work.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>**kwargs</td>
-<td>OD1,OD2,SQR1,SQR2
+<td>SQR1,SQR2,SQR3,SQR4
 states(0 or 1)</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">OD1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">OD2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">SQR1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">sets OD1,SQR1 HIGH, OD2 LOw, but leave SQR2 untouched.</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">SQR1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">SQR2</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">sets SQR1 HIGH, SQR2 LOw, but leave SQR3,SQR4 untouched.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2309,14 +2309,14 @@ This is used to operate servo motors.  Tested with 9G SG-90 Servo motor.</p>
 <dt id="interface.Interface.stepForward">
 <tt class="descname">stepForward</tt><big>(</big><em>steps</em>, <em>delay</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.stepForward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.stepForward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control stepper motors using SQR1-4</p>
-<p>take a fixed number of steps in the forward direction with a certain delay between each step.</p>
+<p>take a fixed number of steps in the forward direction with a certain delay( in milliseconds ) between each step.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="interface.Interface.stepBackward">
 <tt class="descname">stepBackward</tt><big>(</big><em>steps</em>, <em>delay</em><big>)</big><a class="reference internal" href="_modules/interface.html#Interface.stepBackward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.Interface.stepBackward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control stepper motors using SQR1-4</p>
-<p>take a fixed number of steps in the backward direction with a certain delay between each step.</p>
+<p>take a fixed number of steps in the backward direction with a certain delay( in milliseconds ) between each step.</p>
 </dd></dl>
 
 <dl class="method">

@@ -6,6 +6,7 @@ class Handler():
 		self.burstBuffer=''
 		self.loadBurst=False
 		self.inputQueueSize=0
+		self.BAUD = 1000000
 		self.BASE_PORT_NAME = "/dev/ttyACM"
 		self.timeout=timeout
 		self.version_string=''
@@ -18,7 +19,7 @@ class Handler():
 					sys.exit(1)
 				self.fd = serial.Serial(self.portname, 9600, stopbits=1, timeout = 0.02)
 				self.fd.read(100)
-				self.fd = serial.Serial(self.portname, 1000000, stopbits=1, timeout = 1.0)
+				self.fd = serial.Serial(self.portname, self.BAUD, stopbits=1, timeout = 1.0)
 				if(self.fd.inWaiting()):
 					self.fd.read(1000)
 					self.fd.flush()
@@ -35,7 +36,7 @@ class Handler():
 						self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 9600, stopbits=1, timeout = 0.01)
 						#self.fd.read(100)
 						self.fd.close()
-						self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), 1000000, stopbits=1, timeout = 0.2)
+						self.fd = serial.Serial(self.BASE_PORT_NAME+str(a), self.BAUD, stopbits=1, timeout = 0.2)
 						self.portname=self.BASE_PORT_NAME+str(a)
 						self.fd.read(1000)
 						self.fd.flush()
@@ -71,7 +72,7 @@ class Handler():
 			self.fd = serial.Serial(self.portname, 9600, stopbits=1, timeout = 0.1)
 			self.fd.close()
 			time.sleep(0.2)
-			self.fd = serial.Serial(self.portname, 1000000, stopbits=1, timeout = self.timeout)
+			self.fd = serial.Serial(self.portname, self.BAUD, stopbits=1, timeout = self.timeout)
 			if(self.fd.inWaiting()):
 				self.fd.read(1000)
 				self.fd.flush()

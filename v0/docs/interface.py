@@ -1043,7 +1043,7 @@ class Interface():
         scale=self.H.__getByte__()
         val = self.H.__getLong__()
         self.H.__get_ack__()
-        print hex(val)
+        #print hex(val)
         return scale*(val)/1.0e-1 #100mS sampling
 
 
@@ -1891,12 +1891,12 @@ class Interface():
         ==============  ============================================================================================
         **Arguments** 
         ==============  ============================================================================================
-        \*\*kwargs      OD1,OD2,SQR1,SQR2
+        \*\*kwargs      SQR1,SQR2,SQR3,SQR4
                         states(0 or 1)
         ==============  ============================================================================================
 
-        >>> I.set_state(OD1=1,OD2=0,SQR1=1)
-        sets OD1,SQR1 HIGH, OD2 LOw, but leave SQR2 untouched.
+        >>> I.set_state(SQR1=1,SQR2=0)
+        sets SQR1 HIGH, SQR2 LOw, but leave SQR3,SQR4 untouched.
 
         """
         data=0
@@ -1970,6 +1970,7 @@ class Interface():
         GOOD_VOLTS=[2.5,2.8]
         CT=100
         CR=1
+        iterations = 0
         while 1:
             V,C = self.__get_capacitance__(CR,0,CT)
             if CT>30000 and V<0.1:
@@ -1978,9 +1979,12 @@ class Interface():
             elif V>GOOD_VOLTS[0] and V<GOOD_VOLTS[1]:
                 return C
             elif V<GOOD_VOLTS[0] and V>0.1 and CT<40000:
-                if GOOD_VOLTS[0]/V >1.1:
+                if GOOD_VOLTS[0]/V >1.1 and iterations<10:
                     CT=int(CT*GOOD_VOLTS[0]/V)
+                    iterations+=1
                     print 'increased CT ',CT
+                elif iterations==10:
+                    return 0
                 else:
                     return C
             elif V<=0.1 and CR<3:
@@ -2620,40 +2624,36 @@ class Interface():
         
         """
         wavelength = int(64e6/freq)
-        if wavelength>65535:
+        wavelength = int(64e6/freq)
+        params=0
+        if wavelength>0xFFFF00:
             print 'frequency too low.'
             return
+        elif wavelength>0x3FFFC0:
+            wavelength = int(64e6/freq/256)
+            params=3
+        elif wavelength>0x7FFF8:
+            params=2
+            wavelength = int(64e6/freq/64)
+        elif wavelength>0xFFFF:
+            params=1
+            wavelength = int(64e6/freq/8)
+
+
         self.H.__sendByte__(WAVEGEN)
         self.H.__sendByte__(SQR4)
         self.H.__sendInt__(wavelength)
         self.H.__sendInt__(int(wavelength*h0))
-        params = 0
-        if p1==0:p1=1
-        if p2==0:p2=1
-        if p3==0:p3=1
-        if h1+p1>1:
-            A1 = int((h1+p1)%1*wavelength)
-            B1 = int((p1)*wavelength)
-            params|=(1<<2)
-        else:
-            A1 = int(p1*wavelength)
-            B1 = int((h1+p1)*wavelength)
-        if h2+p2>1:
-            A2 = int((h2+p2)%1*wavelength)
-            B2 = int((p2)*wavelength)
-            params|=(1<<3)
-        else:
-            A2 = int(p2*wavelength)
-            B2 = int((h2+p2)*wavelength)
-        if h3+p3>1:
-            A3 = int((h3+p3)%1*wavelength)
-            B3 = int((p3)*wavelength)
-            params|=(1<<4)
-        else:
-            A3 = int(p3*wavelength)
-            B3 = int((h3+p3)*wavelength)
 
-        print wavelength,A1,B1,A2,B2,A3,B3
+        A1 = int(p1%1*wavelength)
+        B1 = int((h1+p1)%1*wavelength)
+        A2 = int(p2%1*wavelength)
+        B2 = int((h2+p2)%1*wavelength)
+        A3 = int(p3%1*wavelength)
+        B3 = int((h3+p3)%1*wavelength)
+
+        #print p1,h1,p2,h2,p3,h3
+        #print wavelength,int(wavelength*h0),A1,B1,A2,B2,A3,B3
         self.H.__sendInt__(A1)
         self.H.__sendInt__(B1)
         self.H.__sendInt__(A2)
@@ -2709,8 +2709,8 @@ class Interface():
         A3 = int(p3%1*wavelength)
         B3 = int((h3+p3)%1*wavelength)
 
-        print p1,h1,p2,h2,p3,h3
-        print wavelength,int(wavelength*h0),A1,B1,A2,B2,A3,B3
+        #print p1,h1,p2,h2,p3,h3
+        #print wavelength,int(wavelength*h0),A1,B1,A2,B2,A3,B3
         self.H.__sendInt__(A1)
         self.H.__sendInt__(B1)
         self.H.__sendInt__(A2)
@@ -2864,15 +2864,14 @@ class Interface():
         self.H.__sendByte__(STEPPER_MOTOR)
         self.H.__sendInt__((steps<<1)|direction)
         self.H.__sendInt__(delay)
-        print steps,delay,direction
+        t=time.time()
         time.sleep(steps*delay*1e-3) #convert mS to S
-        self.H.__get_ack__()
 
     def stepForward(self,steps,delay):
         """
         Control stepper motors using SQR1-4
         
-        take a fixed number of steps in the forward direction with a certain delay between each step.
+        take a fixed number of steps in the forward direction with a certain delay( in milliseconds ) between each step.
         
         """
         self.__stepperMotor__(steps,delay,1)
@@ -2881,7 +2880,7 @@ class Interface():
         """
         Control stepper motors using SQR1-4
         
-        take a fixed number of steps in the backward direction with a certain delay between each step.
+        take a fixed number of steps in the backward direction with a certain delay( in milliseconds ) between each step.
         
         """
         self.__stepperMotor__(steps,delay,0)

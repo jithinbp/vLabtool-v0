@@ -41,13 +41,17 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 	def __init__(self, parent=None,**kwargs):
 		super(MyMainWindow, self).__init__(parent)
 		self.eventHandler = kwargs.get('app',None)
+		self.showSplash();self.updateSplash(10,'Setting up UI...')
 		self.setupUi(self)
+		self.updateSplash(10,'Connecting to Device...')
 		if  args.PortName: self.I = interface.connect(port = args.PortName)
 		else: self.I = interface.connect()
 		try:
 			if not self.I.connected:
 				print 'Not Connected'
+				self.updateSplash(10,'Failed to connect')
 		except:
+			self.updateSplash(30,'Connected. Loading Applications...')
 			pass
 
 		self.funcs=[]
@@ -65,6 +69,7 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 				col=0;row+=1
 
 		row=0;col=0;colLimit=4
+		self.updateSplash(30,'Loading Widgets...')
 		for app in controls:
 			fn = functools.partial(self.launchFunc,'v0.controls.'+app)
 			self.funcs.append(fn)
@@ -129,6 +134,8 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.locateDevices)
 		self.timer.start(500)
+		self.updateSplash(30,'Almost done...')
+		self.splash.finish(self)
 		self.runningApp = None
 
 
@@ -325,12 +332,12 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 
 	def showSplash(self):
 		import pkg_resources
-		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('vLabtool.stylesheets', "splash3.png"))
+		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('v0.stylesheets', "splash3.png"))
 		self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
 		# adding progress bar
 		self.progressBar = QtGui.QProgressBar(self.splash)
 		self.progressBar.resize(self.splash.width(),20)
-		css = pkg_resources.resource_string('vLabtool', "stylesheets/splash.css")
+		css = pkg_resources.resource_string('v0', "stylesheets/splash.css")
 		if css:
 			self.splash.setStyleSheet(css)
 		self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")
@@ -348,7 +355,7 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 				from v0.iPythonEmbed import QIPythonWidget
 				self.updateSplash(10,'Creating Dock Widget...')
 			except:
-				self.splash.finish(self);self.updateSplash(10)
+				self.splash.finish(self);
 				errbox = QtGui.QMessageBox()
 				errbox.setStyleSheet('background:#fff;')
 				print errbox.styleSheet()
