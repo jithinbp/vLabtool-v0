@@ -73,7 +73,7 @@ Bulk Write::
 		default_fontsize = 16;
 		
 		A [label = "Python"];
-		B [label = "vLabtool"];
+		B [label = "SEELablet"];
 		C [label = "I2C Slave"];
 		D [shape = "dots"];
 		E [label = "I2C Slave #127"];
@@ -117,7 +117,7 @@ example::
 		default_fontsize = 16;
 		
 		A [label = "Python"];
-		B [label = "vLabtool"];
+		B [label = "SEELablet"];
 		C [label = "SPI Slave #1"];
 		D [label = "SPI Slave #2"];
 
@@ -151,7 +151,7 @@ Example::
 		# lst = dictionary with node addresses as keys,
 		# and I2C sensors as values
 		>>> LINK = I.newRadioLink(address=lst.keys()[0])
-		#vLabtool automatically transmits data to LINK's address, 
+		#SEELablet automatically transmits data to LINK's address, 
 		#and retrieves preliminary info.
 		>>> print LINK.I2C_scan()
 

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="top" title="vLabtool Programer&#39;s Manual" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
   </head>
@@ -51,6 +50,7 @@
   <h1>Source code for experiment</h1><div class="highlight"><pre>
 <span class="c"># Set the QT API to PyQt4</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;QT_API&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;pyqt&#39;</span>
 <span class="kn">import</span> <span class="nn">sip</span>
 <span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&quot;QString&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -63,7 +63,6 @@
 
 <span class="kn">from</span> <span class="nn">templates</span> <span class="kn">import</span> <span class="n">template_exp</span>
 <span class="kn">import</span> <span class="nn">time</span><span class="o">,</span><span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">customui_rc</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">custom_widgets</span> <span class="kn">as</span> <span class="nn">Widgets</span>
  
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -245,6 +244,7 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">axisItems</span><span class="o">=</span><span class="p">[]</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">total_plot_areas</span><span class="o">=</span><span class="mi">0</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">widgetBay</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">help_url</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;helpfiles&#39;</span><span class="p">,</span><span class="s">&#39;interface.html&#39;</span><span class="p">))</span>
 			<span class="c">#self.additional_handle = QSplitterHandle(Qt.Horizontal,self.graph_splitter)</span>
 			<span class="c">#self.graph_splitter.addWidget(self.additional_handle)</span>
 			<span class="k">if</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;showresult&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)):</span>
@@ -280,20 +280,20 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="Experiment.showSplash"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.showSplash">[docs]</a>	<span class="k">def</span> <span class="nf">showSplash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-			<span class="kn">import</span> <span class="nn">pkg_resources</span>
-			<span class="n">splash_pix</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s">&#39;vLabtool.stylesheets&#39;</span><span class="p">,</span> <span class="s">&quot;splash3.png&quot;</span><span class="p">))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSplashScreen</span><span class="p">(</span><span class="n">splash_pix</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span><span class="p">)</span>
-			<span class="c"># adding progress bar</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span><span class="mi">20</span><span class="p">)</span>
-			<span class="n">css</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_string</span><span class="p">(</span><span class="s">&#39;vLabtool&#39;</span><span class="p">,</span> <span class="s">&quot;stylesheets/splash.css&quot;</span><span class="p">)</span>
-			<span class="k">if</span> <span class="n">css</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">css</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="p">);</span><span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;font-weight:bold;color:purple&quot;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">setMask</span><span class="p">(</span><span class="n">splash_pix</span><span class="o">.</span><span class="n">mask</span><span class="p">())</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Loading....&#39;</span><span class="p">);</span><span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span><span class="mi">20</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
+		<span class="kn">import</span> <span class="nn">pkg_resources</span>
+		<span class="n">splash_pix</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s">&#39;v0.stylesheets&#39;</span><span class="p">,</span> <span class="s">&quot;splash3.png&quot;</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splash</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QSplashScreen</span><span class="p">(</span><span class="n">splash_pix</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WindowStaysOnTopHint</span><span class="p">)</span>
+		<span class="c"># adding progress bar</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span><span class="mi">20</span><span class="p">)</span>
+		<span class="n">css</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_string</span><span class="p">(</span><span class="s">&#39;v0&#39;</span><span class="p">,</span> <span class="s">&quot;stylesheets/splash.css&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">css</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">css</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="p">);</span><span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&quot;font-weight:bold;color:purple&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">setMask</span><span class="p">(</span><span class="n">splash_pix</span><span class="o">.</span><span class="n">mask</span><span class="p">())</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Loading....&#39;</span><span class="p">);</span><span class="bp">self</span><span class="o">.</span><span class="n">splashMsg</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">progressBar</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span><span class="mi">20</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span>
 
 	</div>
 <div class="viewcode-block" id="Experiment.run"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -424,9 +424,10 @@
 			<span class="k">print</span> <span class="s">&#39;Device Not Connected.&#39;</span>
 		
 <div class="viewcode-block" id="Experiment.addConsole"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.addConsole">[docs]</a>  	<span class="k">def</span> <span class="nf">addConsole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">args</span><span class="p">):</span>
-  			<span class="c">#read arguments</span>
-  			<span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
-  			<span class="bp">self</span><span class="o">.</span><span class="n">showSplash</span><span class="p">();</span><span class="bp">self</span><span class="o">.</span><span class="n">updateSplash</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;Importing iPython Widgets...&#39;</span><span class="p">)</span>
+  		<span class="k">try</span><span class="p">:</span>
+			<span class="c">#read arguments</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">showSplash</span><span class="p">();</span><span class="bp">self</span><span class="o">.</span><span class="n">updateSplash</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;Importing iPython Widgets...&#39;</span><span class="p">)</span>
 			<span class="kn">from</span> <span class="nn">iPythonEmbed</span> <span class="kn">import</span> <span class="n">QIPythonWidget</span><span class="p">;</span><span class="bp">self</span><span class="o">.</span><span class="n">updateSplash</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;Creating Dock Widget...&#39;</span><span class="p">)</span>
 			<span class="c">#-------create an area for it to sit------</span>
 			<span class="n">dock</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">()</span>
@@ -459,9 +460,52 @@
 				<span class="n">dock</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">60</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">delayedTask</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">dockResize</span><span class="p">)</span>
 			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ipyConsole</span>
-
-			
+		<span class="k">except</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">splash</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">);</span><span class="bp">self</span><span class="o">.</span><span class="n">updateSplash</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+			<span class="n">errbox</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">()</span>
+			<span class="n">errbox</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s">&#39;background:#fff;&#39;</span><span class="p">)</span>
+			<span class="k">print</span> <span class="n">errbox</span><span class="o">.</span><span class="n">styleSheet</span><span class="p">()</span>
+			<span class="n">errbox</span><span class="o">.</span><span class="n">about</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;Error&quot;</span><span class="p">,</span> <span class="s">&quot;iPython-qtconsole not found.</span><span class="se">\n</span><span class="s"> Please Install the module&quot;</span><span class="p">)</span>
 			</div>
+<div class="viewcode-block" id="Experiment.showHelp"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.showHelp">[docs]</a> 	<span class="k">def</span> <span class="nf">showHelp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ 		<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtWebKit</span>
+		<span class="n">dock</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span> <span class="o">=</span> <span class="n">QtWebKit</span><span class="o">.</span><span class="n">QWebView</span><span class="p">()</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Help window&quot;</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">help_url</span><span class="p">))</span>			
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpWindow</span> <span class="o">=</span> <span class="n">dock</span>
+</div>
+<div class="viewcode-block" id="Experiment.showFullHelp"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.showFullHelp">[docs]</a> 	<span class="k">def</span> <span class="nf">showFullHelp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ 		<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtWebKit</span>
+		<span class="n">dock</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span> <span class="o">=</span> <span class="n">QtWebKit</span><span class="o">.</span><span class="n">QWebView</span><span class="p">()</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Help window&quot;</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+		<span class="n">URL</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;helpfiles&#39;</span><span class="p">,</span><span class="s">&#39;interface.html&#39;</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">URL</span><span class="p">))</span>			
+		<span class="bp">self</span><span class="o">.</span><span class="n">fullHelpWindow</span> <span class="o">=</span> <span class="n">dock</span>
+</div>
+<div class="viewcode-block" id="Experiment.showImageMap"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.showImageMap">[docs]</a> 	<span class="k">def</span> <span class="nf">showImageMap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ 		<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtWebKit</span>
+		<span class="n">dock</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span> <span class="o">=</span> <span class="n">QtWebKit</span><span class="o">.</span><span class="n">QWebView</span><span class="p">()</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Help window&quot;</span><span class="p">)</span>
+		<span class="n">dock</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+		<span class="n">URL</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;helpfiles&#39;</span><span class="p">,</span><span class="s">&#39;imagemap.html&#39;</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">helpView</span><span class="o">.</span><span class="n">setUrl</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">URL</span><span class="p">))</span>			
+		<span class="bp">self</span><span class="o">.</span><span class="n">imageMapHelp</span> <span class="o">=</span> <span class="n">dock</span>
+
+</div>
+<div class="viewcode-block" id="Experiment.setHelpUrl"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.setHelpUrl">[docs]</a>	<span class="k">def</span> <span class="nf">setHelpUrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">url</span><span class="p">):</span>
+		<span class="k">if</span> <span class="s">&#39;http&#39;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">help_url</span> <span class="o">=</span> <span class="n">url</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">help_url</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;helpfiles&#39;</span><span class="p">,</span><span class="n">url</span><span class="p">))</span>
+		</div>
 <div class="viewcode-block" id="Experiment.new3dSurface"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.new3dSurface">[docs]</a>	<span class="k">def</span> <span class="nf">new3dSurface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">plot</span><span class="p">,</span><span class="o">**</span><span class="n">args</span><span class="p">):</span>
 			<span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="kn">as</span> <span class="nn">ndi</span>
 			<span class="n">surface3d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gl</span><span class="o">.</span><span class="n">GLSurfacePlotItem</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">]]),</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
@@ -554,8 +598,7 @@
 <div class="viewcode-block" id="Experiment.setCommand"><a class="viewcode-back" href="../experiment.html#experiment.Experiment.setCommand">[docs]</a>	<span class="k">def</span> <span class="nf">setCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">widget</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">slot</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 			<span class="n">buttonCallback</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">slot</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 			<span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">buttonCallback</span><span class="p">)</span>
-
- </div>
+</div>
  	<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">	class WorkThread(QtCore.QThread):</span>
 <span class="sd">		punched = QtCore.pyqtSignal()		 </span>
@@ -614,7 +657,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Jithin B..
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

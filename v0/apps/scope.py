@@ -50,7 +50,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow):
 		self.I=kwargs.get('I',None)
 		self.math = analyticsClass()
 
-		self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+		self.setWindowTitle(self.I.generic_name + ' : ' +self.I.H.version_string)
 		self.plot=pg.PlotWidget()
 
 		#cross hair

@@ -3,25 +3,45 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to vLabtool's documentation!
-=========================================
+Welcome to the Documentation for vLabtool-v0
+============================================
 
-Contents:
+Introduction
+-------------
+A cost effective, multi-pronged data acquisition tool to turn your computer into a workbench for science and electronics experiments.
 
 .. toctree::
    :maxdepth: 4
 
+   introduction
+
+Graphical Apps
+--------------
+
+.. toctree::
+   :maxdepth: 2
+
+   experiments
+
+Python Library
+--------------
+.. toctree::
+   :maxdepth: 2
+
    interface
+
+Advanced Modules
+----------------
+
+.. toctree::
+   :maxdepth: 2
+
    SPI_class
    I2C_class
    NRF24L01_class
+   NRF_NODE
    experiment
    Apps
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 

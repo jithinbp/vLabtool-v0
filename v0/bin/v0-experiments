@@ -103,11 +103,11 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 				autogenControls.append(self.autogenControl(TITLE='VOLTMETER',FUNC=tmpfunc,TYPE='selectButton',UNITS='V',TOOLTIP='Voltmeter',OPTIONS=self.I.allAnalogChannels))
 				autogenControls.append(self.autogenControl(TITLE='Low Frequency',FUNC=self.I.get_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequency. Minimum 40Hz',OPTIONS=self.I.allDigitalChannels))
 				autogenControls.append(self.autogenControl(TITLE='High Frequency',FUNC=self.I.get_high_freq,TYPE='selectButton',UNITS='Hz',TOOLTIP='Measure Frequencies over 1MHz with 10Hz resolution',OPTIONS=self.I.allDigitalChannels))
-				self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+				self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string)
 			else:
-				self.setWindowTitle('vLabtool : Not Connected')
+				self.setWindowTitle(self.I.generic_name + ' : Not Connected')
 		else:
-			self.setWindowTitle('vLabtool : Not Connected')
+			self.setWindowTitle(self.I.generic_name + ' : Not Connected')
 
 		for C in autogenControls:
 			if C.TYPE=='dial':
@@ -165,7 +165,7 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 
 			if fname.split('.')[1]=='apps':
 				try:
-					HF = FILE.helpfile
+					HF = FILE.params.get('helpfile','introduction.html')
 					print HF
 					self.helpTitle.setText(fname.split('.')[2])
 					if 'http' in HF:
@@ -314,12 +314,12 @@ class MyMainWindow(QtGui.QMainWindow, template_experiments.Ui_MainWindow):
 		print 'connecting to ',sel
 		if self.I:
 			self.I.reconnect(port = sel)
-			self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+			self.setWindowTitle('SEELablet : '+self.I.H.version_string)
 		else:
 			self.I = interface.connect(port = sel)
 			print self.I
 			try:
-				self.setWindowTitle('vLabtool : '+self.I.H.version_string)
+				self.setWindowTitle('SEELablet : '+self.I.H.version_string)
 			except:
 				pass
 		return

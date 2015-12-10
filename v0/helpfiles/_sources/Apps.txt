@@ -1,12 +1,5 @@
-Apps package
+Applications
 ============
-
-.. toctree::
-
-   Apps.vLabtool-scope
-   Apps.vLabtool-stream
-   Apps.vLabtool-console
-   Apps.vLabtool-wirelessDemo
 
 Module contents
 ---------------

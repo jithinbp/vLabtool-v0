@@ -76,7 +76,7 @@
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">writeBulk</span><span class="p">(</span><span class="n">ADDRESS</span><span class="p">,[</span><span class="n">Byte</span> <span class="mi">1</span><span class="p">,</span><span class="n">Byte</span> <span class="mf">2.</span><span class="o">...</span><span class="p">])</span>
 </pre></div>
 </div>
-<div><img height="280" src="_images/blockdiag-afd7ccbdfe3ab1b953254a266760f52e6f3e3ed3.png" width="640" /></div><div class="admonition seealso">
+<div><img height="280" src="_images/blockdiag-1356eb1cbe63f774231ccdffcd633698e5108cde.png" width="640" /></div><div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="I2C_class.html#I2C_class.I2C" title="I2C_class.I2C"><tt class="xref py py-meth docutils literal"><span class="pre">I2C</span></tt></a> for complete documentation</p>
 </div>
@@ -94,7 +94,7 @@
 </div>
 </dd>
 </dl>
-<div><img height="200" src="_images/blockdiag-93dd3d1bee315c34dcca4d3393de640a056d08b3.png" width="640" /></div><div class="admonition seealso">
+<div><img height="200" src="_images/blockdiag-3e5eba32be33e9add8dc44636cbe1849b4552604.png" width="640" /></div><div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="SPI_class.html#SPI_class.SPI" title="SPI_class.SPI"><tt class="xref py py-meth docutils literal"><span class="pre">SPI</span></tt></a> for complete documentation</p>
 </div>
@@ -116,7 +116,7 @@
 <span class="go"># lst = dictionary with node addresses as keys,</span>
 <span class="go"># and I2C sensors as values</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">LINK</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">newRadioLink</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">lst</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
-<span class="go">#vLabtool automatically transmits data to LINK&#39;s address,</span>
+<span class="go">#SEELablet automatically transmits data to LINK&#39;s address,</span>
 <span class="go">#and retrieves preliminary info.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">LINK</span><span class="o">.</span><span class="n">I2C_scan</span><span class="p">()</span>
 </pre></div>
