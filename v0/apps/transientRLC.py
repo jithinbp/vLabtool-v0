@@ -50,7 +50,7 @@ import pyqtgraph as pg
 
 params = {
 'image' : 'scope.png',
-'helpfile': 'https://en.wikipedia.org/wiki/LC_circuit',
+#'helpfile': 'https://en.wikipedia.org/wiki/LC_circuit',
 'name':'Transient RLC\nResponse'
 }
 
@@ -72,9 +72,9 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 
 		self.plot1.setYRange(-8.5,8.5)
 		self.plot2.setYRange(-8.5,8.5)
-
+		self.I.set_gain('CH1',1)
 		self.I.configure_trigger(0,'CH1',0)
-		self.tg=1
+		self.tg=10
 		self.x=[]
 
 		self.looptimer=QtCore.QTimer()
@@ -87,22 +87,26 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 		self.ON="background-color: rgb(0,255,0);"
 		self.OFF="background-color: rgb(255, 0, 0);"
 		self.state=0
-		self.I.set_state(OD1=0)
+		self.I.set_state(SQR1=0)
 		self.indicator.setStyleSheet(self.OFF)
 		self.msg.setText("Fitting fn :\noff+amp*exp(-damp*x)*sin(x*freq+ph)")
 		self.Params=[]
 		
 	def run(self):
-		print self.I.get_average_voltage('CH1')
 		self.I.H.loadBurst=True
 		self.I.capture_traces(1,5000,self.tg,trigger=False)
 		self.state = 0 if self.state else 1
-		self.I.set_state(OD1=self.state)
-		print self.I.H.sendBurst()
+		self.I.set_state(SQR1=self.state)
+		self.I.H.sendBurst()
 		if(self.state):self.indicator.setStyleSheet(self.ON)
 		else:self.indicator.setStyleSheet(self.OFF)
 		self.CH1Fit.setData([],[])
-		self.loop=self.delayedTask(5000*self.I.timebase*1e-6+10,self.plotData)
+		self.loop=self.delayedTask(5000*self.I.timebase*1e-3+10,self.plotData)
+
+	def setTimebase(self,T):
+		tgs = [1,2,4,6,8,10,15,25,50,100]
+		self.tg = tgs[T]
+		self.tgLabel.setText(str(5000*self.tg*1e-3)+'mS')
 
 	def fit(self):
 		if(not len(self.x)):return
@@ -128,9 +132,8 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 
 	def showData(self):
 		self.lognum+=1
-		print '------------------------',self.lognum,'------------------'
 		b=self.CParams
-		print 'FIT:\tAmp:%.1fV\tFreq:%.1fHz\tPhase:%.1f\tOffset:%.2fV\tDamping:%.2e'%(b[0],1e6*abs(b[1])/(2*np.pi),b[2]*180/np.pi,b[3],b[4])
-		print '\n'
+		res =  'FIT:\nAmp:%.1fV\tFreq:%.1fHz\tPhase:%.1f\nOffset:%.2fV\tDamping:%.2e'%(b[0],1e6*abs(b[1])/(2*np.pi),b[2]*180/np.pi,b[3],b[4])
+		self.displayDialog(res)
 		
 

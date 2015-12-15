@@ -157,6 +157,71 @@ color: black;
               </widget>
              </item>
              <item>
+              <widget class="QFrame" name="frame_6">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <property name="leftMargin">
+                 <number>3</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="tgLabel">
+                  <property name="text">
+                   <string>5mS</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSlider" name="horizontalSlider">
+                  <property name="maximum">
+                   <number>9</number>
+                  </property>
+                  <property name="pageStep">
+                   <number>1</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_5">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
               <widget class="QPushButton" name="pushButton_5">
                <property name="text">
                 <string>Fit selected region</string>
@@ -172,19 +237,6 @@ color: black;
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>310</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item>
            <widget class="QFrame" name="frame_4">
@@ -216,58 +268,6 @@ color: black;
              </item>
              <item>
               <widget class="QLabel" name="CLabel">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>_</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="LLabel">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>_</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="RLabel">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>_</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="LCLabel">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>_</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="ILabel">
                <property name="font">
                 <font>
                  <weight>75</weight>
@@ -326,7 +326,7 @@ color: black;
                <x>0</x>
                <y>0</y>
                <width>796</width>
-               <height>391</height>
+               <height>412</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_4">
@@ -388,8 +388,8 @@ color: black;
    <slot>fit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>126</y>
+     <x>462</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>293</x>
@@ -404,12 +404,28 @@ color: black;
    <slot>showData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>167</y>
+     <x>486</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>340</x>
      <y>-10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setTimebase(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>139</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>-9</y>
     </hint>
    </hints>
   </connection>
@@ -419,5 +435,6 @@ color: black;
   <slot>delete_curve()</slot>
   <slot>fit()</slot>
   <slot>showData()</slot>
+  <slot>setTimebase(int)</slot>
  </slots>
 </ui>

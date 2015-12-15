@@ -103,9 +103,9 @@ class analyticsClass():
 		if(func=='sine' or func=='damped sine'):
 			N=len(xReal)
 			offset = np.average(yReal)
-			yhat = self.fftpack.rfft(yReal-offset)
+			yhat = fftpack.rfft(yReal-offset)
 			idx = (yhat**2).argmax()
-			freqs = self.fftpack.rfftfreq(N, d = (xReal[1]-xReal[0])/(2*np.pi))
+			freqs = fftpack.rfftfreq(N, d = (xReal[1]-xReal[0])/(2*np.pi))
 			frequency = freqs[idx]
 
 			amplitude = (yReal.max()-yReal.min())/2.0
@@ -119,7 +119,7 @@ class analyticsClass():
 		N=len(xReal)
 		guess=args.get('guess',[])
 		try:
-			results, pcov = self.optimize.curve_fit(func, xReal, yReal,guess)
+			results, pcov = optimize.curve_fit(func, xReal, yReal,guess)
 			pcov[0]*=1e6
 			return True,results,pcov
 		except:

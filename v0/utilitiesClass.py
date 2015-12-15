@@ -107,3 +107,6 @@ class utilitiesClass():
 			self.timers.append(timer)
 
 
+
+	def displayDialog(self,txt=''):
+			QtGui.QMessageBox.about(self, 'Message',  txt)

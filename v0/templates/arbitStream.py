@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'arbitStream.ui'
 #
-# Created: Fri Dec 11 11:40:43 2015
+# Created: Tue Dec 15 12:23:38 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
