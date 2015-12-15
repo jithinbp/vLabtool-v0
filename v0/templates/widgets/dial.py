@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dial.ui'
 #
-# Created: Fri Nov  6 19:59:06 2015
+# Created: Fri Dec 11 11:40:43 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -101,12 +101,14 @@ class Ui_Form(object):
         self.dial = QtGui.QDial(self.ImageFrame)
         self.dial.setMinimum(10)
         self.dial.setMaximum(5000)
+        self.dial.setInvertedControls(False)
+        self.dial.setWrapping(False)
         self.dial.setNotchesVisible(True)
         self.dial.setObjectName(_fromUtf8("dial"))
         self.gridLayout_3.addWidget(self.dial, 0, 0, 1, 1)
         self.value = QtGui.QLabel(self.ImageFrame)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.value.setFont(font)

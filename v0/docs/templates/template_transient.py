@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'transient.ui'
+# Form implementation generated from reading ui file 'template_transient.ui'
 #
-# Created: Tue Jan  6 12:50:15 2015
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Fri Dec 11 12:24:03 2015
+#      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,92 +12,226 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(223, 420)
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName(_fromUtf8("MainWindow"))
+        MainWindow.resize(804, 628)
+        MainWindow.setStyleSheet(_fromUtf8("QPushButton {\n"
+"color: #333;\n"
+"border: 2px solid #555;\n"
+"border-radius: 11px;\n"
+"padding: 5px;\n"
+"background: qradialgradient(cx: 0.3, cy: -0.4,\n"
+"fx: 0.3, fy: -0.4,\n"
+"radius: 1.35, stop: 0 #fff, stop: 1 #888);\n"
+"min-width: 80px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"background: qradialgradient(cx: 0.4, cy: -0.1,\n"
+"fx: 0.4, fy: -0.1,\n"
+"radius: 1.35, stop: 0 #fff, stop: 1 #ddd);\n"
+"}\n"
+"\n"
+"QFrame.PeripheralCollection{\n"
+"border-top-left-radius: 5px;\n"
+"border-top-right-radius: 5px;\n"
+"border: 1px solid black;\n"
+"background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"stop: 0 #6af, stop: 0.1 #689);\n"
+"}\n"
+"QFrame.PeripheralCollection QLabel {\n"
+"color: white;\n"
+"font-weight: bold;\n"
+"}\n"
+"\n"
+"QFrame.PeripheralCollectionInner {\n"
+"background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"stop: 0 #abe, stop: 0.7 #aba);\n"
+"border: none;\n"
+"border-top: 1px solid black;\n"
+"}\n"
+"\n"
+"QFrame.PeripheralCollectionInner QLabel{\n"
+"color: black;\n"
+"}\n"
+"\n"
+""))
+        self.centralwidget = QtGui.QWidget(MainWindow)
+        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
+        self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout_3.setMargin(0)
+        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
+        self.widgetFrameOuter = QtGui.QFrame(self.centralwidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
-        Form.setSizePolicy(sizePolicy)
-        self.gridLayout = QtGui.QGridLayout(Form)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.formLayout = QtGui.QFormLayout()
-        self.formLayout.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
-        self.formLayout.setObjectName(_fromUtf8("formLayout"))
-        self.pushButton = QtGui.QPushButton(Form)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.formLayout.setWidget(0, QtGui.QFormLayout.SpanningRole, self.pushButton)
-        self.pushButton_3 = QtGui.QPushButton(Form)
-        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
-        self.formLayout.setWidget(2, QtGui.QFormLayout.SpanningRole, self.pushButton_3)
-        self.msg = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.msg.setFont(font)
-        self.msg.setText(_fromUtf8(""))
-        self.msg.setObjectName(_fromUtf8("msg"))
-        self.formLayout.setWidget(3, QtGui.QFormLayout.SpanningRole, self.msg)
-        self.CLabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.CLabel.setFont(font)
-        self.CLabel.setText(_fromUtf8(""))
-        self.CLabel.setObjectName(_fromUtf8("CLabel"))
-        self.formLayout.setWidget(4, QtGui.QFormLayout.SpanningRole, self.CLabel)
-        self.LLabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.LLabel.setFont(font)
-        self.LLabel.setText(_fromUtf8(""))
-        self.LLabel.setObjectName(_fromUtf8("LLabel"))
-        self.formLayout.setWidget(5, QtGui.QFormLayout.SpanningRole, self.LLabel)
-        self.RLabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.RLabel.setFont(font)
-        self.RLabel.setText(_fromUtf8(""))
-        self.RLabel.setObjectName(_fromUtf8("RLabel"))
-        self.formLayout.setWidget(6, QtGui.QFormLayout.SpanningRole, self.RLabel)
-        self.LCLabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.LCLabel.setFont(font)
-        self.LCLabel.setText(_fromUtf8(""))
-        self.LCLabel.setObjectName(_fromUtf8("LCLabel"))
-        self.formLayout.setWidget(7, QtGui.QFormLayout.SpanningRole, self.LCLabel)
-        self.ILabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setPointSize(9)
-        self.ILabel.setFont(font)
-        self.ILabel.setText(_fromUtf8(""))
-        self.ILabel.setObjectName(_fromUtf8("ILabel"))
-        self.formLayout.setWidget(8, QtGui.QFormLayout.SpanningRole, self.ILabel)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.formLayout.setItem(9, QtGui.QFormLayout.SpanningRole, spacerItem)
-        self.pushButton_2 = QtGui.QPushButton(Form)
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
-        self.formLayout.setWidget(10, QtGui.QFormLayout.SpanningRole, self.pushButton_2)
-        self.indicator = QtGui.QLabel(Form)
+        sizePolicy.setHeightForWidth(self.widgetFrameOuter.sizePolicy().hasHeightForWidth())
+        self.widgetFrameOuter.setSizePolicy(sizePolicy)
+        self.widgetFrameOuter.setStyleSheet(_fromUtf8(""))
+        self.widgetFrameOuter.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.widgetFrameOuter.setFrameShadow(QtGui.QFrame.Raised)
+        self.widgetFrameOuter.setObjectName(_fromUtf8("widgetFrameOuter"))
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.widgetFrameOuter)
+        self.verticalLayout_3.setSpacing(5)
+        self.verticalLayout_3.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.frame = QtGui.QFrame(self.widgetFrameOuter)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setMinimumSize(QtCore.QSize(0, 150))
+        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame.setObjectName(_fromUtf8("frame"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.frame)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.frame_3 = QtGui.QFrame(self.frame)
+        self.frame_3.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_3.setObjectName(_fromUtf8("frame_3"))
+        self.verticalLayout = QtGui.QVBoxLayout(self.frame_3)
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.pushButton_4 = QtGui.QPushButton(self.frame_3)
+        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.verticalLayout.addWidget(self.pushButton_4)
+        self.indicator = QtGui.QLabel(self.frame_3)
         self.indicator.setMinimumSize(QtCore.QSize(0, 15))
         self.indicator.setMaximumSize(QtCore.QSize(16777215, 10))
         self.indicator.setObjectName(_fromUtf8("indicator"))
-        self.formLayout.setWidget(1, QtGui.QFormLayout.SpanningRole, self.indicator)
-        self.gridLayout.addLayout(self.formLayout, 0, 0, 1, 1)
+        self.verticalLayout.addWidget(self.indicator)
+        self.pushButton_5 = QtGui.QPushButton(self.frame_3)
+        self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
+        self.verticalLayout.addWidget(self.pushButton_5)
+        self.pushButton_6 = QtGui.QPushButton(self.frame_3)
+        self.pushButton_6.setObjectName(_fromUtf8("pushButton_6"))
+        self.verticalLayout.addWidget(self.pushButton_6)
+        self.horizontalLayout.addWidget(self.frame_3)
+        spacerItem = QtGui.QSpacerItem(310, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.frame_4 = QtGui.QFrame(self.frame)
+        self.frame_4.setMinimumSize(QtCore.QSize(300, 0))
+        self.frame_4.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_4.setObjectName(_fromUtf8("frame_4"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.frame_4)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.msg = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.msg.setFont(font)
+        self.msg.setObjectName(_fromUtf8("msg"))
+        self.verticalLayout_2.addWidget(self.msg)
+        self.CLabel = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.CLabel.setFont(font)
+        self.CLabel.setObjectName(_fromUtf8("CLabel"))
+        self.verticalLayout_2.addWidget(self.CLabel)
+        self.LLabel = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.LLabel.setFont(font)
+        self.LLabel.setObjectName(_fromUtf8("LLabel"))
+        self.verticalLayout_2.addWidget(self.LLabel)
+        self.RLabel = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.RLabel.setFont(font)
+        self.RLabel.setObjectName(_fromUtf8("RLabel"))
+        self.verticalLayout_2.addWidget(self.RLabel)
+        self.LCLabel = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.LCLabel.setFont(font)
+        self.LCLabel.setObjectName(_fromUtf8("LCLabel"))
+        self.verticalLayout_2.addWidget(self.LCLabel)
+        self.ILabel = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.ILabel.setFont(font)
+        self.ILabel.setObjectName(_fromUtf8("ILabel"))
+        self.verticalLayout_2.addWidget(self.ILabel)
+        self.horizontalLayout.addWidget(self.frame_4)
+        self.verticalLayout_3.addWidget(self.frame)
+        self.frame_2 = QtGui.QFrame(self.widgetFrameOuter)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
+        self.frame_2.setSizePolicy(sizePolicy)
+        self.frame_2.setMinimumSize(QtCore.QSize(0, 50))
+        self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_2.setObjectName(_fromUtf8("frame_2"))
+        self.gridLayout_2 = QtGui.QGridLayout(self.frame_2)
+        self.gridLayout_2.setMargin(2)
+        self.gridLayout_2.setHorizontalSpacing(2)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.scrollArea = QtGui.QScrollArea(self.frame_2)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
+        self.scrollAreaWidgetContents = QtGui.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 796, 391))
+        self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
+        self.gridLayout_4 = QtGui.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout_4.setMargin(2)
+        self.gridLayout_4.setSpacing(2)
+        self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
+        self.plot_area = QtGui.QGridLayout()
+        self.plot_area.setObjectName(_fromUtf8("plot_area"))
+        self.gridLayout_4.addLayout(self.plot_area, 0, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.gridLayout_2.addWidget(self.scrollArea, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.frame_2)
+        self.gridLayout_3.addWidget(self.widgetFrameOuter, 0, 0, 1, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtGui.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 804, 25))
+        self.menubar.setObjectName(_fromUtf8("menubar"))
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtGui.QStatusBar(MainWindow)
+        self.statusbar.setObjectName(_fromUtf8("statusbar"))
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Form)
-        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), Form.showData)
-        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Form.run)
-        QtCore.QObject.connect(self.pushButton_3, QtCore.SIGNAL(_fromUtf8("clicked()")), Form.fit)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(MainWindow)
+        QtCore.QObject.connect(self.pushButton_4, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.run)
+        QtCore.QObject.connect(self.pushButton_5, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.fit)
+        QtCore.QObject.connect(self.pushButton_6, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.showData)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("Form", "Toggle OD1", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setText(QtGui.QApplication.translate("Form", "Fit selected region", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Log data to Console", None, QtGui.QApplication.UnicodeUTF8))
-        self.indicator.setText(QtGui.QApplication.translate("Form", "Output state", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        self.widgetFrameOuter.setProperty("class", _translate("MainWindow", "PeripheralCollection", None))
+        self.frame.setProperty("class", _translate("MainWindow", "PeripheralCollectionInner", None))
+        self.pushButton_4.setText(_translate("MainWindow", "Toggle OD1", None))
+        self.indicator.setText(_translate("MainWindow", "Output state", None))
+        self.pushButton_5.setText(_translate("MainWindow", "Fit selected region", None))
+        self.pushButton_6.setText(_translate("MainWindow", "Show Data", None))
+        self.msg.setText(_translate("MainWindow", "_", None))
+        self.CLabel.setText(_translate("MainWindow", "_", None))
+        self.LLabel.setText(_translate("MainWindow", "_", None))
+        self.RLabel.setText(_translate("MainWindow", "_", None))
+        self.LCLabel.setText(_translate("MainWindow", "_", None))
+        self.ILabel.setText(_translate("MainWindow", "_", None))
+        self.frame_2.setProperty("class", _translate("MainWindow", "PeripheralCollectionInner", None))
 

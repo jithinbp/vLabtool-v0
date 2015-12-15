@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'selectAndButton.ui'
 #
-# Created: Sat Dec  5 15:45:04 2015
+# Created: Fri Dec 11 11:40:43 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,7 +46,6 @@ class Ui_Form(object):
 "}\n"
 "QLabel {\n"
 "color: white;\n"
-"font-weight: bold;\n"
 "background:transparent;\n"
 "}\n"
 ""))
@@ -102,7 +101,7 @@ class Ui_Form(object):
         self.gridLayout_3.addWidget(self.optionBox, 0, 0, 1, 1)
         self.value = QtGui.QLabel(self.ImageFrame)
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.value.setFont(font)

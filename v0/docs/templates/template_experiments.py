@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'template_experiments.ui'
 #
-# Created: Thu Dec  3 19:45:27 2015
+# Created: Fri Dec 11 11:40:43 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(1000, 565)
+        MainWindow.resize(925, 565)
         MainWindow.setStyleSheet(_fromUtf8("QPushButton {\n"
 "color: #333;\n"
 "border: 2px solid #555;\n"
@@ -107,12 +107,12 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.experimentFrameOuter = QtGui.QFrame(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.experimentFrameOuter.sizePolicy().hasHeightForWidth())
         self.experimentFrameOuter.setSizePolicy(sizePolicy)
-        self.experimentFrameOuter.setMinimumSize(QtCore.QSize(470, 0))
+        self.experimentFrameOuter.setMinimumSize(QtCore.QSize(360, 0))
         self.experimentFrameOuter.setMaximumSize(QtCore.QSize(500, 16777215))
         self.experimentFrameOuter.setStyleSheet(_fromUtf8(""))
         self.experimentFrameOuter.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -144,7 +144,7 @@ class Ui_MainWindow(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollArea_4.setObjectName(_fromUtf8("scrollArea_4"))
         self.SCF1 = QtGui.QWidget()
-        self.SCF1.setGeometry(QtCore.QRect(0, 0, 490, 215))
+        self.SCF1.setGeometry(QtCore.QRect(0, 0, 452, 215))
         self.SCF1.setStyleSheet(_fromUtf8(""))
         self.SCF1.setObjectName(_fromUtf8("SCF1"))
         self.gridLayout_5 = QtGui.QGridLayout(self.SCF1)
@@ -169,12 +169,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.scrollArea_4)
         self.verticalLayout.addWidget(self.experimentFrameOuter)
         self.widgetFrameOuter = QtGui.QFrame(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widgetFrameOuter.sizePolicy().hasHeightForWidth())
         self.widgetFrameOuter.setSizePolicy(sizePolicy)
-        self.widgetFrameOuter.setMinimumSize(QtCore.QSize(470, 0))
+        self.widgetFrameOuter.setMinimumSize(QtCore.QSize(360, 0))
         self.widgetFrameOuter.setMaximumSize(QtCore.QSize(500, 16777215))
         self.widgetFrameOuter.setStyleSheet(_fromUtf8(""))
         self.widgetFrameOuter.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -208,7 +208,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName(_fromUtf8("scrollArea_2"))
         self.SCF2 = QtGui.QWidget()
-        self.SCF2.setGeometry(QtCore.QRect(0, 0, 490, 214))
+        self.SCF2.setGeometry(QtCore.QRect(0, 0, 452, 214))
         self.SCF2.setStyleSheet(_fromUtf8(""))
         self.SCF2.setObjectName(_fromUtf8("SCF2"))
         self.gridLayout_3 = QtGui.QGridLayout(self.SCF2)
@@ -225,7 +225,8 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
         self.WidgetLayout = QtGui.QGridLayout()
         self.WidgetLayout.setMargin(5)
-        self.WidgetLayout.setSpacing(15)
+        self.WidgetLayout.setHorizontalSpacing(10)
+        self.WidgetLayout.setVerticalSpacing(7)
         self.WidgetLayout.setObjectName(_fromUtf8("WidgetLayout"))
         self.gridLayout_4.addLayout(self.WidgetLayout, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.frame_3, 0, 0, 1, 1)
@@ -233,12 +234,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.scrollArea_2)
         self.verticalLayout.addWidget(self.widgetFrameOuter)
         self.frame_2 = QtGui.QFrame(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
         self.frame_2.setSizePolicy(sizePolicy)
-        self.frame_2.setMinimumSize(QtCore.QSize(470, 0))
+        self.frame_2.setMinimumSize(QtCore.QSize(360, 0))
         self.frame_2.setMaximumSize(QtCore.QSize(500, 16777215))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
@@ -283,7 +284,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.helpFrameOuter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 925, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuUtilities = QtGui.QMenu(self.menubar)
         self.menuUtilities.setObjectName(_fromUtf8("menuUtilities"))

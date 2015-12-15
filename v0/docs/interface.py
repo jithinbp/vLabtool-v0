@@ -82,6 +82,7 @@ class Interface():
     def __init__(self,timeout=1.0,**kwargs):
         self.verbose=kwargs.get('verbose',False)
         self.initialArgs = kwargs
+        self.generic_name = 'SEELablet'
         
         self.ADC_SHIFTS_LOCATION1=11
         self.ADC_SHIFTS_LOCATION2=12

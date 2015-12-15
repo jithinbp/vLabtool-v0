@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>925</width>
     <height>565</height>
    </rect>
   </property>
@@ -101,14 +101,14 @@ stop: 0 #abe, stop: 0.7 #aba);
       <item>
        <widget class="QFrame" name="experimentFrameOuter">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>470</width>
+          <width>360</width>
           <height>0</height>
          </size>
         </property>
@@ -184,7 +184,7 @@ stop: 0 #abe, stop: 0.7 #aba);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>490</width>
+              <width>452</width>
               <height>215</height>
              </rect>
             </property>
@@ -248,14 +248,14 @@ stop: 0 #abe, stop: 0.7 #aba);
       <item>
        <widget class="QFrame" name="widgetFrameOuter">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>470</width>
+          <width>360</width>
           <height>0</height>
          </size>
         </property>
@@ -333,7 +333,7 @@ background:transparent;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>490</width>
+              <width>452</width>
               <height>214</height>
              </rect>
             </property>
@@ -373,11 +373,14 @@ background:transparent;
                 </property>
                 <item row="0" column="0">
                  <layout class="QGridLayout" name="WidgetLayout">
+                  <property name="horizontalSpacing">
+                   <number>10</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>7</number>
+                  </property>
                   <property name="margin">
                    <number>5</number>
-                  </property>
-                  <property name="spacing">
-                   <number>15</number>
                   </property>
                  </layout>
                 </item>
@@ -394,14 +397,14 @@ background:transparent;
       <item>
        <widget class="QFrame" name="frame_2">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>470</width>
+          <width>360</width>
           <height>0</height>
          </size>
         </property>
@@ -507,7 +510,7 @@ background:transparent;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>925</width>
      <height>25</height>
     </rect>
    </property>

@@ -31,10 +31,10 @@ cd ..
 
 
 rm -rf docs
-sphinx-apidoc -H "vLabtool-v0" -A "Jithin B."  -F -o docs .
+sphinx-apidoc -H "SEELablet" -A "Jithin B."  -F -o docs .
 cp conf.py docs/conf.py
 cp custom.css docs/_static/custom.css
-cp index.rst docs/index.rst
+cp manual.rst docs/manual.rst
 cp interface.rst docs/interface.rst
 cp videos.rst docs/videos.rst
 cp introduction.rst docs/introduction.rst
@@ -55,5 +55,5 @@ rm widgets.* templates.*
 rm MCP4728_class.rst
 
 make html
-make latexpdf
+#make latexpdf
 cp -R ../js _build/html/

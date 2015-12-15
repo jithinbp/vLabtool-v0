@@ -92,3 +92,37 @@ class analyticsClass():
 		except:
 			return False
 
+	def dampedSine(self,x, amp, freq, phase,offset,damp):
+		"""
+		A damped sine wave function
+		
+		"""
+		return offset + amp*np.exp(-damp*x)*np.sin(abs(freq)*x + phase)
+
+	def getGuessValues(self,xReal,yReal,func='sine'):
+		if(func=='sine' or func=='damped sine'):
+			N=len(xReal)
+			offset = np.average(yReal)
+			yhat = self.fftpack.rfft(yReal-offset)
+			idx = (yhat**2).argmax()
+			freqs = self.fftpack.rfftfreq(N, d = (xReal[1]-xReal[0])/(2*np.pi))
+			frequency = freqs[idx]
+
+			amplitude = (yReal.max()-yReal.min())/2.0
+			phase=0.
+			if func=='sine':
+				return amplitude, frequency, phase,offset
+			if func=='damped sine':
+				return amplitude, frequency, phase,offset,0
+
+	def arbitFit(self,xReal,yReal,func,**args):
+		N=len(xReal)
+		guess=args.get('guess',[])
+		try:
+			results, pcov = self.optimize.curve_fit(func, xReal, yReal,guess)
+			pcov[0]*=1e6
+			return True,results,pcov
+		except:
+			return False,[],[]
+
+

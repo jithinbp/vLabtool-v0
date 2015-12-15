@@ -44,7 +44,6 @@ stop: 0 rgb(97, 146, 121), stop: 0.5 rgb(65, 89, 111));
 }
 QLabel {
 color: white;
-font-weight: bold;
 background:transparent;
 }
 </string>
@@ -164,7 +163,7 @@ background:transparent;
           <widget class="QLabel" name="value">
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>9</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>

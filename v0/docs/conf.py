@@ -47,9 +47,9 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'manual'
 
-pdf_documents = [('index', u'manual', u'vLabtool Documentation', u'CSpark Research'),]
+pdf_documents = [('index', u'manual', u'SEELablet Documentation', u'CSpark Research'),]
 
 # index - master document
 # rst2pdf - name of the generated pdf
@@ -58,7 +58,7 @@ pdf_documents = [('index', u'manual', u'vLabtool Documentation', u'CSpark Resear
 
 
 # General information about the project.
-project = u'vLabtool'
+project = u'SEELablet'
 copyright = u'2015, Jithin B.'
 
 
@@ -126,10 +126,10 @@ html_theme_options = {
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "vLabtool Programer's Manual"
+html_title = "SEELablet Programer's Manual"
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = "vLabtool Quick ref"
+html_short_title = "SEELablet Quick ref"
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -206,7 +206,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'index.tex', u'vLabtool Manual',
+  ('index', 'index.tex', u'SEELablet Manual',
    u'Jithin B.', 'manual'),
 ]
 
@@ -250,8 +250,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'vLabtool', u'. Documentation',
-   u'Jithin B.', '', 'Programmer"s manual for the vLabtool.',
+  ('index', 'SEELablet', u'. Documentation',
+   u'Jithin B.', '', 'Programmer"s manual for the SEELablet.',
    'Miscellaneous'),
 ]
 
@@ -268,7 +268,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'vLabtool'
+epub_title = u'SEELablet'
 epub_author = u'Jithin B.'
 epub_publisher = u'Jithin B.'
 epub_copyright = u'2015, Jithin B.'
